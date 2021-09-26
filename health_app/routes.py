@@ -1,13 +1,13 @@
 from flask import render_template, url_for, flash, request
-from app import app
-from health_app.forms import Form
+from health_app import app, forms
+# from health_app.forms import Form
 
-from health_app.models import Mod
+# from health_app.models import Mod
 
 some_function = [
         {
-            'function': "Function Output",
-            'display': "Telling you what to do"
+            'function': "A call to a function",
+            'display': "Function Testing. NOTE: The bootstrap css files are dictating the styling. Should we build our own?"
 
          }
 ]
@@ -16,12 +16,26 @@ some_function = [
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', some_function=some_function)
+    return render_template('home.html')
 
 
-@app.route("/about")
-def about():
-    return render_template('about.html', title='About')
+@app.route("/sched")
+def sched():
+    return render_template('sched.html', title='Scheduler', some_function=some_function)
 
 
+@app.route("/records")
+def records():
+    return render_template('records.html', title='', forms=forms)
 
+@app.route("/labs")
+def labs():
+    return render_template('labs.html', title='')
+
+@app.route("/pharm")
+def pharm():
+    return render_template('pharm.html', title='')
+
+@app.route("/billing")
+def billing():
+    return render_template('billing.html', title='')
