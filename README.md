@@ -1,6 +1,8 @@
 # CS532
 CS532 Group Project Fall 2021
 
+NOTE: SECRET_KEY and SQLALCHEMY_DATABASE_URI are set to ENVIRONMENT variables.
+
 1. This application is currently under development using Python 3.8.10. 
 2. In order to launch the site, you will need to set up the virtual environment first.
 3. Once you have set up/cloned the repository, navigate to the top level directory. (contains <code>health_app/</code> folder, <code>requirements.txt</code>, etc.)
