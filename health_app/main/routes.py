@@ -1,6 +1,4 @@
 from flask import render_template, url_for, flash, request, Blueprint
-# from health_main.forms import Form
-# from health_main.models import Mod
 
 main = Blueprint('main', __name__)
 
