@@ -39,3 +39,7 @@ def pharm():
 @app.route("/billing")
 def billing():
     return render_template('billing.html', title='')
+
+@app.route("/equipment")
+def equipment():
+    return render_template('equipment.html', title='')
