@@ -1,7 +1,7 @@
 # CS532
 CS532 Group Project Fall 2021
 
-NOTE: SECRET_KEY and SQLALCHEMY_DATABASE_URI are set to ENVIRONMENT variables.
+NOTE: SECRET_KEY and SQLALCHEMY_DATABASE_URI are set to ENVIRONMENT variables. Modify your bashrc or other shell initializiation folder (zshrc, or set using windows commands if on that OS | you can set these values to anything at the moment, but these will be importantly hidden out of production code for security reasons when the program is deployed)
 
 1. This application is currently under development using Python 3.8.10. 
 2. In order to launch the site, you will need to set up the virtual environment first.
