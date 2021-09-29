@@ -20,11 +20,6 @@ const Services = () => (
             <CardInfo className="card-info">{p.description}</CardInfo>
             <div>
               <TitleContent>Stack</TitleContent>
-              <TagList>
-                {p.tags.map((t, i) => {
-                  return <Tag key={i}>{t}</Tag>;
-                })}
-              </TagList>
             </div>
             <UtilityList>
               <ExternalLinks href={p.visit}>Code</ExternalLinks>
