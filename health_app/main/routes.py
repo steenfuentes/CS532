@@ -16,15 +16,13 @@ some_function = [
 def home():
     return render_template('home.html')
 
-
-@main.route("/sched")
-def sched():
-    return render_template('sched.html', title='Scheduler', some_function=some_function)
-
-
 @main.route("/records")
 def records():
     return render_template('records.html', title='')
+    
+@main.route("/sched")
+def sched():
+    return render_template('sched.html', title='Scheduler', some_function=some_function)
 
 @main.route("/labs")
 def labs():

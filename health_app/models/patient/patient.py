@@ -1,10 +1,10 @@
 from health_app import db
-from health_app import curent_app
+from flask import current_app
 
 # just outlining the basic info needed that defines a patient
 # a more elegent approach will establish patients as objects in the system
 class Patient(db.Model):
-
+    __tablename__ = 'patient'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
     number = db.Column(db.String(20), unique=False, nullable=False)
