@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "start-api": "cd api && python run.py",
     "build": "next build && next export",
     "start": "next start"
   },
@@ -18,5 +19,6 @@
     "react-icons": "^4.2.0",
     "styled-components": "^5.3.0",
     "styled-normalize": "^8.0.7"
-  }
+  },
+  "proxy": "https://localhost:5000"
 }
