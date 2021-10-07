@@ -2,8 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 
 import { CarouselButton, CarouselButtonDot, CarouselButtons, CarouselContainer, CarouselItem, CarouselItemImg, CarouselItemText, CarouselItemTitle, CarouselMobileScrollNode } from './AboutStyles';
 import { Section, SectionDivider, SectionText, SectionTitle } from '../../styles/GlobalComponents';
-import { TimeLineData } from '../../ServiceConstants/constants';
 
+const TimeLineData = [
+  { year: 'Aug', text: 'Started Planning', },
+  { year: 'Sept', text: 'Requirments and functional requirements', },
+  { year: 'Oct', text: 'Development and testing', },
+  { year: 'Nov', text: 'Final software and services testing and quality assurance', },
+  { year: 'Dec', text: 'Launched BSEG Health Care', },
+];
 const TOTAL_CAROUSEL_COUNT = TimeLineData.length;
 
 const Timeline = () => {
