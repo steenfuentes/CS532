@@ -4,7 +4,7 @@ from weakref import WeakValueDictionary
 from sqlalchemy import inspect
 from sqlalchemy.orm import aliased
 
-from . import db
+from api import db
 
 
 class MetaBaseModel(db.Model.__class__):

@@ -1,4 +1,4 @@
-from models.patient import Patient
+from api.src.models.patient import Patient
 
 class PatientRepository:
 
@@ -9,9 +9,14 @@ class PatientRepository:
         return Patient.query.filter_by(last_name=last_name, first_name=first_name).one_or_none()
     
     @staticmethod
-    def create(self, id, first_name, last_name, number):
+    def create(id, first_name, last_name, number):
         """ Create a new patient"""
+
         patient = Patient(id=id, first_name=first_name, last_name=last_name, number=number)
-        
+
         return patient.save()
-       
+    
+    def update(self,**kwargs):
+        """ update any attribute of the user"""
+        for key, value in kwargs.items():
+            locals()[key] = value

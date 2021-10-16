@@ -1,4 +1,6 @@
 from enum import unique
+
+from marshmallow.fields import Email
 from api import db
 from .abstractmodel import BaseModel, MetaBaseModel
 
@@ -20,8 +22,16 @@ class Patient(db.Model, BaseModel, metaclass=MetaBaseModel):
     medications = db.Column(db.String(200), unique=False, nullable=True) # need to implement a one to many relationship for a Patient model to Medication models
     appointments = db.Column(db.String(200), unique=False, nullable=True) # One to many relationship to Appointment model? 
 
-    def __init__(self, id, first_name, last_name, number):
+    def __init__(self, id, first_name, last_name, number, **kwargs):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
         self.number = number
+        self.email = None
+        self.address = None
+        self.insurance = None
+        self.dob = None
+        self.gender = None
+        self.pcp = None
+        self.medications = None
+        self.appointments = None
