@@ -22,16 +22,18 @@ class Patient(db.Model, BaseModel, metaclass=MetaBaseModel):
     medications = db.Column(db.String(200), unique=False, nullable=True) # need to implement a one to many relationship for a Patient model to Medication models
     appointments = db.Column(db.String(200), unique=False, nullable=True) # One to many relationship to Appointment model? 
 
-    def __init__(self, id, first_name, last_name, number, **kwargs):
+    def __init__(self, id, first_name, last_name, number, email=None,
+                    address=None, insurance=None, dob=None, gender=None, pcp=None, 
+                    medications=None, appointments=None):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
         self.number = number
-        self.email = None
-        self.address = None
-        self.insurance = None
-        self.dob = None
-        self.gender = None
-        self.pcp = None
-        self.medications = None
-        self.appointments = None
+        self.email = email
+        self.address = address
+        self.insurance = insurance
+        self.dob = dob
+        self.gender = gender
+        self.pcp = pcp
+        self.medications = medications
+        self.appointments = appointments

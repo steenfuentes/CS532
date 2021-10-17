@@ -9,10 +9,10 @@ class PatientRepository:
         return Patient.query.filter_by(last_name=last_name, first_name=first_name).one_or_none()
     
     @staticmethod
-    def create(id, first_name, last_name, number):
+    def create(**kwargs):
         """ Create a new patient"""
 
-        patient = Patient(id=id, first_name=first_name, last_name=last_name, number=number)
+        patient = Patient(**kwargs)
 
         return patient.save()
     
