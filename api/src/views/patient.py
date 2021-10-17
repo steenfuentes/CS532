@@ -1,14 +1,13 @@
 """
 Define the REST verbs
 """
-from flask_restful import Resource
 from flask.views import MethodView
 from webargs.flaskparser import use_kwargs
 
 from api.src.repositories import PatientRepository
 from api.src.schema import PatientSchema
 
-class PatientResource():
+class PatientView(MethodView):
     """ Verbs that are relative to the patients"""
     
     @staticmethod
@@ -24,7 +23,7 @@ class PatientResource():
     @staticmethod
     @use_kwargs(PatientSchema())
     def post(**kwargs):
-        """Create patient using all of the sent information"""
+        """Create patient using all of the incoming information"""
         PatientRepository.create(**kwargs)
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
