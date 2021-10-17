@@ -2,11 +2,17 @@ from api.src.models.patient import Patient
 
 class PatientRepository:
 
-    # Need to implement returning a list of results for the given search name. For now, this only returns a single result
+    # Need to implement returning a list of results for the given search name. For now, this only returns a single result.
+    # Implmentation should also suppport searching by any given attribute filter
     @staticmethod
     def get(last_name, first_name):
         """ Query a patient by last and first name """
         return Patient.query.filter_by(last_name=last_name, first_name=first_name).one_or_none()
+
+    @staticmethod
+    def get_all():
+        """Return all patients"""
+        pass
     
     @staticmethod
     def create(**kwargs):

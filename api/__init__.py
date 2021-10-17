@@ -1,11 +1,9 @@
 from flask import Flask
 from flask_bcrypt import Bcrypt
-from flask_login import LoginManager
-from .config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
-
+from .config import Config
 
 db = SQLAlchemy()
 ma = Marshmallow()
