@@ -2,13 +2,12 @@
 Defines the model for a patient
 """
 
-from marshmallow.fields import Email
 from api import db
 from .abstractmodel import BaseModel, MetaBaseModel
 
 # just outlining the basic info needed that defines a patient
 # a more elegent approach will establish patients as objects in the system
-class Patient(db.Model, BaseModel, metaclass=MetaBaseModel):
+class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'patient'
 
     id = db.Column(db.Integer, primary_key=True)

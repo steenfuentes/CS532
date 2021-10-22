@@ -2,6 +2,7 @@
 
 # from marshmallow.fields import Email
 from api import db
+import enum
 from .abstractmodel import BaseModel, MetaBaseModel
 
 #enumerate marketing status
@@ -13,7 +14,7 @@ class mkt_status(enum.Enum):
 
 # just outlining the basic info needed that defines a medication 
 # a more elegent approach will establish patients as objects in the system
-class medication_reference(db.Model):
+class MedicationModel(db.Model):
     __tablename__ = 'medication_reference'
     id = db.Column(db.Integer, primary_key=True)
     brand_name = db.Column(db.String(64), unique=False, nullable=False)
