@@ -1,4 +1,6 @@
-from enum import unique
+"""
+Defines the model for a patient
+"""
 
 from marshmallow.fields import Email
 from api import db

@@ -1,6 +1,6 @@
 from api.src.models.patient import Patient
 
-class PatientRepository:
+class PatientRepository():
 
     # Need to implement returning a list of results for the given search name. For now, this only returns a single result.
     # Implmentation should also suppport searching by any given attribute filter

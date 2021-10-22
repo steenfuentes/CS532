@@ -5,7 +5,7 @@ from flask.views import MethodView
 from flask import json, jsonify
 from webargs.flaskparser import use_kwargs
 
-from api.src.repositories import PatientRepository
+from api.src.repositories.patient import PatientRepository
 from api.src.schema import PatientSchema
 
 class PatientAPI(MethodView):

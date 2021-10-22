@@ -31,5 +31,7 @@ def create_app(config_class=Config):
     app.add_url_rule('/records/', defaults={'id': None}, view_func=patient_view, methods=['GET'])
     app.add_url_rule('/records/', view_func=patient_view, methods=['POST',])
     app.add_url_rule('/records/<int:id>', view_func=patient_view, methods=['GET'])
+
+    
     
     return app
