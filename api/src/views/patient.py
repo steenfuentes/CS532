@@ -3,10 +3,13 @@ Define the REST verbs
 """
 from flask.views import MethodView
 from flask import json, jsonify
-from webargs.flaskparser import use_kwargs
+from marshmallow import ValidationError
+from marshmallow.decorators import VALIDATES
+from marshmallow.utils import pprint
+from webargs.flaskparser import abort, use_kwargs, use_args
 
-from api.src.repositories.patient import PatientRepository
-from api.src.schema import PatientSchema
+from api.src.repositories.patient import PatientRepo
+from api.src.models.patient import PatientModel
 
 class PatientAPI(MethodView):
     """ Verbs that are relative to the patients"""
@@ -15,12 +18,12 @@ class PatientAPI(MethodView):
     def get(id):
         """ Return a user based on the id"""
         if id is None:
-            p = PatientRepository.get_all()
-            schema = PatientSchema(many=True)
+            p = PatientRepo.get_all()
+            schema = PatientModel.Schema()
         else:
-            p = PatientRepository.get(id)
+            p = PatientRepo.get(id)
             print(p)
-            schema = PatientSchema()
+            schema = PatientModel.Schema()
             print(schema)
        
         result = schema.dump(p)
@@ -28,10 +31,10 @@ class PatientAPI(MethodView):
         return result
 
     @staticmethod
-    @use_kwargs(PatientSchema())
+    @use_kwargs(PatientModel.Schema) 
     def post(**kwargs):
         """Create patient using all of the incoming information"""
-        PatientRepository.create(**kwargs)
+        PatientRepo.create(**kwargs)
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
     @use_kwargs

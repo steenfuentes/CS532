@@ -2,11 +2,15 @@
 Defines the model for a patient
 """
 
+import re
 from api import db
+from api.src.utils.add_schema import add_schema
 from .abstractmodel import BaseModel, MetaBaseModel
+from sqlalchemy.orm import validates
 
 # just outlining the basic info needed that defines a patient
 # a more elegent approach will establish patients as objects in the system
+@add_schema
 class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'patient'
 
@@ -18,14 +22,14 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     address = db.Column(db.String(200), unique=False, nullable=True)
     insurance = db.Column(db.String(30), unique=False, nullable=True)
     dob = db.Column(db.String(20), unique=False, nullable=True)
-    gender = db.Column(db.Boolean, unique=False, nullable=True)
+    gender = db.Column(db.String(1), unique=False, nullable=True)
     pcp = db.Column(db.String(50), unique=False, nullable=True) 
     medications = db.Column(db.String(200), unique=False, nullable=True) # need to implement a one to many relationship for a Patient model to Medication models
     appointments = db.Column(db.String(200), unique=False, nullable=True) # One to many relationship to Appointment model? 
 
-    def __init__(self, id, first_name, last_name, number, email=None,
-                    address=None, insurance=None, dob=None, gender=None, pcp=None, 
-                    medications=None, appointments=None):
+    def __init__(self, id, first_name, last_name, number, email="",
+                    address="", insurance="", dob="", gender="", pcp="", 
+                    medications="", appointments=""):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
@@ -38,3 +42,14 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
         self.pcp = pcp
         self.medications = medications
         self.appointments = appointments
+    
+    @validates('email')
+    def validate_email(self, key, email):
+        if not email:
+            raise AssertionError('No email provided')  
+        if not re.match("(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+            raise AssertionError('Provided email is not an email address') 
+
+        return email
+    
+

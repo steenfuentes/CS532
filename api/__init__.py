@@ -32,6 +32,10 @@ def create_app(config_class=Config):
     app.add_url_rule('/records/', view_func=patient_view, methods=['POST',])
     app.add_url_rule('/records/<int:id>', view_func=patient_view, methods=['GET'])
 
-    
+    from api.src.views.equipment import EquipmentAPI
+    equipment_view = EquipmentAPI.as_view('equipment_api')
+    app.add_url_rule('/equipment/', defaults={'id': None}, view_func=equipment_view, methods=['GET'])
+    app.add_url_rule('/equipment/', view_func=equipment_view, methods=['POST',])
+    app.add_url_rule('/equipment/<int:id>', view_func=equipment_view, methods=['GET'])
     
     return app

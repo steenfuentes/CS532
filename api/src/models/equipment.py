@@ -16,4 +16,11 @@ class EquipmentModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     own = db.Column(db.Boolean, unique=False, nullable=False)
     pdate = db.Column(db.Date)
 
-
+    def __init__(self, id, etype, edescription, department, own, pdate):
+        self.id = id
+        self.etype = etype
+        self.edescription = edescription
+        self.department = department
+        self.own = own
+        self.pdate = pdate
+        
