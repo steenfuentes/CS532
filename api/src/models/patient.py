@@ -45,8 +45,6 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     
     @validates('email')
     def validate_email(self, key, email):
-        if not email:
-            raise AssertionError('No email provided')  
         if not re.match("(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
             raise AssertionError('Provided email is not an email address') 
 
