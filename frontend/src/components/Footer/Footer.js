@@ -2,7 +2,7 @@ import React from 'react';
 import { AiFillGithub, AiFillHeart } from 'react-icons/ai';
 import { IoMdHelpCircle } from 'react-icons/io'
 
-import { SocialIcons } from '../DesktopNav/HeaderStyles';
+import { SocialIcons } from '../Navigation/HeaderStyles';
 import { CompanyContainer, FooterWrapper, LinkColumn, LinkItem, LinkList, LinkTitle, Slogan, SocialContainer, SocialIconsContainer } from './FooterStyles';
 
 const Footer = () => {
