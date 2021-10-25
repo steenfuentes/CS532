@@ -10,7 +10,7 @@ from api.src.utils.add_schema import add_schema
 
 @add_schema
 class EquipmentModel(db.Model, BaseModel, metaclass=MetaBaseModel):
-    __tablename__ = 'equipment'
+    __tablename__ = 'equipmentmodel'
 
     id = db.Column(db.Integer, primary_key=True)
     etype = db.Column(db.String(20), unique=False, nullable=False)

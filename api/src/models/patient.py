@@ -31,7 +31,6 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     appointments = db.Column(db.String(200), unique=False, nullable=True) # One to many relationship to Appointment model? 
 
     # relationships
-
     lab_orders = db.relationship("LabOrderModel", backref="patientmodel")
 
     def __init__(self, id, first_name, last_name, number, email="",
