@@ -3,9 +3,12 @@ from enum import unique
 from marshmallow.fields import Email
 from api import db
 from .abstractmodel import BaseModel, MetaBaseModel
+from api.src.utils.add_schema import add_schema
 
 # just outlining the basic info needed that defines a patient
 # a more elegent approach will establish patients as objects in the system
+
+@add_schema
 class EquipmentModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'equipment'
 

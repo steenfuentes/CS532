@@ -25,17 +25,32 @@ def create_app(config_class=Config):
     #     app.add_url_rule(url, view_func=view_func, methods=['POST',])
     #     app.add_url_rule(f'{url}<{pk_type}:{pk}>', view_func=view_func,
     #                     methods=['GET', 'PUT', 'DELETE'])
-
+    
+    from api.src.views.equipment import EquipmentAPI
+    from api.src.views.laborder import LabOrderAPI
     from api.src.views.patient import PatientAPI
+    from api.src.views.physician import PhysicianAPI
+
+    equipment_view = EquipmentAPI.as_view('equipment_api')
+    app.add_url_rule('/equipment/', defaults={'id': None}, view_func=equipment_view, methods=['GET'])
+    app.add_url_rule('/equipment/', view_func=equipment_view, methods=['POST',])
+    app.add_url_rule('/equipment/<int:id>', view_func=equipment_view, methods=['GET'])
+
+    laborder_view = LabOrderAPI.as_view('laborder_api')
+    app.add_url_rule('/laborder/', defaults={'id': None}, view_func=laborder_view, methods=['GET'])
+    app.add_url_rule('/laborder/', view_func=laborder_view, methods=['POST',])
+    app.add_url_rule('/laborder/<int:id>', view_func=laborder_view, methods=['GET'])
+  
     patient_view = PatientAPI.as_view('patient_api')
     app.add_url_rule('/records/', defaults={'id': None}, view_func=patient_view, methods=['GET'])
     app.add_url_rule('/records/', view_func=patient_view, methods=['POST',])
     app.add_url_rule('/records/<int:id>', view_func=patient_view, methods=['GET'])
 
-    from api.src.views.equipment import EquipmentAPI
-    equipment_view = EquipmentAPI.as_view('equipment_api')
-    app.add_url_rule('/equipment/', defaults={'id': None}, view_func=equipment_view, methods=['GET'])
-    app.add_url_rule('/equipment/', view_func=equipment_view, methods=['POST',])
-    app.add_url_rule('/equipment/<int:id>', view_func=equipment_view, methods=['GET'])
+    physician_view = PhysicianAPI.as_view('physician_api')
+    app.add_url_rule('/physicians/', defaults={'id': None}, view_func=physician_view, methods=['GET'])
+    app.add_url_rule('/physicians/', view_func=physician_view, methods=['POST',])
+    app.add_url_rule('/physicians/<int:id>', view_func=physician_view, methods=['GET'])
+  
+
     
     return app

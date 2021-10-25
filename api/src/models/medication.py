@@ -5,6 +5,7 @@ import enum
 
 from api import db
 from .abstractmodel import BaseModel, MetaBaseModel
+from api.src.utils.add_schema import add_schema
 
 #enumerate marketing status
 class mkt_status(enum.Enum):
@@ -15,8 +16,10 @@ class mkt_status(enum.Enum):
 
 # just outlining the basic info needed that defines a medication 
 # a more elegent approach will establish patients as objects in the system
+@add_schema
 class MedicationModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'medication'
+
     id = db.Column(db.Integer, primary_key=True)
     brand_name = db.Column(db.String(64), unique=False, nullable=False)
     reference_standard = db.Column(db.String(64), unique=False, nullable=False)g

@@ -1,5 +1,5 @@
 """
-Define the REST verbs
+Define the REST verbs for endpoints related to a patient
 """
 from flask.views import MethodView
 from flask import json, jsonify
