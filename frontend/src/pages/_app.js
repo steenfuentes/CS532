@@ -5,25 +5,20 @@ import { Provider } from 'react-redux';
 import { store } from '../store';
 
 import { CssBaseline, StyledEngineProvider } from '@material-ui/core';
-import themes from '../themes';
 
 
 
 const App = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout || ((page) => page)
 
-  // const customization = useSelector((state) => state.customization);
 
   return (
     <>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider>
-          <CssBaseline />
-          <Theme>
-            {getLayout(<Provider store={store}><Component {...pageProps} /></Provider>)}
-          </Theme>
-        </ThemeProvider>
-      </StyledEngineProvider>
+
+      <Theme>
+        {getLayout(<Component {...pageProps} />)}
+      </Theme>
+
 
     </>
   );

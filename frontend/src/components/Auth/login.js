@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from "@material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { useSelector } from 'react-redux';
 import {
     Box,
@@ -32,7 +32,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 
 
-const useStyles = makeStyles((theme) => ({
+const styles = (theme) => ({
     redButton: {
         fontSize: '1rem',
         fontWeight: 500,
@@ -44,16 +44,16 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             // backgroundColor: theme.palette.primary.light
         },
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '0.875rem'
-        }
+        // [theme.breakpoints.down('sm')]: {
+        //     fontSize: '0.875rem'
+        // }
     },
     signDivider: {
         flexGrow: 1
     },
     signText: {
         cursor: 'unset',
-        margin: theme.spacing(2),
+        // margin: theme.spacing(2),
         padding: '5px 56px',
         // borderColor: `${theme.palette.grey[100]} !important`,
         // color: `${theme.palette.grey[900]}!important`,
@@ -61,23 +61,21 @@ const useStyles = makeStyles((theme) => ({
     },
     loginIcon: {
         marginRight: '16px',
-        [theme.breakpoints.down('sm')]: {
-            marginRight: '8px'
-        }
+        // [theme.breakpoints.down('sm')]: {
+        //     marginRight: '8px'
+        // }
     },
     loginInput: {
-        ...theme.typography.customInput
+        // ...theme.typography.customInput
     }
-}));
+});
 
 
 
 
 const Login = (props, { ...others }) => {
 
-    const classes = useStyles();
-
-    const customization = useSelector((state) => state.customization);
+    const { classes } = props;
     const scriptedRef = useScriptRef();
     const [checked, setChecked] = React.useState(true);
 
@@ -122,7 +120,6 @@ const Login = (props, { ...others }) => {
                             <Button
                                 variant="outlined"
                                 className={classes.signText}
-                                sx={{ borderRadius: `${customization.borderRadius}px` }}
                                 disableRipple
                                 disabled
                             >
@@ -288,4 +285,4 @@ const Login = (props, { ...others }) => {
     );
 }
 
-export default Login;
+export default withStyles(styles, { withTheme: true })(Login);
