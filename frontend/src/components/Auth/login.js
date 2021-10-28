@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { useSelector } from 'react-redux';
 import {
@@ -73,20 +73,21 @@ const styles = (theme) => ({
 
 
 
-const Login = (props, { ...others }) => {
+const Login = () => {
 
-    const { classes } = props;
-    const scriptedRef = useScriptRef();
-    const [checked, setChecked] = React.useState(true);
+    const classes = styles();
 
-    const googleHandler = async () => {
-        console.error('Login');
-    };
+    // const scriptedRef = useScriptRef();
+    const [checked, setChecked] = useState(true);
 
-    const [showPassword, setShowPassword] = React.useState(false);
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
+    // const googleHandler = async () => {
+    //     console.error('Login');
+    // };
+
+    // const [showPassword, setShowPassword] = React.useState(false);
+    // const handleClickShowPassword = () => {
+    //     setShowPassword(!showPassword);
+    // };
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
@@ -100,7 +101,7 @@ const Login = (props, { ...others }) => {
                             disableElevation
                             fullWidth
                             className={classes.redButton}
-                            onClick={googleHandler}
+                            onClick={""}
                             size="large"
                             variant="contained"
                         >
@@ -167,7 +168,7 @@ const Login = (props, { ...others }) => {
                 }}
             >
                 {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
-                    <form noValidate onSubmit={handleSubmit} {...others}>
+                    <form noValidate onSubmit={handleSubmit}>
                         <FormControl fullWidth error={Boolean(touched.email && errors.email)} className={classes.loginInput}>
                             <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
                             <OutlinedInput
@@ -196,7 +197,7 @@ const Login = (props, { ...others }) => {
                             <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-password-login"
-                                type={showPassword ? 'text' : 'password'}
+                                type={""}
                                 value={values.password}
                                 name="password"
                                 onBlur={handleBlur}
@@ -205,11 +206,11 @@ const Login = (props, { ...others }) => {
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
+                                            onClick={""}
                                             onMouseDown={handleMouseDownPassword}
                                             edge="end"
                                         >
-                                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                                            {"showPassword ? <Visibility /> : <VisibilityOff />"}
                                         </IconButton>
                                     </InputAdornment>
                                 }
@@ -242,7 +243,7 @@ const Login = (props, { ...others }) => {
                             <Typography
                                 variant="subtitle1"
                                 component={"Link"}
-                                to="/pages/forgot-password/forgot-password3"
+                                to=""
                                 color="secondary"
                                 sx={{ textDecoration: 'none' }}
                             >
@@ -285,4 +286,4 @@ const Login = (props, { ...others }) => {
     );
 }
 
-export default withStyles(styles, { withTheme: true })(Login);
+export default Login;

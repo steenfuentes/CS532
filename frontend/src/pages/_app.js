@@ -10,15 +10,12 @@ import { CssBaseline, StyledEngineProvider } from '@material-ui/core';
 
 const App = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout || ((page) => page)
-
-
   return (
     <>
 
       <Theme>
         {getLayout(<Component {...pageProps} />)}
       </Theme>
-
 
     </>
   );

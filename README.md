@@ -2,7 +2,7 @@
 
 ## Cloning the repository
 
-### `git clone --branch <branchname> <remote-repo-url>`
+### `git clone --branch tamer https://github.com/steenfuentes/CS532.git`
 
 ## After Cloning
 
