@@ -2,7 +2,11 @@
 Define the model for a lab order
 """
 import enum
-from api import db
+from flask_marshmallow.schema import Schema
+from marshmallow import validate, pre_load, schema, fields
+from marshmallow_enum import EnumField
+
+from api import db, ma
 from api.src.utils.add_schema import add_schema
 from .abstractmodel import BaseModel, MetaBaseModel
 from sqlalchemy.orm import validates
@@ -26,27 +30,33 @@ class TestType(enum.Enum):
     U = "Urinalysis"
     C = "Cultures"
 
-
-@add_schema
 class LabOrderModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'labordermodel'
     __table_args__ = {'extend_existing':True}
 
     id = db.Column(db.Integer, primary_key=True)
-    test_type = db.Column(db.Enum(TestType)) #Implement an enumeration for this column
+    test_type = db.Column(db.Enum(TestType), nullable=True) #Implement an enumeration for this column
     date_performed = db.Column(db.String(60), nullable=True)
     performed_by = db.Column(db.String(60), nullable=True) # Create reference to an employee database table?
     results = db.Column(db.String(120), nullable=True) # Create a database table for results?
 
+   
     patient_id = db.Column(db.Integer, db.ForeignKey('patientmodel.id'))
     physician_id = db.Column(db.Integer, db.ForeignKey('physicianmodel.id'))
 
-    def __init__(self, id, patient, patient_id, physician_id, test_type="", date_performed="", performed_by="", results=""):
+    def __init__(self, id, test_type, patient_id = None, physician_id=None, date_performed="", performed_by="", results=""):
         self.id = id
-        self.patient = patient 
+        self.test_type = test_type
         self.patient_id = patient_id
         self.physician_id = physician_id
-        self.test_type = test_type
         self.date_performed = date_performed
         self.performed_by = performed_by
         self.results = results
+
+class LabOrderSchema(Schema):
+    test_type = EnumField(TestType, error='by_name') 
+    id = fields.Integer(required=True)
+    date_performed = fields.String()
+    performed_by = fields.String()
+    results = fields.String()
+    patient_id = fields.Integer()

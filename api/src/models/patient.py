@@ -3,19 +3,19 @@ Defines the model for a patient
 """
 
 import re
+
+from flask_marshmallow.schema import Schema
+from marshmallow import fields
 from api import db
 from api.src.utils.add_schema import add_schema
+from api.src.models.laborder import LabOrderSchema
 from .abstractmodel import BaseModel, MetaBaseModel
 from sqlalchemy.orm import validates
 
-from api.src.models.laborder import LabOrderModel
-
 # just outlining the basic info needed that defines a patient
 # a more elegent approach will establish patients as objects in the system
-@add_schema
 class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'patientmodel'
-    __table_args__ = {'extend_existing':True}
 
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(120), unique=False, nullable=False)
@@ -31,11 +31,11 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     appointments = db.Column(db.String(200), unique=False, nullable=True) # One to many relationship to Appointment model? 
 
     # relationships
-    lab_orders = db.relationship("LabOrderModel", backref="patientmodel")
+    lab_orders = db.relationship("LabOrderModel", backref="patientmodel", lazy=True)
 
     def __init__(self, id, first_name, last_name, number, email="",
                     address="", insurance="", dob="", gender="", pcp="", 
-                    medications="", appointments="", lab_orders=tuple()):
+                    medications="", appointments="", lab_orders=[]):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
@@ -52,9 +52,27 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     
     @validates('email')
     def validate_email(self, key, email):
-        if not re.match("(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
-            raise AssertionError('Provided email is not an email address') 
+        if email:
+            if not re.match("(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+                raise AssertionError('Provided email is not an email address') 
 
         return email
+    
+class PatientSchema(Schema): 
+    id = fields.Integer(required=True)
+    first_name = fields.String()
+    last_name = fields.String()
+    number = fields.String()
+    email = fields.String()
+    address = fields.String()
+    insurance = fields.String()
+    dob = fields.String()
+    gender = fields.String()
+    pcp = fields.String()
+    medications = fields.String()
+    appointments = fields.String()
+    lab_orders = fields.List(fields.Nested(LabOrderSchema()))
+
+    
     
 

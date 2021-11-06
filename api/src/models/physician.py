@@ -16,10 +16,10 @@ class PhysicianModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     number = db.Column(db.String(15), unique=False, nullable=False)
     schedule = db.Column(db.String(20), unique=False, nullable=True)
     
-    patients = db.relationship("PatientModel", backref="physicianmodel", uselist=False)
-    lab_orders = db.relationship("LabOrderModel", backref="physicianmodel")
+    patients = db.relationship("PatientModel", backref="physicianmodel", lazy='select')
+    lab_orders = db.relationship("LabOrderModel", backref="physicianmodel", lazy='select')
 
-def __init__(self, id, name, number, schedule, patients=tuple(), lab_orders=tuple()):
+def __init__(self, id, name, number, schedule, patients=[], lab_orders=[]):
     self.id = id
     self.name = name
     self.number = number

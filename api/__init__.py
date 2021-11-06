@@ -37,9 +37,9 @@ def create_app(config_class=Config):
     app.add_url_rule('/equipment/<int:id>', view_func=equipment_view, methods=['GET'])
 
     laborder_view = LabOrderAPI.as_view('laborder_api')
-    app.add_url_rule('/laborder/', defaults={'id': None}, view_func=laborder_view, methods=['GET'])
+    app.add_url_rule('/laborder/', defaults={'id': None}, view_func=laborder_view, methods=['GET','PUT','DELETE'])
     app.add_url_rule('/laborder/', view_func=laborder_view, methods=['POST',])
-    app.add_url_rule('/laborder/<int:id>', view_func=laborder_view, methods=['GET'])
+    app.add_url_rule('/laborder/<int:id>', view_func=laborder_view, methods=['GET', 'PUT', 'DELETE'])
   
     patient_view = PatientAPI.as_view('patient_api')
     app.add_url_rule('/records/', defaults={'id': None}, view_func=patient_view, methods=['GET'])

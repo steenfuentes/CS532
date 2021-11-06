@@ -9,7 +9,7 @@ from marshmallow.utils import pprint
 from webargs.flaskparser import abort, use_kwargs, use_args
 
 from api.src.repositories.patient import PatientRepo
-from api.src.models.patient import PatientModel
+from api.src.models.patient import PatientModel, PatientSchema
 
 class PatientAPI(MethodView):
     """ Verbs that are relative to the patients"""
@@ -19,11 +19,11 @@ class PatientAPI(MethodView):
         """ Return a user based on the id"""
         if id is None:
             p = PatientRepo.get_all()
-            schema = PatientModel.Schema()
+            schema = PatientSchema
         else:
             p = PatientRepo.get(id)
             print(p)
-            schema = PatientModel.Schema()
+            schema = PatientSchema()
             print(schema)
        
         result = schema.dump(p)
@@ -31,7 +31,7 @@ class PatientAPI(MethodView):
         return result
 
     @staticmethod
-    @use_kwargs(PatientModel.Schema) 
+    @use_kwargs(PatientSchema()) 
     def post(**kwargs):
         """Create patient using all of the incoming information"""
         PatientRepo.create(**kwargs)

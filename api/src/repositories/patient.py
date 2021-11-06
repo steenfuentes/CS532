@@ -1,4 +1,5 @@
 from api.src.models.patient import PatientModel
+from api.src.models.laborder import LabOrderModel
 
 class PatientRepo():
 
@@ -18,7 +19,6 @@ class PatientRepo():
     @staticmethod
     def create(**kwargs):
         """ Create a new patient"""
-
         patient = PatientModel(**kwargs)
         return patient.save()
     
@@ -26,3 +26,5 @@ class PatientRepo():
         """ update any attribute of the user"""
         for key, value in kwargs.items():
             locals()[key] = value
+    
+    
