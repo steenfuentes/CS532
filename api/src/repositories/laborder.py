@@ -36,6 +36,14 @@ class LabOrderRepo():
             print("Lab order added to:", associated_patient.first_name, associated_patient.last_name)
             associated_patient.save()
         
+        if "physician_id" in kwargs:
+            physician_id = kwargs.get("physician_id")
+            associated_md = PhysicianModel.query.filter_by(id=physician_id).one()
+            print("Retrieving physician...")
+            associated_md.lab_orders.append(LabOrder)
+            print("Lab order added to doctor:", associated_md.name)
+            associated_md.save()
+        
         return LabOrder.save()
     
     def update(self, **kwargs):

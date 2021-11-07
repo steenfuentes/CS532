@@ -1,5 +1,6 @@
 from api.src.models.patient import PatientModel
 from api.src.models.laborder import LabOrderModel
+from api.src.models.physician import PhysicianModel
 
 class PatientRepo():
 
@@ -22,9 +23,18 @@ class PatientRepo():
         patient = PatientModel(**kwargs)
         return patient.save()
     
-    def update(self,**kwargs):
+
+    def update(self, id, **kwargs):
         """ update any attribute of the user"""
+        patient = self.get(id)
         for key, value in kwargs.items():
-            locals()[key] = value
+            setattr(patient, key, value)
+
+        if "physician_id" in kwargs:
+            physician_id = kwargs.get("physician_id")
+            physician = PhysicianModel.get(id=physician_id)
+            physician.patients.append(patient)
+
+        return patient.save()
     
     

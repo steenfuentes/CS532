@@ -12,7 +12,9 @@ class PhysicianRepo():
     @staticmethod
     def get_all():
         """ Query all the Physicians in the database. Return a dictionary."""
+        print("Querying physician table...")
         Physician_list = PhysicianModel.query.all()
+
         return Physician_list
     
     @staticmethod
@@ -21,7 +23,10 @@ class PhysicianRepo():
         Physician = PhysicianModel(**kwargs)
         return Physician.save()
     
-    def update(self,**kwargs):
+    def update(self, id, **kwargs):
         """ update any attribute of the user"""
+        physician = self.get(id)
         for key, value in kwargs.items():
-            locals()[key] = value
+            setattr(physician, key, value)
+        
+        return physician.save()

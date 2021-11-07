@@ -19,7 +19,9 @@ class PatientAPI(MethodView):
         """ Return a user based on the id"""
         if id is None:
             p = PatientRepo.get_all()
-            schema = PatientSchema
+            schema = PatientSchema(many=True)
+            result = schema.dump(p)
+            return jsonify({"Patients": result})
         else:
             p = PatientRepo.get(id)
             print(p)
@@ -35,9 +37,14 @@ class PatientAPI(MethodView):
     def post(**kwargs):
         """Create patient using all of the incoming information"""
         PatientRepo.create(**kwargs)
+
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
-    @use_kwargs
-    def put(**kwargs):
+    @staticmethod
+    @use_kwargs(PatientSchema())
+    def put(id, **kwargs):
         """Update any attribute of the Patient Model"""
-        pass
+        repository = PatientRepo()
+        updated_patient = repository.update(id, **kwargs)
+
+        return jsonify({'Updated': (updated_patient.first_name, updated_patient.last_name)}), 201

@@ -39,12 +39,10 @@ class LabOrderModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     date_performed = db.Column(db.String(60), nullable=True)
     performed_by = db.Column(db.String(60), nullable=True) # Create reference to an employee database table?
     results = db.Column(db.String(120), nullable=True) # Create a database table for results?
-
-   
     patient_id = db.Column(db.Integer, db.ForeignKey('patientmodel.id'))
     physician_id = db.Column(db.Integer, db.ForeignKey('physicianmodel.id'))
 
-    def __init__(self, id, test_type, patient_id = None, physician_id=None, date_performed="", performed_by="", results=""):
+    def __init__(self, id, test_type, patient_id =None, physician_id=None, date_performed="", performed_by="", results=""):
         self.id = id
         self.test_type = test_type
         self.patient_id = patient_id
@@ -60,3 +58,4 @@ class LabOrderSchema(Schema):
     performed_by = fields.String()
     results = fields.String()
     patient_id = fields.Integer()
+    physician_id = fields.Integer()
