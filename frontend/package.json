@@ -15,6 +15,7 @@
     "@material-ui/styles": "^4.11.4",
     "@mui/icons-material": "^5.0.1",
     "@mui/material": "^5.0.4",
+    "@mui/styles": "^5.1.0",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "next": "^11.1.2",

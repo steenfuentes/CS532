@@ -6,15 +6,23 @@
 
 ## After Cloning
 
-Once on cloned or downloaded, cd into the main folder and download packages:
+Once on cloned or downloaded, cd in and download packages:
 
 ### `cd CS532`
 
+Download backend requirements
+
+### `cd api`
+
 ### `pip install -r requirements.txt`
 
-cd into frontend and install all dependencies
+backout and go into frontend
+
+### `cd ..`
 
 ### `cd frontend`
+
+install dependencies
 
 ### `npm i`
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link'
-import { styled } from '@mui/material/styles'
+import { makeStyles } from '@mui/styles'
 import Box from '@mui/material/Box'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -8,11 +8,21 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 
+const useStyles = makeStyles({
+    root: {
+        background: '#1976d2',
+        color: 'white',
+
+    },
+    navbar: {
+    }
+});
 
 
 export default function ButtonAppBar() {
+    const classes = useStyles();
     return (
-        <AppBar position="inherit">
+        <AppBar className={classes.root} position="inherit">
             <Toolbar>
                 <IconButton
                     size="large"

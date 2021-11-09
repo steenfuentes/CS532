@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { withFormik, Form, Field } from 'formik'
-import { Button, FormLabel, TextField } from '@material-ui/core'
+import { Button, FormLabel, TextField, AppBar, Toolbar, Grid, Typography, Paper, Link } from '@material-ui/core'
 
 const LoginPage = (props) => {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
     const loginPageStyle = {
         margin: "32px auto 37px",
         maxWidth: "530px",
@@ -18,27 +20,94 @@ const LoginPage = (props) => {
     const buttonStyle = {
         background: '#fff'
     }
+    function handleChange(event) {
+        setUsername(event.state.username)
+        setPassword(event.state.password)
+    }
+    function handleSubmit(event) {
+        event.preventDefault();
+        if (state.username == '' && state.password == '') {
+            props.history.push("/home");
+        } else {
+            alert('Incorrect Credntials!');
+        }
+    }
+
 
     return (
+        <div>
+            <Grid justify="center" item xs={12} sm={6} md={3}>
+                <Grid item>
+                    <Grid
+                        justify="center"
+                        spacing={2}
 
-        <div className="container">
-            <div className="login-wrapper" style={loginPageStyle}>
-                <h2>Login Page</h2>
-                <Form className="form-container">
-                    <div className="form-group" style={labelStyles}>
-                        <FormLabel htmlFor="email" style={labelStyles}>Email</FormLabel>
-                        <TextField type="text" name="email" className={"form-control"} placeholder="Email" />
-                    </div>
-                    <div className="form-group" style={labelStyles}>
-                        <FormLabel htmlFor="password" style={labelStyles}>Password</FormLabel>
-                        <TextField type="password" name="password" className={"form-control"} placeholder="Password" />
-                    </div>
-                    <Button style={buttonStyle} type="submit" className="btn btn-primary">Login</Button>
-                </Form>
-            </div>
+                    >
+                        <Paper
+                            variant="elevation"
+                            elevation={2}
+                            className="login-background"
+                        >
+                            <Grid item>
+                                <Typography component="h1" variant="h5">
+                                    Sign in
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <form onSubmit={handleSubmit}>
+                                    <Grid container direction="column" spacing={2}>
+                                        <Grid item>
+                                            <TextField
+                                                type="email"
+                                                placeholder="Email"
+                                                fullWidth
+                                                name="username"
+                                                variant="outlined"
+                                                value={username}
+                                                onChange={handleChange}
+                                                required
+                                                autoFocus
+                                            />
+                                        </Grid>
+                                        <Grid item>
+                                            <TextField
+                                                type="password"
+                                                placeholder="Password"
+                                                fullWidth
+                                                name="password"
+                                                variant="outlined"
+                                                value={password}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                        </Grid>
+                                        <Grid item>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                type="submit"
+                                                className="button-block"
+                                            >
+                                                Submit
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </form>
+                            </Grid>
+                            <Grid item>
+                                <Link href="#" variant="body2">
+                                    Forgot Password?
+                                </Link>
+                            </Grid>
+                        </Paper>
+                    </Grid>
+                </Grid>
+            </Grid>
         </div>
-    )
+    );
 }
+
+
 
 const LoginFormik = withFormik({
     mapPropsToValues: (props) => {
