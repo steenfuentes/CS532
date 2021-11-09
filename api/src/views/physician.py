@@ -45,6 +45,6 @@ class PhysicianAPI(MethodView):
     @use_kwargs(PhysicianSchema)
     def put(self, id, **kwargs):
         """Update any attribute of the Physician Model"""
-
-
+        physician = PhysicianRepo.get(id)
+        
         pass
