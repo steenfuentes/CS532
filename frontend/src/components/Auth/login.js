@@ -1,289 +1,55 @@
-import React, { useState } from 'react';
-import { withStyles } from "@material-ui/core/styles";
-import { useSelector } from 'react-redux';
-import {
-    Box,
-    Button,
-    Checkbox,
-    Divider,
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    Grid,
-    IconButton,
-    InputAdornment,
-    InputLabel,
-    OutlinedInput,
-    Stack,
-    Typography
-} from '@material-ui/core';
+import React from 'react'
+import { withFormik, Form, Field } from 'formik'
+import { Button, FormLabel, TextField } from '@material-ui/core'
 
-// third party
-import * as Yup from 'yup';
-import { Formik } from 'formik';
-
-// project imports
-import useScriptRef from '../../hooks/useScriptRef';
-import AnimateButton from '../ui-only/AnimateButton';
-
-// assets
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-
-
-
-const styles = (theme) => ({
-    redButton: {
-        fontSize: '1rem',
-        fontWeight: 500,
-        // backgroundColor: theme.palette.grey[50],
-        border: '1px solid',
-        // borderColor: theme.palette.grey[100],
-        // color: theme.palette.grey[700],
-        textTransform: 'none',
-        '&:hover': {
-            // backgroundColor: theme.palette.primary.light
-        },
-        // [theme.breakpoints.down('sm')]: {
-        //     fontSize: '0.875rem'
-        // }
-    },
-    signDivider: {
-        flexGrow: 1
-    },
-    signText: {
-        cursor: 'unset',
-        // margin: theme.spacing(2),
-        padding: '5px 56px',
-        // borderColor: `${theme.palette.grey[100]} !important`,
-        // color: `${theme.palette.grey[900]}!important`,
-        fontWeight: 500
-    },
-    loginIcon: {
-        marginRight: '16px',
-        // [theme.breakpoints.down('sm')]: {
-        //     marginRight: '8px'
-        // }
-    },
-    loginInput: {
-        // ...theme.typography.customInput
+const LoginPage = (props) => {
+    const loginPageStyle = {
+        margin: "32px auto 37px",
+        maxWidth: "530px",
+        minHeight: '300px',
+        background: 'rgb(36 106 173)',
+        padding: "30px",
+        borderRadius: "10px",
+        boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.15)"
     }
-});
+    const labelStyles = {
+        padding: '5px'
+    }
+    const buttonStyle = {
+        background: '#fff'
+    }
 
-
-
-
-const Login = () => {
-
-    const classes = styles();
-
-    // const scriptedRef = useScriptRef();
-    const [checked, setChecked] = useState(true);
-
-    // const googleHandler = async () => {
-    //     console.error('Login');
-    // };
-
-    // const [showPassword, setShowPassword] = React.useState(false);
-    // const handleClickShowPassword = () => {
-    //     setShowPassword(!showPassword);
-    // };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
     return (
-        <>
-            <Grid container direction="column" justifyContent="center" spacing={2}>
-                <Grid item xs={12}>
-                    <AnimateButton>
-                        <Button
-                            disableElevation
-                            fullWidth
-                            className={classes.redButton}
-                            onClick={""}
-                            size="large"
-                            variant="contained"
-                        >
-                            <img src={""} alt="google" width="20px" className={classes.loginIcon} /> Sign in with Google
-                        </Button>
-                    </AnimateButton>
-                </Grid>
-                <Grid item xs={12}>
-                    <Box
-                        sx={{
-                            alignItems: 'center',
-                            display: 'flex'
-                        }}
-                    >
-                        <Divider className={classes.signDivider} orientation="horizontal" />
-                        <AnimateButton>
-                            <Button
-                                variant="outlined"
-                                className={classes.signText}
-                                disableRipple
-                                disabled
-                            >
-                                OR
-                            </Button>
-                        </AnimateButton>
-                        <Divider className={classes.signDivider} orientation="horizontal" />
-                    </Box>
-                </Grid>
-                <Grid item xs={12} container alignItems="center" justifyContent="center">
-                    <Box
-                        sx={{
-                            mb: 2
-                        }}
-                    >
-                        <Typography variant="subtitle1">Sign in with Email address</Typography>
-                    </Box>
-                </Grid>
-            </Grid>
 
-            <Formik
-                initialValues={{
-                    email: 'info@bseghealthcare.com',
-                    password: '123456',
-                    submit: null
-                }}
-                validationSchema={Yup.object().shape({
-                    email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                    password: Yup.string().max(255).required('Password is required')
-                })}
-                onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-                    try {
-                        if (scriptedRef.current) {
-                            setStatus({ success: true });
-                            setSubmitting(false);
-                        }
-                    } catch (err) {
-                        console.error(err);
-                        if (scriptedRef.current) {
-                            setStatus({ success: false });
-                            setErrors({ submit: err.message });
-                            setSubmitting(false);
-                        }
-                    }
-                }}
-            >
-                {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
-                    <form noValidate onSubmit={handleSubmit}>
-                        <FormControl fullWidth error={Boolean(touched.email && errors.email)} className={classes.loginInput}>
-                            <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-email-login"
-                                type="email"
-                                value={values.email}
-                                name="email"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                label="Email Address / Username"
-                                inputProps={{
-                                    classes: {
-                                        notchedOutline: classes.notchedOutline
-                                    }
-                                }}
-                            />
-                            {touched.email && errors.email && (
-                                <FormHelperText error id="standard-weight-helper-text-email-login">
-                                    {' '}
-                                    {errors.email}{' '}
-                                </FormHelperText>
-                            )}
-                        </FormControl>
-
-                        <FormControl fullWidth error={Boolean(touched.password && errors.password)} className={classes.loginInput}>
-                            <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-password-login"
-                                type={""}
-                                value={values.password}
-                                name="password"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={""}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                        >
-                                            {"showPassword ? <Visibility /> : <VisibilityOff />"}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                label="Password"
-                                inputProps={{
-                                    classes: {
-                                        notchedOutline: classes.notchedOutline
-                                    }
-                                }}
-                            />
-                            {touched.password && errors.password && (
-                                <FormHelperText error id="standard-weight-helper-text-password-login">
-                                    {' '}
-                                    {errors.password}{' '}
-                                </FormHelperText>
-                            )}
-                        </FormControl>
-                        <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={checked}
-                                        onChange={(event) => setChecked(event.target.checked)}
-                                        name="checked"
-                                        color="primary"
-                                    />
-                                }
-                                label="Remember me"
-                            />
-                            <Typography
-                                variant="subtitle1"
-                                component={"Link"}
-                                to=""
-                                color="secondary"
-                                sx={{ textDecoration: 'none' }}
-                            >
-                                Forgot Password?
-                            </Typography>
-                        </Stack>
-                        {errors.submit && (
-                            <Box
-                                sx={{
-                                    mt: 3
-                                }}
-                            >
-                                <FormHelperText error>{errors.submit}</FormHelperText>
-                            </Box>
-                        )}
-
-                        <Box
-                            sx={{
-                                mt: 2
-                            }}
-                        >
-                            <AnimateButton>
-                                <Button
-                                    disableElevation
-                                    disabled={isSubmitting}
-                                    fullWidth
-                                    size="large"
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                >
-                                    Sign in
-                                </Button>
-                            </AnimateButton>
-                        </Box>
-                    </form>
-                )}
-            </Formik>
-        </>
-    );
+        <div className="container">
+            <div className="login-wrapper" style={loginPageStyle}>
+                <h2>Login Page</h2>
+                <Form className="form-container">
+                    <div className="form-group" style={labelStyles}>
+                        <FormLabel htmlFor="email" style={labelStyles}>Email</FormLabel>
+                        <TextField type="text" name="email" className={"form-control"} placeholder="Email" />
+                    </div>
+                    <div className="form-group" style={labelStyles}>
+                        <FormLabel htmlFor="password" style={labelStyles}>Password</FormLabel>
+                        <TextField type="password" name="password" className={"form-control"} placeholder="Password" />
+                    </div>
+                    <Button style={buttonStyle} type="submit" className="btn btn-primary">Login</Button>
+                </Form>
+            </div>
+        </div>
+    )
 }
 
-export default Login;
+const LoginFormik = withFormik({
+    mapPropsToValues: (props) => {
+        return {
+            email: props.email || '',
+            password: props.password || ''
+        }
+    },
+    handleSubmit: (values) => {
+        console.log(values)
+    }
+})(LoginPage)
+
+export default LoginFormik

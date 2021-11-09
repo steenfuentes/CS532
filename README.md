@@ -18,6 +18,6 @@ cd into frontend and install all dependencies
 
 ### `npm i`
 
-run the application locally
+run the application
 
 ### `npm run dev`
