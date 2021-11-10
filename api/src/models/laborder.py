@@ -7,7 +7,6 @@ from marshmallow import validate, pre_load, schema, fields
 from marshmallow_enum import EnumField
 
 from api import db, ma
-from api.src.utils.add_schema import add_schema
 from .abstractmodel import BaseModel, MetaBaseModel
 from sqlalchemy.orm import validates
 

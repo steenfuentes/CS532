@@ -12,8 +12,6 @@ from api.src.models.laborder import LabOrderSchema
 from .abstractmodel import BaseModel, MetaBaseModel
 from sqlalchemy.orm import validates
 
-# just outlining the basic info needed that defines a patient
-# a more elegent approach will establish patients as objects in the system
 class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'patientmodel'
 
@@ -27,17 +25,17 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     dob = db.Column(db.String(20), unique=False, nullable=True)
     gender = db.Column(db.String(1), unique=False, nullable=True)
     medications = db.Column(db.String(200), unique=False, nullable=True) # need to implement a one to many relationship for a Patient model to Medication models
-    appointments = db.Column(db.String(200), unique=False, nullable=True) # One to many relationship to Appointment model? 
 
     # foreign keys
     pcp_id = db.Column(db.Integer, db.ForeignKey("physicianmodel.id"))
 
     # relationships
     lab_orders = db.relationship("LabOrderModel", backref="patientmodel", lazy=True)
+    appointments = db.relationship("AppointmentModel", backref="patientmodel", lazy=True)
 
     def __init__(self, id, first_name, last_name, number, email="",
                     address="", insurance="", dob="", gender="", pcp="", 
-                    medications="", appointments="", lab_orders=[]):
+                    medications="", appointments=[], lab_orders=[]):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name

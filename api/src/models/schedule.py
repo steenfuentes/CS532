@@ -1,3 +1,0 @@
-"""
-Defines model for appointments
-"""
