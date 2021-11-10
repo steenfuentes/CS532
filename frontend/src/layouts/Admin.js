@@ -80,7 +80,7 @@ export default function Admin({ children, ...rest }) {
             <Sidebar
                 routes={routes}
                 logoText={"BSEG"}
-                logo={"logo"}
+                logo={"loogo"}
                 image={image}
                 handleDrawerToggle={handleDrawerToggle}
                 open={mobileOpen}
