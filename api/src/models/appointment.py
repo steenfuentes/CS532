@@ -15,7 +15,7 @@ class AppointmentModel(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, nullable=False)
-    time = db.Column(db.DateTime(timezone=True), nullable=False)
+    time = db.Column(db.Time(timezone=True), nullable=False)
     
     # relationships (1 to 1)
     patient_id = db.Column(db.Integer, db.ForeignKey('patientmodel.id'))
