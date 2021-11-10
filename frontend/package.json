@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build && next export",
+    "dev": "export NODE_OPTIONS=--openssl-legacy-provider; next dev",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider; next build && next export",
     "start": "next start"
   },
   "dependencies": {
@@ -16,10 +16,14 @@
     "@mui/icons-material": "^5.0.1",
     "@mui/material": "^5.0.4",
     "@mui/styles": "^5.1.0",
+    "chartist": "^0.11.4",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "next": "^11.1.2",
+    "perfect-scrollbar": "^1.5.3",
+    "prop-types": "^15.7.2",
     "react": "17.0.2",
+    "react-chartist": "^0.14.4",
     "react-dom": "17.0.2",
     "react-icons": "^4.2.0",
     "react-redux": "^7.2.5",

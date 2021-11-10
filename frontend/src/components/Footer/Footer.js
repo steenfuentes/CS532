@@ -1,40 +1,57 @@
-import React from 'react';
-import { AiFillGithub, AiFillHeart } from 'react-icons/ai';
-import { IoMdHelpCircle } from 'react-icons/io'
+/*eslint-disable*/
+import React from "react";
+import PropTypes from "prop-types";
+// @material-ui/core components
+import { makeStyles } from "@material-ui/core/styles";
+import ListItem from "@material-ui/core/ListItem";
+import List from "@material-ui/core/List";
+// core components
+import styles from "../../assets/styling/components/Footer/footerStyle";
 
-import { SocialIcons } from '../Navigation/HeaderStyles';
-import { CompanyContainer, FooterWrapper, LinkColumn, LinkItem, LinkList, LinkTitle, Slogan, SocialContainer, SocialIconsContainer } from './FooterStyles';
-
-const Footer = () => {
-  return (
-    <FooterWrapper>
-      <LinkList>
-        <LinkColumn>
-          <LinkTitle>Call</LinkTitle>
-          <LinkItem href="tel:314-343-3432">314-343-3432</LinkItem>
-        </LinkColumn>
-        <LinkColumn>
-          <LinkTitle>Email</LinkTitle>
-          <LinkItem href="mailto:contact@jsmastery.com">
-            contact@bseghealthcare.com
-          </LinkItem>
-        </LinkColumn>
-      </LinkList>
-      <SocialIconsContainer>
-        <CompanyContainer>
-          <Slogan>Improving health care one patient at a time</Slogan>
-        </CompanyContainer>
-        <SocialContainer>
-          <SocialIcons href="https://google.com">
-            <AiFillHeart size="3rem" />
-          </SocialIcons>
-          <SocialIcons href="https://google.com">
-            <IoMdHelpCircle size="3rem" />
-          </SocialIcons>
-        </SocialContainer>
-      </SocialIconsContainer>
-    </FooterWrapper>
-  );
-};
-
-export default Footer;
+export default function Footer(props) {
+    const useStyles = makeStyles(styles);
+    const classes = useStyles();
+    return (
+        <footer className={classes.footer}>
+            <div className={classes.container}>
+                <div className={classes.left}>
+                    <List className={classes.list}>
+                        <ListItem className={classes.inlineBlock}>
+                            <a href="#home" className={classes.block}>
+                                Home
+                            </a>
+                        </ListItem>
+                        <ListItem className={classes.inlineBlock}>
+                            <a href="#company" className={classes.block}>
+                                Company
+                            </a>
+                        </ListItem>
+                        <ListItem className={classes.inlineBlock}>
+                            <a href="#portfolio" className={classes.block}>
+                                Portfolio
+                            </a>
+                        </ListItem>
+                        <ListItem className={classes.inlineBlock}>
+                            <a href="#blog" className={classes.block}>
+                                Blog
+                            </a>
+                        </ListItem>
+                    </List>
+                </div>
+                <p className={classes.right}>
+                    <span>
+                        &copy; {1900 + new Date().getYear()}{" "}
+                        <a
+                            href="/"
+                            target="_blank"
+                            className={classes.a}
+                        >
+                            BSEG
+                        </a>
+                        , Health Track
+                    </span>
+                </p>
+            </div>
+        </footer>
+    );
+}
