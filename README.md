@@ -13,7 +13,7 @@ Above command assumes that you have a PostgreSQL database on the localhost named
 2. In order to launch the site, you will need to set up the virtual environment first.
 3. Once you have set up/cloned the repository, navigate to the top level directory. (contains <code>health_app/</code> folder, <code>requirements.txt</code>, etc.)
 4. Create a new virtual environment in the top level directory by running the command <code>python3 -m venv venv/</code>, which will create a directory venv/ with the enviroment. 
-5. Activate the virtual environment by running <code>source venv/bin/activate</code> while in top level directory. 
+5. Activate the virtual environment by running <code>source venv/bin/activate</code> while in api directory. 
 6. Update the enviroment with the necessary dependencies from <code>requirements.txt</code> by running the command <code>pip3 install -r requirements.txt</code>
 7. Once your venv is activated and the dependencies are installed, you can launch api by running <code>flask run</code> while in the top level directory.
 8. Once you have set up a PostgreSQL database and configured the environment variables as necessary (see above), you can populate the database with mock data by running the script, <code>populate_db.py</code> located in <code>api/script</code> (remember to launch the api before executing the script or else the requests won't go through)
