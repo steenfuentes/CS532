@@ -33,7 +33,7 @@ class PatientAPI(MethodView):
         return result
 
     @staticmethod
-    @use_kwargs(PatientSchema()) 
+    @use_kwargs(PatientSchema(), location="form") 
     def post(**kwargs):
         """Create patient using all of the incoming information"""
         PatientRepo.create(**kwargs)
@@ -41,7 +41,7 @@ class PatientAPI(MethodView):
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
     @staticmethod
-    @use_kwargs(PatientSchema())
+    @use_kwargs(PatientSchema(), location="form")
     def put(id, **kwargs):
         """Update any attribute of the Patient Model"""
         repository = PatientRepo()

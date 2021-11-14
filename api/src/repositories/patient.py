@@ -1,6 +1,7 @@
 from api.src.models.patient import PatientModel
 from api.src.models.laborder import LabOrderModel
 from api.src.models.physician import PhysicianModel
+from api.src.repositories.physician import PhysicianRepo
 
 class PatientRepo():
 
@@ -21,6 +22,12 @@ class PatientRepo():
     def create(**kwargs):
         """ Create a new patient"""
         patient = PatientModel(**kwargs)
+        if "pcp_id" in kwargs:
+            physician_id = kwargs.get("pcp_id")
+            physician = PhysicianRepo.get(id=physician_id)
+            physician.patients.append(patient)
+            physician.save()
+        
         return patient.save()
     
 
@@ -32,8 +39,9 @@ class PatientRepo():
 
         if "physician_id" in kwargs:
             physician_id = kwargs.get("physician_id")
-            physician = PhysicianModel.get(id=physician_id)
+            physician = PhysicianRepo.get(id=physician_id)
             physician.patients.append(patient)
+            physician.save()
 
         return patient.save()
     

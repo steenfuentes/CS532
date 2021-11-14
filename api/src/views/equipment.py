@@ -8,7 +8,7 @@ from marshmallow.utils import pprint
 from webargs.flaskparser import use_kwargs
 
 from api.src.repositories.equipment import EquipmentRepo
-from api.src.models.equipment import EquipmentModel
+from api.src.models.equipment import EquipmentModel, EquipmentSchema
 
 class EquipmentAPI(MethodView):
     """ Verbs that are relative to equipment"""
@@ -30,10 +30,10 @@ class EquipmentAPI(MethodView):
         return result
 
     @staticmethod
-    @use_kwargs(EquipmentModel.Schema)
+    @use_kwargs(EquipmentSchema())
     def post(**kwargs):
         """Create equipment using all of the incoming information"""
-        schema = EquipmentModel.Schema(missing=set)
+        schema = EquipmentSchema(missing=set)
         schema.load(**kwargs)
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 

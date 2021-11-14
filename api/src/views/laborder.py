@@ -13,17 +13,21 @@ from api.src.repositories.laborder import LabOrderRepo
 from api.src.models.laborder import LabOrderModel, TestType, LabOrderSchema
 
 class LabOrderAPI(MethodView):
-    @parser.location_loader("json_and_form")
-    def load_data(request, schema):
-        # relies on the Flask (werkzeug) MultiDict type's implementation of
-        # these methods, but when you're extending webargs, you may know things
-        # about your framework of choice
-        newdata = request.args.copy()
-        newdata.update(request.form)
-        return MultiDictProxy(newdata, schema)
+    # @parser.location_loader("json_and_form")
+    # def load_json_or_form(self, req):
+    #     """Load data from a request, accepting either JSON or form-encoded
+    #     data.
+
+    #     The data will first be loaded as JSON, and, if that fails, it will be
+    #     loaded as a form post.
+    #     """
+    #     data = self.load_json(req)
+    #     if data:
+    #         return data
+    #     return self.load_form(req)
 
 
-    """ Verbs that are relative to a lab"""
+    # """ Verbs that are relative to a lab"""
     @staticmethod
     def get(id):
         """ Return LabOrder based on the id"""
@@ -41,13 +45,13 @@ class LabOrderAPI(MethodView):
         return result
 
     @staticmethod
-    @use_kwargs(LabOrderSchema)
+    @use_kwargs(LabOrderSchema, location="form")
     def post(id,**kwargs):
         """Create LabOrder using all of the incoming information"""
         LabOrderRepo.create(id=id,**kwargs)
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
-    @use_kwargs(LabOrderSchema)
+    @use_kwargs(LabOrderSchema, location="form")
     def put(id, **kwargs):
         """Update any attribute of the LabOrder Model"""
         order = LabOrderRepo.get(id)

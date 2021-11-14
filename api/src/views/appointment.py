@@ -34,7 +34,7 @@ class AppointmentAPI(MethodView):
 
 
     @staticmethod
-    @use_kwargs(AppointmentSchema)
+    @use_kwargs(AppointmentSchema, location="form")
     def post(id,**kwargs):
         """Create Appointment using all of the incoming information"""
 
@@ -43,7 +43,7 @@ class AppointmentAPI(MethodView):
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
 
-    @use_kwargs(AppointmentSchema)
+    @use_kwargs(AppointmentSchema, location="form")
     def put(id, **kwargs):
         """Update any attribute of the Appointment Model"""
 

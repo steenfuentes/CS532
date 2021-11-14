@@ -2,15 +2,12 @@
 Defines the model for a patient
 """
 
-import re
-
 from flask_marshmallow.schema import Schema
 from marshmallow import fields
+
 from api import db
-from api.src.utils.add_schema import add_schema
 from api.src.models.laborder import LabOrderSchema
 from .abstractmodel import BaseModel, MetaBaseModel
-from sqlalchemy.orm import validates
 
 class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'patientmodel'
@@ -21,9 +18,9 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     number = db.Column(db.String(20), unique=False, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable= True)
     address = db.Column(db.String(200), unique=False, nullable=True)
-    insurance = db.Column(db.String(30), unique=False, nullable=True)
+    insurance = db.Column(db.String(50), unique=False, nullable=True)
     dob = db.Column(db.String(20), unique=False, nullable=True)
-    gender = db.Column(db.String(1), unique=False, nullable=True)
+    gender = db.Column(db.String(20), unique=False, nullable=True)
     medications = db.Column(db.String(200), unique=False, nullable=True) # need to implement a one to many relationship for a Patient model to Medication models
 
     # foreign keys
@@ -34,7 +31,7 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     appointments = db.relationship("AppointmentModel", backref="patientmodel", lazy=True)
 
     def __init__(self, id, first_name, last_name, number, email="",
-                    address="", insurance="", dob="", gender="", pcp="", 
+                    address="", insurance="", dob="", gender="", pcp_id="", 
                     medications="", appointments=[], lab_orders=[]):
         self.id = id
         self.first_name = first_name
@@ -45,20 +42,14 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
         self.insurance = insurance
         self.dob = dob
         self.gender = gender
-        self.pcp = pcp
+        self.pcp = pcp_id
         self.medications = medications
         self.appointments = appointments
         self.lab_orders = lab_orders
-    
-    # @validates('email')
-    # def validate_email(self, key, email):
-    #     if email:
-    #         if not re.match("(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
-    #             raise AssertionError('Provided email is not an email address') 
 
-    #     return email
-    
+
 class PatientSchema(Schema): 
+    
     id = fields.Integer(required=True)
     first_name = fields.String()
     last_name = fields.String()
