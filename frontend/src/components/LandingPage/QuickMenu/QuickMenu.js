@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { Section, SectionDivider, SectionTitle } from '../../../styles/GlobalComponents';
-import { BoxNum, BoxText } from './QuickMenuStyles';
 import { Card, Grid } from '@mui/material';
+import { Typography, Container } from '@material-ui/core';
 
 
 const data = [
@@ -12,21 +11,22 @@ const data = [
   { number: "Schedule", text: 'Physician-Patient Appointments', },
 ];
 
-const QuickMenu = () => (
-  <Section>
-    <SectionTitle>Quick Menu</SectionTitle>
-    <Grid sx={{ flexGrow: 1 }} container spacing={2}>
-      {data.map((card, index) => (
-        <Grid key={index} item md={3} xs={6}>
-          <Card sx={{ backgroundColor: 'transparent' }}>
-            <BoxNum>{`${card.number}`}</BoxNum>
-            <BoxText>{card.text}</BoxText>
-          </Card>
+export default function QuickMenu() {
+  return (
+    <>
+      <Container maxWidth="sm">
+        <Typography variant="h1">Quick Menu</Typography>
+        <Grid sx={{ flexGrow: 1 }} container spacing={2}>
+          {data.map((card, index) => (
+            <Grid key={index} item md={3} xs={6}>
+              <Card sx={{ backgroundColor: 'transparent' }}>
+                <Typography variant="h4">{`${card.number}`}</Typography>
+                <Typography variant="body1">{card.text}</Typography>
+              </Card>
+            </Grid>
+          ))}
         </Grid>
-      ))}
-    </Grid>
-    <SectionDivider />
-  </Section>
-);
-
-export default QuickMenu;
+      </Container>
+    </>
+  );
+}

@@ -21,11 +21,18 @@ import Button from "../CustomButtons/Button";
 import useWindowSize from "../../hooks/useWindowSize";
 
 import styles from "../../assets/styling/components/Navbar/headerLinks";
+import { useRouter } from "next/router";
 
 export default function AdminLinks() {
     const size = useWindowSize();
     const useStyles = makeStyles(styles);
     const classes = useStyles();
+    const router = useRouter();
+
+    function handleLogout(event) {
+        event.preventDefault();
+        router.push('/login')
+    }
     const [openNotification, setOpenNotification] = React.useState(null);
     const [openProfile, setOpenProfile] = React.useState(null);
     const handleClickNotification = (event) => {
@@ -197,7 +204,7 @@ export default function AdminLinks() {
                                         </MenuItem>
                                         <Divider light />
                                         <MenuItem
-                                            onClick={handleCloseProfile}
+                                            onClick={handleLogout}
                                             className={classes.dropdownItem}
                                         >
                                             Logout
