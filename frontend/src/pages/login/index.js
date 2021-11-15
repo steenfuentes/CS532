@@ -8,7 +8,11 @@ export default function loginTest() {
     return (
         <>
             <ButtonAppBar />
-            <LoginFormik />
+            <div style={{ height: '80vh', marginTop: '20px', padding: 0 }}>
+                <LoginFormik />
+
+
+            </div>
             <Footer />
         </>
     )
