@@ -3,7 +3,7 @@ import React from "react";
 import ChartistGraph from "react-chartist";
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
-import Icon from "@material-ui/core/Icon";
+import { Typography } from "@material-ui/core";
 // @material-ui/icons
 import DateRange from "@material-ui/icons/DateRange";
 import LocalOffer from "@material-ui/icons/LocalOffer";
@@ -22,7 +22,6 @@ import GridContainer from "../../components/Grid/GridContainer";
 import Table from "../../components/Table/Table.js";
 import Tasks from "../../components/Tasks/Tasks.js";
 import CustomTabs from "../../components/CustomTabs/CustomTabs.js";
-import Danger from "../../components/Typography/Danger.js";
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import CardIcon from "../../components/Card/CardIcon.js";
@@ -97,11 +96,11 @@ function Dashboard() {
             <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
                     <CustomTabs
-                        title="Tasks:"
+                        title="Lab Orders:"
                         headerColor="dark"
                         tabs={[
                             {
-                                tabName: "Bugs",
+                                tabName: "Patient",
                                 tabIcon: BugReport,
                                 tabContent: (
                                     <Tasks
@@ -112,7 +111,7 @@ function Dashboard() {
                                 ),
                             },
                             {
-                                tabName: "Website",
+                                tabName: "Date",
                                 tabIcon: Code,
                                 tabContent: (
                                     <Tasks
@@ -123,7 +122,7 @@ function Dashboard() {
                                 ),
                             },
                             {
-                                tabName: "Server",
+                                tabName: "Phsycian",
                                 tabIcon: Cloud,
                                 tabContent: (
                                     <Tasks

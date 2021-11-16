@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from "@material-ui/core/styles";
 
 import Admin from '../../layouts/Admin';
@@ -13,11 +13,28 @@ import styles from "../../assets/styling/views/dashboardStyle.js";
 
 
 function Patient() {
+    const [data, setData] = useState([])
+    // const columns = [
+    //     { title: "ID", field: "id" },
+    //     { title: "Name", field: "name" },
+    // ]
+    const columns = ["ID", "Name", "Insurance", "DOB", 'Physician']
+
     const useStyles = makeStyles(styles);
     const classes = useStyles();
 
     const current = new Date;
     const dateNow = `${current.getMonth() + 1}/${current.getDate()}/${current.getFullYear()}`;
+
+    useEffect(() => {
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then(resp => resp.json())
+            .then(resp => {
+                console.log(resp)
+                setData(resp)
+            })
+
+    }, [])
 
     return (
         <GridContainer>
@@ -26,19 +43,16 @@ function Patient() {
                 <Card>
                     <CardHeader color="warning">
                         <h4 className={classes.cardTitleWhite}>Active patients as of {dateNow}</h4>
-                        <p className={classes.cardCategoryWhite}>nbc
-
-                        </p>
                     </CardHeader>
                     <CardBody>
                         <Table
                             tableHeaderColor="warning"
-                            tableHead={["ID", "Name", "Insurance", "Physician"]}
+                            tableHead={columns}
                             tableData={[
-                                ["1", "Dakota Rice", "EPO", "Dr. Frankenstein"],
-                                ["2", "Minerva Hooper", "HMO", "Dr. Drew"],
-                                ["3", "Sage Rodriguez", "PPO", "Dr. Frankenstein"],
-                                ["4", "Philip Chaney", "EPO", "Dr. Frankenstein"],
+                                ["1", "Dakota Rice", "EPO", "10/20/1990", "Dr.Frankenstein"],
+                                ["2", "Minerva Hooper", "HMO", "04/22/2000", "Dr. Drew"],
+                                ["3", "Sage Rodriguez", "PPO", "01/05/1999", "Dr. Frankenstein"],
+                                ["4", "Philip Chaney", "EPO", "05/12/1981", "Dr. Frankenstein"],
                             ]}
                         />
                     </CardBody>
