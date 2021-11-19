@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { withFormik, Form, Field } from 'formik'
 import { makeStyles } from '@mui/styles';
 import { Button, Box, TextField, AppBar, Toolbar, Grid, Typography, Paper, Link } from '@material-ui/core'
+import { useRouter } from 'next/router';
 
 
 const useStyles = makeStyles({
@@ -16,8 +17,8 @@ const useStyles = makeStyles({
     },
 });
 
-
 const LoginPage = (props) => {
+    const router = useRouter();
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -29,9 +30,10 @@ const LoginPage = (props) => {
     function handleSubmit(event) {
         event.preventDefault();
         if (username == '' && password == '') {
-            props.history.push("/dashboard");
+            props.history.push("admin/dashboard");
         } else {
-            alert('Incorrect Credntials!');
+            router.push('/admin/dashboard')
+
         }
     }
 

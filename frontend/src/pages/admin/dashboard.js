@@ -5,12 +5,12 @@ import ChartistGraph from "react-chartist";
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
-import Store from "@material-ui/icons/Store";
-import Warning from "@material-ui/icons/Warning";
 import DateRange from "@material-ui/icons/DateRange";
 import LocalOffer from "@material-ui/icons/LocalOffer";
+import ScheduleIcon from '@mui/icons-material/Schedule';
 import Update from "@material-ui/icons/Update";
 import Accessibility from "@material-ui/icons/Accessibility";
+import MedicationOutlinedIcon from '@mui/icons-material/MedicationOutlined';
 import BugReport from "@material-ui/icons/BugReport";
 import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
@@ -42,11 +42,11 @@ function Dashboard() {
     return (
         <div>
             <GridContainer>
-                <GridItem xs={12} sm={6} md={3}>
+                <GridItem xs={12} sm={6} md={4}>
                     <Card>
                         <CardHeader color="dark" stats icon>
                             <CardIcon color="dark">
-                                <Store />
+                                <ScheduleIcon />
                             </CardIcon>
                             <p className={classes.cardCategory}>Appointments Today</p>
                             <h3 className={classes.cardTitle}>5</h3>
@@ -59,11 +59,11 @@ function Dashboard() {
                         </CardFooter>
                     </Card>
                 </GridItem>
-                <GridItem xs={12} sm={6} md={3}>
+                <GridItem xs={12} sm={6} md={4}>
                     <Card>
                         <CardHeader color="danger" stats icon>
                             <CardIcon color="danger">
-                                <Icon>info_outline</Icon>
+                                <MedicationOutlinedIcon />
                             </CardIcon>
                             <p className={classes.cardCategory}>New Medications</p>
                             <h3 className={classes.cardTitle}>75</h3>
@@ -76,7 +76,7 @@ function Dashboard() {
                         </CardFooter>
                     </Card>
                 </GridItem>
-                <GridItem xs={12} sm={6} md={3}>
+                <GridItem xs={12} sm={6} md={4}>
                     <Card>
                         <CardHeader color="info" stats icon>
                             <CardIcon color="info">

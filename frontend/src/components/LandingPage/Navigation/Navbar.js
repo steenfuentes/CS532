@@ -14,8 +14,6 @@ const useStyles = makeStyles({
         color: 'white',
 
     },
-    navbar: {
-    }
 });
 
 
@@ -41,10 +39,6 @@ export default function ButtonAppBar() {
                         <Typography variant="h6">
                             Login
                         </Typography></Button></Link>
-                <Button color="inherit">
-                    <Typography variant="h6">
-                        Register
-                    </Typography></Button>
             </Toolbar>
         </AppBar>
     );

@@ -15,9 +15,6 @@ import routes from "../../routes";
 
 import styles from "../assets/styling/layouts/adminStyle";
 
-// import bgImage from "assets/img/sidebar-2.jpg";
-// import logo from "assets/img/reactlogo.png";
-
 let ps;
 
 export default function Admin({ children, ...rest }) {
@@ -29,7 +26,6 @@ export default function Admin({ children, ...rest }) {
     // ref to help us initialize PerfectScrollbar on windows devices
     const mainPanel = React.createRef();
     // states and functions
-    const [image, setImage] = React.useState("bgImage");
     const [color, setColor] = React.useState("white");
     const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -80,8 +76,7 @@ export default function Admin({ children, ...rest }) {
             <Sidebar
                 routes={routes}
                 logoText={"BSEG"}
-                logo={"loogo"}
-                image={image}
+                image={"#000"}
                 handleDrawerToggle={handleDrawerToggle}
                 open={mobileOpen}
                 color={color}
