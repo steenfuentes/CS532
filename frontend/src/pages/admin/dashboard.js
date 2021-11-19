@@ -3,7 +3,11 @@ import React from "react";
 import ChartistGraph from "react-chartist";
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
+<<<<<<< HEAD
 import { Typography } from "@material-ui/core";
+=======
+import Icon from "@material-ui/core/Icon";
+>>>>>>> origin/rework
 // @material-ui/icons
 import DateRange from "@material-ui/icons/DateRange";
 import LocalOffer from "@material-ui/icons/LocalOffer";
@@ -22,6 +26,10 @@ import GridContainer from "../../components/Grid/GridContainer";
 import Table from "../../components/Table/Table.js";
 import Tasks from "../../components/Tasks/Tasks.js";
 import CustomTabs from "../../components/CustomTabs/CustomTabs.js";
+<<<<<<< HEAD
+=======
+import Danger from "../../components/Typography/Danger.js";
+>>>>>>> origin/rework
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import CardIcon from "../../components/Card/CardIcon.js";
@@ -96,11 +104,19 @@ function Dashboard() {
             <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
                     <CustomTabs
+<<<<<<< HEAD
                         title="Lab Orders:"
                         headerColor="dark"
                         tabs={[
                             {
                                 tabName: "Patient",
+=======
+                        title="Tasks:"
+                        headerColor="dark"
+                        tabs={[
+                            {
+                                tabName: "Bugs",
+>>>>>>> origin/rework
                                 tabIcon: BugReport,
                                 tabContent: (
                                     <Tasks
@@ -111,7 +127,11 @@ function Dashboard() {
                                 ),
                             },
                             {
+<<<<<<< HEAD
                                 tabName: "Date",
+=======
+                                tabName: "Website",
+>>>>>>> origin/rework
                                 tabIcon: Code,
                                 tabContent: (
                                     <Tasks
@@ -122,7 +142,11 @@ function Dashboard() {
                                 ),
                             },
                             {
+<<<<<<< HEAD
                                 tabName: "Phsycian",
+=======
+                                tabName: "Server",
+>>>>>>> origin/rework
                                 tabIcon: Cloud,
                                 tabContent: (
                                     <Tasks

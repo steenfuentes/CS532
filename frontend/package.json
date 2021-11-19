@@ -18,7 +18,10 @@
     "@mui/material": "^5.0.4",
     "@mui/styles": "^5.1.0",
     "chartist": "^0.11.4",
+<<<<<<< HEAD
     "cors": "^2.8.5",
+=======
+>>>>>>> origin/rework
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "i": "^0.3.7",

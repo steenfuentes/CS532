@@ -1,5 +1,6 @@
 import React from 'react'
 import Admin from '../../layouts/Admin';
+<<<<<<< HEAD
 import { Typography } from '@material-ui/core';
 import GridContainer from '../../components/Grid/GridContainer';
 import GridItem from '../../components/Grid/GridItem';
@@ -58,6 +59,15 @@ function Lab() {
 
 
         </GridContainer>
+=======
+
+function Lab() {
+    return (
+        <div>
+            Labs
+
+        </div>
+>>>>>>> origin/rework
     )
 }
 

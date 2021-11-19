@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react'
+=======
+import React from 'react'
+>>>>>>> origin/rework
 import { makeStyles } from "@material-ui/core/styles";
 
 import Admin from '../../layouts/Admin';
@@ -13,6 +17,7 @@ import styles from "../../assets/styling/views/dashboardStyle.js";
 
 
 function Patient() {
+<<<<<<< HEAD
     const [data, setData] = useState([])
     // const columns = [
     //     { title: "ID", field: "id" },
@@ -20,12 +25,15 @@ function Patient() {
     // ]
     const columns = ["ID", "Name", "Insurance", "DOB", 'Physician']
 
+=======
+>>>>>>> origin/rework
     const useStyles = makeStyles(styles);
     const classes = useStyles();
 
     const current = new Date;
     const dateNow = `${current.getMonth() + 1}/${current.getDate()}/${current.getFullYear()}`;
 
+<<<<<<< HEAD
     useEffect(() => {
         fetch('http://localhost:5000/records/')
             .then(resp => resp.json())
@@ -36,6 +44,8 @@ function Patient() {
 
     }, [])
 
+=======
+>>>>>>> origin/rework
     return (
         <GridContainer>
             <Typography variant="h4">Electronic Patient Record</Typography>
@@ -43,12 +53,28 @@ function Patient() {
                 <Card>
                     <CardHeader color="warning">
                         <h4 className={classes.cardTitleWhite}>Active patients as of {dateNow}</h4>
+<<<<<<< HEAD
+=======
+                        <p className={classes.cardCategoryWhite}>nbc
+
+                        </p>
+>>>>>>> origin/rework
                     </CardHeader>
                     <CardBody>
                         <Table
                             tableHeaderColor="warning"
+<<<<<<< HEAD
                             tableHead={columns}
                             tableData={data}
+=======
+                            tableHead={["ID", "Name", "Insurance", "Physician"]}
+                            tableData={[
+                                ["1", "Dakota Rice", "EPO", "Dr. Frankenstein"],
+                                ["2", "Minerva Hooper", "HMO", "Dr. Drew"],
+                                ["3", "Sage Rodriguez", "PPO", "Dr. Frankenstein"],
+                                ["4", "Philip Chaney", "EPO", "Dr. Frankenstein"],
+                            ]}
+>>>>>>> origin/rework
                         />
                     </CardBody>
                 </Card>
