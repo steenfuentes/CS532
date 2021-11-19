@@ -2,12 +2,5 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/admin/patients": "pages/admin/patients.js",
-  "/": "pages/index.js",
-  "/login": "pages/login.js",
-  "/admin/dashboard": "pages/admin/dashboard.js",
-  "/admin/pharmacy": "pages/admin/pharmacy.js",
-  "/admin/lab": "pages/admin/lab.js",
-  "/home": "pages/home.js",
-  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js"
+  "/admin/patients": "pages/admin/patients.js"
 }

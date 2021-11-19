@@ -27,7 +27,7 @@ function Patient() {
     const dateNow = `${current.getMonth() + 1}/${current.getDate()}/${current.getFullYear()}`;
 
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/users')
+        fetch('http://localhost:5000/records/')
             .then(resp => resp.json())
             .then(resp => {
                 console.log(resp)
@@ -48,12 +48,7 @@ function Patient() {
                         <Table
                             tableHeaderColor="warning"
                             tableHead={columns}
-                            tableData={[
-                                ["1", "Dakota Rice", "EPO", "10/20/1990", "Dr.Frankenstein"],
-                                ["2", "Minerva Hooper", "HMO", "04/22/2000", "Dr. Drew"],
-                                ["3", "Sage Rodriguez", "PPO", "01/05/1999", "Dr. Frankenstein"],
-                                ["4", "Philip Chaney", "EPO", "05/12/1981", "Dr. Frankenstein"],
-                            ]}
+                            tableData={data}
                         />
                     </CardBody>
                 </Card>
