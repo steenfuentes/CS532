@@ -27,11 +27,7 @@ export default function Footer(props) {
                             </a>
                         </ListItem>
                         <ListItem className={classes.inlineBlock}>
-<<<<<<< HEAD
                             <a href="/admin/dashboard" className={classes.block}>
-=======
-                            <a href="/admin" className={classes.block}>
->>>>>>> origin/rework
                                 Dashboard
                             </a>
                         </ListItem>
