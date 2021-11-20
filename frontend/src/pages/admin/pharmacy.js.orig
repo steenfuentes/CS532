@@ -1,0 +1,28 @@
+import React from 'react'
+import GridContainer from '../../components/Grid/GridContainer'
+<<<<<<< HEAD
+=======
+import { Typography } from '@material-ui/core';
+>>>>>>> d8aeada99fa7f1d4b86feb9b34925368df3732fb
+
+
+import Admin from '../../layouts/Admin';
+
+function Pharmacy() {
+    return (
+        <div>
+            <GridContainer>
+<<<<<<< HEAD
+                Pharmacy
+=======
+                <Typography variant="h4">Pharmacy Order Tracking</Typography>
+>>>>>>> d8aeada99fa7f1d4b86feb9b34925368df3732fb
+
+            </GridContainer>
+
+        </div>
+    )
+}
+
+Pharmacy.layout = Admin;
+export default Pharmacy;

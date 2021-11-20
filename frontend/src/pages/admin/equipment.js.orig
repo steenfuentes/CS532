@@ -1,0 +1,23 @@
+import React from 'react'
+import GridContainer from '../../components/Grid/GridContainer';
+<<<<<<< HEAD
+=======
+import { Typography } from '@material-ui/core';
+>>>>>>> d8aeada99fa7f1d4b86feb9b34925368df3732fb
+import Admin from '../../layouts/Admin';
+
+function Equipment() {
+    return (
+        <GridContainer>
+<<<<<<< HEAD
+            Equipment
+=======
+            <Typography variant="h4">Equipment Inventory and Maintenance</Typography>
+
+>>>>>>> d8aeada99fa7f1d4b86feb9b34925368df3732fb
+        </GridContainer>
+    )
+}
+
+Equipment.layout = Admin;
+export default Equipment;
