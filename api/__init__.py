@@ -2,6 +2,7 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask_cors import CORS
 
 from .config import Config
 
@@ -16,6 +17,7 @@ def create_app(config_class=Config):
     db.init_app(app) 
     bcrypt.init_app(app)
     ma.init_app(app)
+    CORS(app)
 
     # def register_api(view, endpoint, url, pk='id', pk_type='int'):
     #     """Easy Registration of Model API"""

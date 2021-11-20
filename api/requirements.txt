@@ -3,18 +3,27 @@ aniso8601==9.0.1
 appdirs==1.4.3
 attrs==21.2.0
 bcrypt==3.2.0
+<<<<<<< HEAD
 beautifulsoup4==4.8.2
 blinker==1.4
+=======
+>>>>>>> d8aeada99fa7f1d4b86feb9b34925368df3732fb
 CacheControl==0.12.6
 certifi==2019.11.28
 cffi==1.14.6
 chardet==3.0.4
+<<<<<<< HEAD
 charset-normalizer==2.0.4
 click==7.1.2
 colorama==0.4.3
 contextlib2==0.6.0
 cryptography==2.8
 cycler==0.10.0
+=======
+click==7.1.2
+colorama==0.4.3
+contextlib2==0.6.0
+>>>>>>> d8aeada99fa7f1d4b86feb9b34925368df3732fb
 distlib==0.3.0
 distro==1.4.0
 dnspython==2.1.0
@@ -40,7 +49,10 @@ lockfile==0.12.2
 Mako==1.1.5
 MarkupSafe==1.1.1
 marshmallow==3.13.0
+<<<<<<< HEAD
 marshmallow-enum==1.5.1
+=======
+>>>>>>> d8aeada99fa7f1d4b86feb9b34925368df3732fb
 marshmallow-sqlalchemy==0.26.1
 msgpack==0.6.2
 packaging==20.3
@@ -56,7 +68,10 @@ pytz==2021.3
 requests==2.22.0
 retrying==1.3.3
 six==1.14.0
+<<<<<<< HEAD
 soupsieve==1.9.5
+=======
+>>>>>>> d8aeada99fa7f1d4b86feb9b34925368df3732fb
 SQLAlchemy==1.4.11
 toml==0.10.2
 urllib3==1.25.8
@@ -64,4 +79,8 @@ webargs==8.0.1
 webencodings==0.5.1
 Werkzeug==1.0.1
 WTForms==2.3.3
+<<<<<<< HEAD
 zipp==3.5.0
+=======
+zipp==3.5.0
+>>>>>>> d8aeada99fa7f1d4b86feb9b34925368df3732fb

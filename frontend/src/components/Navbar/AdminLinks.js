@@ -46,11 +46,7 @@ export default function AdminLinks() {
         setOpenNotification(null);
     };
     const handleClickProfile = (event) => {
-        if (openProfile && openProfile.contains(event.target)) {
-            setOpenProfile(null);
-        } else {
-            setOpenProfile(event.currentTarget);
-        }
+        router.push("/admin/profile")
     };
     const handleCloseProfile = () => {
         setOpenProfile(null);
