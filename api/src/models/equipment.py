@@ -6,15 +6,23 @@ from marshmallow.fields import Email
 from api import db
 from .abstractmodel import BaseModel, MetaBaseModel
 
+class Department(enum.Enum):
+    MD = "Medical Department"
+    ND = "Nursing Department"
+    LD = "Lab Department"
+    PD = "Pharmacy Department"
+
+
+
 class EquipmentModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'equipmentmodel'
 
     id = db.Column(db.Integer, primary_key=True)
     equipment_type = db.Column(db.String(20), unique=False, nullable=False)
     description = db.Column(db.String(200), unique=False, nullable=False)
-    department = db.Column(db.String(30), unique=False, nullable=False)     # implement Enum type for Deparments
+    department = db.Column(db.Enum(Department))    #enumerated
     own = db.Column(db.Boolean, unique=False, nullable=False)
-    purchase_date = db.Column(db.Date)
+    purchase_date = db.Column(db.Date, nullable=False)
 
     def __init__(self, id, equipment_type, description, department, own, purchase_date):
         self.id = id
