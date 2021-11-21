@@ -8,12 +8,25 @@ from sqlalchemy.sql import func
 from api import db
 from api import bcrypt
 from .abstractmodel import BaseModel, MetaBaseModel
+from sqlalchemy.types import TypeDecorator
+
+
+class StrippedString(TypeDecorator):
+
+    impl = db.String
+
+    def process_bind_param(self, value, dialect):
+        # In case you have nullable string fields and pass None
+        return value.strip() if value else value
+
+    def copy(self, **kw):
+        return StrippedString(self.impl.length)
 
 class UserModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'usermodel'
 
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.StrippedString(50), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False) # store the hashed password
     created = db.Column(db.DateTime(timezone=True), server_default=func.now())
     # user permission

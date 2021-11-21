@@ -31,7 +31,7 @@ class MedicationModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     reference_standard = db.Column(db.String(64), unique=False, nullable=False)
     dosage_form = db.Column(db.String(64), unique=False, nullable=False)
     route = db.Column(db.String(64), unique=False, nullable=False)
-    marketing_status = db.Column(db.Enum(MarketingStatus))
+    marketing_status = db.Column(db.Enum(MarketingStatus), nullable= False)
     medicine_stock =  db.Column(db.Integer)
     
 def __init__(self, id, brand_name, reference_standard, dosage_form, route, marketing_status, medicine_stock):
