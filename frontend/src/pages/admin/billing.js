@@ -9,12 +9,8 @@ function Billing() {
     return (
         <div>
             <GridContainer>
-<<<<<<< HEAD
-                Billing
-=======
                 <Typography variant="h4">Insurance Billing</Typography>
 
->>>>>>> d8aeada99fa7f1d4b86feb9b34925368df3732fb
 
             </GridContainer>
 

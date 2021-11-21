@@ -3,10 +3,7 @@ import React from "react";
 import ChartistGraph from "react-chartist";
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
-<<<<<<< HEAD
-=======
 import { Typography } from "@material-ui/core";
->>>>>>> d8aeada99fa7f1d4b86feb9b34925368df3732fb
 // @material-ui/icons
 import DateRange from "@material-ui/icons/DateRange";
 import LocalOffer from "@material-ui/icons/LocalOffer";
@@ -25,9 +22,6 @@ import GridContainer from "../../components/Grid/GridContainer";
 import Table from "../../components/Table/Table.js";
 import Tasks from "../../components/Tasks/Tasks.js";
 import CustomTabs from "../../components/CustomTabs/CustomTabs.js";
-<<<<<<< HEAD
-=======
->>>>>>> d8aeada99fa7f1d4b86feb9b34925368df3732fb
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import CardIcon from "../../components/Card/CardIcon.js";
