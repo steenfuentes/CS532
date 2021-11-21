@@ -20,9 +20,9 @@ class PharmacyOrderModel(db.Model):
     medication = db.Column(db.String(64), db.ForeignKey('medicationmodel.id'))
     pharmacist = db.Column(db.String(64), unique=False, nullable=False)
     dosage = db.Column(db.Integer)
-    order_date = db.Column(db.String(60), nullable=True)
-    pickup_date = db.Column(db.String(60), nullable=True)
-    filled_date = db.Column(db.String(60), nullable=True)
+    order_date = db.Column(db.Date, nullable=False) #Updated format to match date
+    pickup_date = db.Column(db.Date, nullable=False) #Updated format to match date
+    filled_date = db.Column(db.Date, nullable=False) #Updated format to match date
     
     def __init__(self, id, patient_id, medication, pharmacist, dosage, order_date, pickup_date, filled_date):
         self.id = id

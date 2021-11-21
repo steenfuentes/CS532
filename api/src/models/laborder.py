@@ -35,7 +35,7 @@ class LabOrderModel(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     id = db.Column(db.Integer, primary_key=True)
     test_type = db.Column(db.Enum(TestType), nullable=True) #Implement an enumeration for this column
-    date_performed = db.Column(db.String(60), nullable=True)
+    date_performed = db.Column(db.Date, nullable=False) #change format to date
     performed_by = db.Column(db.String(60), nullable=True) # Create reference to an employee database table?
     results = db.Column(db.String(120), nullable=True) # Create a database table for results?
     patient_id = db.Column(db.Integer, db.ForeignKey('patientmodel.id'))
