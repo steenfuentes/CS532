@@ -41,10 +41,10 @@ class UserAPI(MethodView):
     @use_kwargs(UserSchema, location="form") 
     def post(id, email, password):
         """Create User using all of the incoming information"""
-        
+
         UserRepo.create(id=id, email=email, password=password)
 
-        return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
+        return {'Status': 'User Created!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
 
     @use_kwargs(UserSchema, location="form")

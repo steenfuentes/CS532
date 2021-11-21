@@ -1,4 +1,6 @@
-"""Utility Function for Stripping Whitespace in Database String"""
+"""Utility Function for Stripping Whitespace in Database String
+https://stackoverflow.com/questions/50854687/stripping-whitespace-generically-for-all-string-fields-sqlalchemy
+"""
 from api import db
 from sqlalchemy.types import TypeDecorator
 

@@ -2,7 +2,7 @@ import os
 
 class BaseConfig:
     """Base Configuration"""
-    SECRET_KEY = os.environ.get('SECRET_KEY')
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'foobar')
     SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI') 
     DEBUG = False
     BCRYPT_LOG_ROUNDS = 13
