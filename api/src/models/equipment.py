@@ -6,11 +6,12 @@ from marshmallow.fields import Email
 from api import db
 from .abstractmodel import BaseModel, MetaBaseModel
 
+
 class Department(enum.Enum):
     MD = "Medical Department"
-    ND = "Nursing Department"
     LD = "Lab Department"
     PD = "Pharmacy Department"
+    AD = "Admin Department"
 
 
 
