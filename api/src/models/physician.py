@@ -8,16 +8,30 @@ from .abstractmodel import BaseModel, MetaBaseModel
 from api.src.models.patient import PatientSchema
 from api.src.models.laborder import LabOrderSchema
 from api.src.models.appointment import AppointmentSchema
+from sqlalchemy.types import TypeDecorator
+
+
+class StrippedString(TypeDecorator):
+
+    impl = db.String
+
+    def process_bind_param(self, value, dialect):
+        # In case you have nullable string fields and pass None
+        return value.strip() if value else value
+
+    def copy(self, **kw):
+        return StrippedString(self.impl.length)
+
 
 
 class PhysicianModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'physicianmodel'
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(50), unique=False, nullable=False)
-    last_name = db.Column(db.String(50), unique=False, nullable=False)
+    first_name = db.Column(db.StrippedString(50), unique=False, nullable=False)
+    last_name = db.Column(db.StrippedString(50), unique=False, nullable=False)
     number = db.Column(db.String(15), unique=False, nullable=True) # Change to nullable=False for production
-    email = db.Column(db.String(50), unique=True, nullable=True) # Change to nullable=False for production
+    email = db.Column(db.StrippedString(50), unique=True, nullable=True) # Change to nullable=False for production
 
     # relationships this model is a parent to
     appointments = db.relationship("AppointmentModel", backref="physicianmodel", lazy='select')

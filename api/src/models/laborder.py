@@ -10,6 +10,7 @@ from api import db, ma
 from .abstractmodel import BaseModel, MetaBaseModel
 from sqlalchemy.orm import validates
 
+
 # just outlining the basic info needed that defines a patient
 # a more elegent approach will establish patients as objects in the system
 class TestType(enum.Enum):

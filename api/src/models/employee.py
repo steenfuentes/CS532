@@ -8,6 +8,19 @@ from marshmallow_enum import EnumField
 from api import db, ma
 from .abstractmodel import BaseModel, MetaBaseModel
 from sqlalchemy.orm import validates
+from sqlalchemy.types import TypeDecorator
+
+
+class StrippedString(TypeDecorator):
+
+    impl = db.String
+
+    def process_bind_param(self, value, dialect):
+        # In case you have nullable string fields and pass None
+        return value.strip() if value else value
+
+    def copy(self, **kw):
+        return StrippedString(self.impl.length)
 
 
 class EmployeeType(enum.Enum):
@@ -24,11 +37,11 @@ class EmployeeModel(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     id = db.Column(db.Integer(), primary_key=True)
     employee_type = db.Column(db.Enum(EmployeeType), nullable=False)
-    first_name = db.Column(db.String(50), nullable=False)
-    last_name = db.Column(db.String(50), nullable=False)
+    first_name = db.Column(db.StrippedString(50), nullable=False)
+    last_name = db.Column(db.StrippedString(50), nullable=False)
     start_date = db.Column(db.Date(), nullable=False)
-    number = db.Column(db.String(15), nullable=True)        # nullable=False for production
-    email = db.Column(db.String(50), nullable=True)         # nullable=False for production
+    number = db.Column(db.StrippedString(15), nullable=True)        # nullable=False for production
+    email = db.Column(db.StrippedString(50), nullable=True)         # nullable=False for production
     
 class EmployeeSchema(Schema):
     id = fields.Integer()
