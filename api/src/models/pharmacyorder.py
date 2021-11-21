@@ -19,7 +19,7 @@ class PharmacyOrderModel(db.Model):
     physician_id = db.Column(db.Integer, db.ForeignKey('physicianmodel.id'))
     medication = db.Column(db.String(64), db.ForeignKey('medicationmodel.id'))
     pharmacist = db.Column(db.String(64), unique=False, nullable=False)
-    dosage = db.Column(db.Integer)
+    dosage = db.Column(db.Integer, nullable=False)
     order_date = db.Column(db.Date, nullable=False) #Updated format to match date
     pickup_date = db.Column(db.Date, nullable=False) #Updated format to match date
     filled_date = db.Column(db.Date, nullable=False) #Updated format to match date

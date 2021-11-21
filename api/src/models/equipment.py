@@ -21,7 +21,7 @@ class EquipmentModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     id = db.Column(db.Integer, primary_key=True)
     equipment_type = db.Column(db.String(20), unique=False, nullable=False)
     description = db.Column(db.String(200), unique=False, nullable=False)
-    department = db.Column(db.Enum(Department))    #enumerated
+    department = db.Column(db.Enum(Department), nullable=False)    #enumerated
     own = db.Column(db.Boolean, unique=False, nullable=False)
     purchase_date = db.Column(db.Date, nullable=False)
 
