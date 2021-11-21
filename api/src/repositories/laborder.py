@@ -7,8 +7,6 @@ from api.src.models.physician import PhysicianModel
 
 class LabOrderRepo():
 
-    # Need to implement returning a list of results for the given search name. For now, this only returns a single result.
-    # Implmentation should also suppport searching by any given attribute filter
     @staticmethod
     def get(id):
         """ Query a LabOrder by ID """

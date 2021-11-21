@@ -1,11 +1,18 @@
+from api import bcrypt
+from webargs import ValidationError
+
 from api.src.models.user import UserModel
 
 class UserRepo():
-    
+        
     @staticmethod
-    def get(id):
-        """ Query a User by ID """
-        return UserModel.query.filter_by(id=id).one_or_none()
+    def get(email):
+        """ Validate Email & Query a User by their email"""
+        user = UserModel.query.filter_by(email=email).one_or_none()
+        if user is None:
+            raise ValidationError("User does not exist")
+
+        return user
 
     @staticmethod
     def get_all():

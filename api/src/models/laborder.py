@@ -58,3 +58,4 @@ class LabOrderSchema(Schema):
     results = fields.String()
     patient_id = fields.Integer()
     physician_id = fields.Integer()
+

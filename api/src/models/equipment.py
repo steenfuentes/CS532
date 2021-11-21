@@ -2,6 +2,7 @@ from operator import eq
 from marshmallow import Schema
 from marshmallow import fields
 from marshmallow.fields import Email
+import enum 
 
 from api import db
 from .abstractmodel import BaseModel, MetaBaseModel
