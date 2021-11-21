@@ -1,10 +1,8 @@
 """
 Defines model and schema for appointments
 """
-from datetime import datetime
 from flask_marshmallow.schema import Schema
 from marshmallow import fields
-from sqlalchemy.orm import validates
 
 from api.src.models.laborder import LabOrderSchema
 from .abstractmodel import BaseModel, MetaBaseModel

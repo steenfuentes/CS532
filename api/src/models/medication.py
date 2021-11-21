@@ -6,12 +6,9 @@ from flask_marshmallow.schema import Schema
 from marshmallow import validate, pre_load, schema, fields
 from marshmallow_enum import EnumField
 
-
 from api import db
 from .abstractmodel import BaseModel, MetaBaseModel
 from sqlalchemy.orm import validates
-
-
 
 
 #enumerate marketing status

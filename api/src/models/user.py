@@ -1,40 +1,30 @@
 """
 Defines model for a user
 """
-from enum import unique
 from marshmallow import Schema, fields
 from sqlalchemy.sql import func
+from flask import current_app
 
 from api import db
 from api import bcrypt
+
+from api.src.utils.stripped_string import StrippedString
+
 from .abstractmodel import BaseModel, MetaBaseModel
-from sqlalchemy.types import TypeDecorator
-
-
-class StrippedString(TypeDecorator):
-
-    impl = db.String
-
-    def process_bind_param(self, value, dialect):
-        # In case you have nullable string fields and pass None
-        return value.strip() if value else value
-
-    def copy(self, **kw):
-        return StrippedString(self.impl.length)
 
 class UserModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'usermodel'
 
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.StrippedString(50), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False) # store the hashed password
+    email = db.Column(StrippedString(50), unique=True, nullable=False)
+    password = db.Column(db.String(255), nullable=False) # store the hashed password
     created = db.Column(db.DateTime(timezone=True), server_default=func.now())
     # user permission
 
     def __init__(self, id, email, password):
         self.id = id
         self.email = email
-        self.password = password
+        self.password = bcrypt.generate_password_hash(password, current_app.config.get('BCRYPT_LOG_ROUNDS'))
 
 class UserSchema(Schema):
     id = fields.Integer()

@@ -4,15 +4,15 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 
-from .config import Config
+from .config import DevelopmentConfig
 
 db = SQLAlchemy()
 ma = Marshmallow()
 bcrypt = Bcrypt()
 
-def create_app(config_class=Config):
+def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
     
     db.init_app(app) 
     bcrypt.init_app(app)

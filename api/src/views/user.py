@@ -18,6 +18,7 @@ class UserAPI(MethodView):
     @staticmethod
     def validate_password(user: UserModel, password):
         """ Validate User Password """
+
         if not bcrypt.check_password_hash(user.password, password):
             raise ValidationError("Incorrect Password!")
 
@@ -40,10 +41,8 @@ class UserAPI(MethodView):
     @use_kwargs(UserSchema, location="form") 
     def post(id, email, password):
         """Create User using all of the incoming information"""
-
-        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-       
-        UserRepo.create(id=id, email=email, password=hashed_password)
+        
+        UserRepo.create(id=id, email=email, password=password)
 
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
