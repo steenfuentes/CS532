@@ -34,6 +34,7 @@
     "react-material-ui-carousel": "^3.0.4",
     "react-redux": "^7.2.5",
     "react-scripts": "^4.0.3",
+    "react-token-auth": "^2.2.0",
     "redux": "^4.1.1",
     "sass": "^1.43.3",
     "styled-components": "^5.3.3",
@@ -41,5 +42,5 @@
     "use-selector": "^3.0.1",
     "yup": "^0.32.11"
   },
-  "proxy": "https://localhost:5000"
+  "proxy": "http://localhost:5000"
 }
