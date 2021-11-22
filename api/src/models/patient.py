@@ -13,7 +13,7 @@ from api.src.utils.stripped_string import StrippedString
 class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'patientmodel'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.Identity(start=1000), primary_key=True)
     first_name = db.Column(StrippedString(120), unique=False, nullable=False)
     last_name = db.Column(StrippedString(120), unique=False, nullable=False)
     number = db.Column(db.String(20), unique=False, nullable=False)
@@ -31,10 +31,9 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     lab_orders = db.relationship("LabOrderModel", backref="patientmodel", lazy=True)
     appointments = db.relationship("AppointmentModel", backref="patientmodel", lazy=True)
 
-    def __init__(self, id, first_name, last_name, number, email="",
+    def __init__(self, first_name, last_name, number, email="",
                     address="", insurance="", dob="", gender="", pcp_id="", 
                     medications="", appointments=[], lab_orders=[]):
-        self.id = id
         self.first_name = first_name
         self.last_name = last_name
         self.number = number
@@ -50,8 +49,7 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
 
 
 class PatientSchema(Schema): 
-    
-    id = fields.Integer(required=True)
+ 
     first_name = fields.String()
     last_name = fields.String()
     number = fields.String()

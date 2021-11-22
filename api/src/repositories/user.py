@@ -1,4 +1,3 @@
-import bcrypt as bc
 from flask.helpers import make_response
 from flask import jsonify, request
 from functools import wraps

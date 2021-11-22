@@ -9,6 +9,7 @@ from marshmallow.decorators import VALIDATES
 from marshmallow.utils import pprint
 from webargs.flaskparser import abort, use_kwargs, use_args
 
+from api.src.repositories.user import UserRepo
 from api.src.repositories.physician import PhysicianRepo
 from api.src.models.physician import PhysicianModel, PhysicianSchema
 
@@ -16,6 +17,7 @@ class PhysicianAPI(MethodView):
     """ Verbs that are relative to the Physicians"""
 
     @staticmethod
+    @UserRepo.token_required
     def get(id):
         """ Return a physician based on the id"""
         if id is None: 
@@ -33,6 +35,7 @@ class PhysicianAPI(MethodView):
 
 
     @staticmethod
+    @UserRepo.token_required
     @use_kwargs(PhysicianSchema, location="form") 
     def post(**kwargs):
         """Create Physician using all of the incoming information"""
@@ -42,6 +45,7 @@ class PhysicianAPI(MethodView):
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
 
+    @UserRepo.token_required
     @use_kwargs(PhysicianSchema, location="form")
     def put(self, id, **kwargs):
         """Update any attribute of the Physician Model"""
