@@ -3,7 +3,7 @@ Define the REST verbs for an appointment
 """
 from flask.views import MethodView
 from flask import jsonify
-from webargs.flaskparser import use_kwargs
+from webargs.flaskparser import parser
 
 
 from api.src.repositories.appointment import AppointmentRepo
@@ -34,7 +34,7 @@ class AppointmentAPI(MethodView):
 
 
     @staticmethod
-    @use_kwargs(AppointmentSchema, location="form")
+    @parser.use_kwargs(AppointmentSchema, location="json_or_form")
     def post(id,**kwargs):
         """Create Appointment using all of the incoming information"""
 
@@ -43,7 +43,7 @@ class AppointmentAPI(MethodView):
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
 
-    @use_kwargs(AppointmentSchema, location="form")
+    @parser.use_kwargs(AppointmentSchema, location="json_or_form")
     def put(id, **kwargs):
         """Update any attribute of the Appointment Model"""
 

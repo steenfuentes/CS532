@@ -7,8 +7,7 @@ from flask import json, jsonify, request
 import jwt
 from marshmallow import ValidationError
 from marshmallow.decorators import VALIDATES
-from marshmallow.utils import pprint
-from webargs.flaskparser import abort, use_kwargs, use_args
+from webargs.flaskparser import abort, parser
 
 from api.src.repositories.user import UserRepo
 from api.src.models.user import UserModel, UserSchema, BlacklistToken
@@ -19,7 +18,7 @@ class RegisterAPI(MethodView):
     """ Resources for registering Users"""
 
     @staticmethod
-    @use_kwargs(UserSchema, location="form") 
+    @parser.use_kwargs(UserSchema, location="json_or_form") 
     def post(email, password):
         """
         Create User using all of the incoming information.
@@ -47,7 +46,7 @@ class LoginAPI(MethodView):
     """ Resources for Logging In"""
 
     @staticmethod
-    @use_kwargs(UserSchema, location="form")
+    @parser.use_kwargs(UserSchema, location="json_or_form")
     def post(email, password):
         """Validate User Login Information & Generate JWT Token"""
 
@@ -113,7 +112,7 @@ class LogoutAPI(MethodView):
 class UserProfileAPI(MethodView):
     """Resources for changing User Information"""
 
-    @use_kwargs(UserSchema, location="form")
+    @parser.use_kwargs(UserSchema, location="json_or_form")
     def put(self, id, **kwargs):
         """Update any attribute of the User Model"""
         user = UserRepo.get_user_id(id)

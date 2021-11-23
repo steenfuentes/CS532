@@ -7,7 +7,7 @@ from flask import json, jsonify
 from marshmallow import ValidationError
 from marshmallow.decorators import VALIDATES
 from marshmallow.utils import pprint
-from webargs.flaskparser import abort, use_kwargs, use_args
+from webargs.flaskparser import abort, parser
 
 from api.src.repositories.user import UserRepo
 from api.src.repositories.physician import PhysicianRepo
@@ -36,7 +36,7 @@ class PhysicianAPI(MethodView):
 
     @staticmethod
     @UserRepo.token_required
-    @use_kwargs(PhysicianSchema, location="form") 
+    @parser.use_kwargs(PhysicianSchema, location="json_or_form") 
     def post(**kwargs):
         """Create Physician using all of the incoming information"""
 
@@ -46,7 +46,7 @@ class PhysicianAPI(MethodView):
 
 
     @UserRepo.token_required
-    @use_kwargs(PhysicianSchema, location="form")
+    @parser.use_kwargs(PhysicianSchema, location="json_or_form") 
     def put(self, id, **kwargs):
         """Update any attribute of the Physician Model"""
         physician = PhysicianRepo.get(id)

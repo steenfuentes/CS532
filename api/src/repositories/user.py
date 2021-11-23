@@ -57,7 +57,7 @@ class UserRepo():
     def update(self, id, **kwargs):
         """ Update any attribute of the user"""
 
-        User = self.get(id)
+        User = self.get_user_id(id)
         for key, value in kwargs.items():
             setattr(User, key, value)
         
