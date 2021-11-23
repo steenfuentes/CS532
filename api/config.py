@@ -6,6 +6,7 @@ class BaseConfig:
     SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI') 
     DEBUG = False
     BCRYPT_LOG_ROUNDS = 13
+    CORS_HEADERS = 'Content-Type'
     
 class DevelopmentConfig(BaseConfig):
     """Development Configuration"""

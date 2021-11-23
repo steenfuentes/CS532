@@ -1,6 +1,7 @@
 """
 Define the REST verbs for endpoints related to the User
 """
+from flask_cors import cross_origin
 from flask.helpers import make_response
 from flask.views import MethodView
 from flask import json, jsonify, request
@@ -17,7 +18,7 @@ from api.src.views.patient import PatientAPI
 class RegisterAPI(MethodView):
     """ Resources for registering Users"""
 
-    @staticmethod
+    @staticmethod 
     @parser.use_kwargs(UserSchema, location="json_or_form") 
     def post(email, password):
         """
@@ -74,6 +75,7 @@ class LoginAPI(MethodView):
 class LogoutAPI(MethodView):
     """Resources for logging out"""
 
+    
     def post(self):
         auth_header = request.headers.get('Authorization')
         if auth_header:
@@ -112,6 +114,7 @@ class LogoutAPI(MethodView):
 class UserProfileAPI(MethodView):
     """Resources for changing User Information"""
 
+    
     @parser.use_kwargs(UserSchema, location="json_or_form")
     def put(self, id, **kwargs):
         """Update any attribute of the User Model"""

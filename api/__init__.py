@@ -9,15 +9,16 @@ from .config import DevelopmentConfig
 db = SQLAlchemy()
 ma = Marshmallow()
 bcrypt = Bcrypt()
+cors = CORS()
 
 def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
-    app.config.from_object(config_class)
+    app.config.from_object(config_class) 
     
     db.init_app(app) 
     bcrypt.init_app(app)
     ma.init_app(app)
-    CORS(app)
+    cors.init_app(app)
     
     """ Add Resources and Rules for API Endpoints """
     from api.src.views.equipment import EquipmentAPI
