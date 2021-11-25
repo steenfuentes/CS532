@@ -7,7 +7,7 @@ from marshmallow_enum import EnumField
 
 from api import db, ma
 from .abstractmodel import BaseModel, MetaBaseModel
-from sqlalchemy.orm import validates
+from sqlalchemy.orm import backref, validates
 from sqlalchemy.types import TypeDecorator
 
 
@@ -42,6 +42,10 @@ class EmployeeModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     start_date = db.Column(db.Date(), nullable=False)
     number = db.Column(db.StrippedString(15), nullable=True)        # nullable=False for production
     email = db.Column(db.StrippedString(50), nullable=True)         # nullable=False for production
+
+    # relationships
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    login = db.relationship("UserModel", backref=backref("employeemodel", uselist=False))
     
 class EmployeeSchema(Schema):
     id = fields.Integer()
