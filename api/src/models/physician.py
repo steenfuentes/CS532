@@ -8,16 +8,20 @@ from .abstractmodel import BaseModel, MetaBaseModel
 from api.src.models.patient import PatientSchema
 from api.src.models.laborder import LabOrderSchema
 from api.src.models.appointment import AppointmentSchema
-
+from api.src.utils.stripped_string import StrippedString
 
 class PhysicianModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'physicianmodel'
 
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(50), unique=False, nullable=False)
-    last_name = db.Column(db.String(50), unique=False, nullable=False)
+    id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
+    owner = db.Column(db.Integer, default = 1, nullable=False)
+    group = db.Column(db.Integer, default = 2, nullable=False) # default group is admin
+    status = db.Column(db.Integer, default = 4, nullable=False) # default status active
+
+    first_name = db.Column(StrippedString(50), unique=False, nullable=False)
+    last_name = db.Column(StrippedString(50), unique=False, nullable=False)
     number = db.Column(db.String(15), unique=False, nullable=True) # Change to nullable=False for production
-    email = db.Column(db.String(50), unique=True, nullable=True) # Change to nullable=False for production
+    email = db.Column(StrippedString(50), unique=True, nullable=True) # Change to nullable=False for production
 
     # relationships this model is a parent to
     appointments = db.relationship("AppointmentModel", backref="physicianmodel", lazy='select')

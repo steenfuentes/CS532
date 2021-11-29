@@ -4,11 +4,13 @@ Define the REST verbs for endpoints related to a Physician
 from re import M
 from flask.views import MethodView
 from flask import json, jsonify
+from flask_cors.decorator import cross_origin
 from marshmallow import ValidationError
 from marshmallow.decorators import VALIDATES
 from marshmallow.utils import pprint
-from webargs.flaskparser import abort, use_kwargs, use_args
+from webargs.flaskparser import abort, parser
 
+from api.src.repositories.user import UserRepo
 from api.src.repositories.physician import PhysicianRepo
 from api.src.models.physician import PhysicianModel, PhysicianSchema
 
@@ -16,6 +18,7 @@ class PhysicianAPI(MethodView):
     """ Verbs that are relative to the Physicians"""
 
     @staticmethod
+    @UserRepo.token_required
     def get(id):
         """ Return a physician based on the id"""
         if id is None: 
@@ -33,7 +36,8 @@ class PhysicianAPI(MethodView):
 
 
     @staticmethod
-    @use_kwargs(PhysicianSchema, location="form") 
+    @UserRepo.token_required("ROOT", "ADMIN", "MED_ADMIN", "MED_STAFF")
+    @parser.use_kwargs(PhysicianSchema, location="json_or_form") 
     def post(**kwargs):
         """Create Physician using all of the incoming information"""
 
@@ -42,7 +46,8 @@ class PhysicianAPI(MethodView):
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
 
-    @use_kwargs(PhysicianSchema, location="form")
+    @UserRepo.token_required("ROOT", "ADMIN", "MED_ADMIN", "MED_STAFF")
+    @parser.use_kwargs(PhysicianSchema, location="json_or_form") 
     def put(self, id, **kwargs):
         """Update any attribute of the Physician Model"""
         physician = PhysicianRepo.get(id)

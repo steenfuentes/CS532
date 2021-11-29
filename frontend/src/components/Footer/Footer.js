@@ -22,18 +22,13 @@ export default function Footer(props) {
                             </a>
                         </ListItem>
                         <ListItem className={classes.inlineBlock}>
-                            <a href="#company" className={classes.block}>
-                                Company
+                            <a href="/login" className={classes.block}>
+                                Login
                             </a>
                         </ListItem>
                         <ListItem className={classes.inlineBlock}>
-                            <a href="#portfolio" className={classes.block}>
-                                Portfolio
-                            </a>
-                        </ListItem>
-                        <ListItem className={classes.inlineBlock}>
-                            <a href="#blog" className={classes.block}>
-                                Blog
+                            <a href="/admin/dashboard" className={classes.block}>
+                                Dashboard
                             </a>
                         </ListItem>
                     </List>
@@ -48,7 +43,7 @@ export default function Footer(props) {
                         >
                             BSEG
                         </a>
-                        , Health Track
+                        , HealthTrack CS532
                     </span>
                 </p>
             </div>

@@ -6,15 +6,17 @@ from flask import json, jsonify
 from marshmallow import ValidationError
 from marshmallow.decorators import VALIDATES
 from marshmallow.utils import pprint
-from webargs.flaskparser import abort, use_kwargs, use_args
+from webargs.flaskparser import abort, parser, use_kwargs, use_args
 
 from api.src.repositories.patient import PatientRepo
 from api.src.models.patient import PatientModel, PatientSchema
+from api.src.repositories.user import UserRepo
 
 class PatientAPI(MethodView):
     """ Verbs that are relative to the patients"""
 
     @staticmethod
+    @UserRepo.token_required()
     def get(id):
         """ Return a user based on the id"""
         if id is None:
@@ -33,15 +35,17 @@ class PatientAPI(MethodView):
         return result
 
     @staticmethod
-    @use_kwargs(PatientSchema(), location="form") 
+    @UserRepo.token_required()
+    @parser.use_kwargs(PatientSchema(), location="json_or_form") 
     def post(**kwargs):
         """Create patient using all of the incoming information"""
         PatientRepo.create(**kwargs)
 
-        return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
+        return {'Status': 'Complete!'}, 201 
 
     @staticmethod
-    @use_kwargs(PatientSchema(), location="form")
+    @UserRepo.token_required()
+    @parser.use_kwargs(PatientSchema(), location="json_or_form")
     def put(id, **kwargs):
         """Update any attribute of the Patient Model"""
         repository = PatientRepo()

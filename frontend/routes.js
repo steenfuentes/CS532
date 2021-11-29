@@ -4,7 +4,7 @@ import Person from "@material-ui/icons/Person";
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ScienceIcon from '@mui/icons-material/Science';
 import MedicationIcon from '@mui/icons-material/Medication';
-import Notifications from "@material-ui/icons/Notifications";
+import ScheduleIcon from '@mui/icons-material/Schedule';
 
 const dashboardRoutes = [
     {
@@ -15,9 +15,16 @@ const dashboardRoutes = [
         layout: "/admin",
     },
     {
-        path: "/user-profile",
-        name: "User Profile",
+        path: "/patients",
+        name: "Patients",
         icon: Person,
+
+        layout: "/admin",
+    },
+    {
+        path: "/scheduler",
+        name: "Scheduler",
+        icon: ScheduleIcon,
 
         layout: "/admin",
     },

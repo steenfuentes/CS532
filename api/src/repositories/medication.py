@@ -10,8 +10,8 @@ class MedicationRepo:
     @staticmethod
     def get_all():
         """ Query all medication. Return a dictionary."""
-        patient_list = MedicationModel.query.all()
-        return patient_list
+        medication_list = MedicationModel.query.all()
+        return medication_list
     
     @staticmethod
     def create(**kwargs):

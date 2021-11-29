@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { withFormik, Form, Field } from 'formik'
 import { makeStyles } from '@mui/styles';
 import { Button, Box, TextField, AppBar, Toolbar, Grid, Typography, Paper, Link } from '@material-ui/core'
+import { useRouter } from 'next/router';
 
 
 const useStyles = makeStyles({
@@ -16,24 +17,42 @@ const useStyles = makeStyles({
     },
 });
 
-
-const LoginPage = (props) => {
+export default function LoginPage(props) {
+    const router = useRouter();
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     const classes = useStyles();
-    function handleChange(event) {
-        setUsername(event.state.username)
-        setPassword(event.state.password)
+    function handleUsernameChange(event) {
+        setUsername(event.target.username)
+    }
+    function handlePasswordChange(event) {
+
+        setPassword(event.target.password)
     }
     function handleSubmit(event) {
         event.preventDefault();
-        if (username == '' && password == '') {
-            props.history.push("/dashboard");
-        } else {
-            alert('Incorrect Credntials!');
+        console.log("You pressed login")
+        let opts = {
+            'username': username,
+            'password': password
         }
+        console.log(opts)
+        fetch('/admin/registeruser', {
+            method: 'post',
+            body: JSON.stringify(opts)
+        }).then(r => r.json())
+            .then(token => {
+                if (token.access_token) {
+                    login(token)
+                    console.log(token)
+                }
+                else {
+                    console.log("Please type in correct username/password")
+                }
+            })
     }
+
 
     return (
         <div>
@@ -56,7 +75,8 @@ const LoginPage = (props) => {
                                             name="username"
                                             variant="outlined"
                                             value={username}
-                                            onChange={e => setUsername(e.target.value)} required
+                                            onChange={handleUsernameChange}
+                                            required
                                             autoFocus
                                         />
                                     </Grid>
@@ -68,7 +88,7 @@ const LoginPage = (props) => {
                                             name="password"
                                             variant="outlined"
                                             value={password}
-                                            onChange={e => setPassword(e.target.value)} required
+                                            onChange={handlePasswordChange}
                                         />
                                     </Grid>
                                     <Grid item>
@@ -101,17 +121,3 @@ const LoginPage = (props) => {
 }
 
 
-
-const LoginFormik = withFormik({
-    mapPropsToValues: (props) => {
-        return {
-            email: props.email || '',
-            password: props.password || ''
-        }
-    },
-    handleSubmit: (values) => {
-        console.log(values)
-    }
-})(LoginPage)
-
-export default LoginFormik

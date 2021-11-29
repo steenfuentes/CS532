@@ -1,35 +1,33 @@
+from re import I
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask_cors import CORS
 
-from .config import Config
+from .config import DevelopmentConfig
 
 db = SQLAlchemy()
 ma = Marshmallow()
 bcrypt = Bcrypt()
+cors = CORS()
 
-def create_app(config_class=Config):
+def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(config_class) 
     
     db.init_app(app) 
     bcrypt.init_app(app)
     ma.init_app(app)
+    cors.init_app(app, resources={r"/*": {"origins": "*"}})
 
-    # def register_api(view, endpoint, url, pk='id', pk_type='int'):
-    #     """Easy Registration of Model API"""
-    #     view_func = view.as_view(endpoint)
-    #     app.add_url_rule(url, defaults={pk: None},
-    #                     view_func=view_func, methods=['GET',])
-    #     app.add_url_rule(url, view_func=view_func, methods=['POST',])
-    #     app.add_url_rule(f'{url}<{pk_type}:{pk}>', view_func=view_func,
-    #                     methods=['GET', 'PUT', 'DELETE'])
     
+    """ Add Resources and Rules for API Endpoints """
     from api.src.views.equipment import EquipmentAPI
     from api.src.views.laborder import LabOrderAPI
     from api.src.views.patient import PatientAPI
     from api.src.views.physician import PhysicianAPI
+    from api.src.views.user import RegisterAPI, LoginAPI, LogoutAPI, UserProfileAPI
 
     equipment_view = EquipmentAPI.as_view('equipment_api')
     app.add_url_rule('/equipment/', defaults={'id': None}, view_func=equipment_view, methods=['GET'])
@@ -50,7 +48,18 @@ def create_app(config_class=Config):
     app.add_url_rule('/physicians/', defaults={'id': None}, view_func=physician_view, methods=['GET'])
     app.add_url_rule('/physicians/', view_func=physician_view, methods=['POST',])
     app.add_url_rule('/physicians/<int:id>', view_func=physician_view, methods=['GET'])
-  
 
+    # routes relative to user creation, login, logout
+    register_view = RegisterAPI.as_view('register_api')
+    app.add_url_rule('/admin/registeruser', view_func=register_view, methods=['POST'])
+
+    login_view = LoginAPI.as_view('login_api')
+    app.add_url_rule('/login/', view_func=login_view, methods=['POST'])
     
+    logout_view = LogoutAPI.as_view('logout_api')
+    app.add_url_rule('/dashboard/logout/', view_func=logout_view, methods=['POST'])
+
+    userprofile_view = UserProfileAPI.as_view('userprofile_api')
+    app.add_url_rule('/profile/', view_func=userprofile_view, methods=['PUT'])
+  
     return app
