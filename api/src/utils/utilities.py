@@ -26,6 +26,7 @@ def create_admin(email="admin@admin.com", password="admin"):
     admin.add_role("ROOT") 
     print("Adding root admin...")
     admin.save()
+    print(f"ROOT Admin added with credentials:\n email: {email}\n password: {password}")
 
 # implement a unique ID generator here
 def generate_id():
