@@ -6,6 +6,7 @@ from flask_marshmallow.schema import Schema
 from marshmallow import fields
 
 from api import db
+from api.src.models.appointment import AppointmentSchema
 from api.src.models.laborder import LabOrderSchema
 from .abstractmodel import BaseModel, MetaBaseModel
 from api.src.utils.stripped_string import StrippedString
@@ -13,7 +14,11 @@ from api.src.utils.stripped_string import StrippedString
 class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'patientmodel'
 
-    id = db.Column(db.Integer, db.Identity(start=1000), primary_key=True)
+    id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
+    owner = db.Column(db.Integer, default = 1, nullable=False)
+    group = db.Column(db.Integer, default = 8, nullable=False) # default group is medical staff
+    status = db.Column(db.Integer, default = 0, nullable=False) # status irrelevant 
+
     first_name = db.Column(StrippedString(120), unique=False, nullable=False)
     last_name = db.Column(StrippedString(120), unique=False, nullable=False)
     number = db.Column(db.String(20), unique=False, nullable=False)
@@ -60,7 +65,7 @@ class PatientSchema(Schema):
     gender = fields.String()
     pcp_id = fields.Integer()
     medications = fields.String()
-    appointments = fields.String()
+    appointments = fields.List(fields.Nested(AppointmentSchema()))
     lab_orders = fields.List(fields.Nested(LabOrderSchema()))
 
     

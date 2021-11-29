@@ -1,3 +1,4 @@
+from re import I
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
@@ -18,7 +19,8 @@ def create_app(config_class=DevelopmentConfig):
     db.init_app(app) 
     bcrypt.init_app(app)
     ma.init_app(app)
-    cors.init_app(app)
+    cors.init_app(app, resources={r"/*": {"origins": "*"}})
+
     
     """ Add Resources and Rules for API Endpoints """
     from api.src.views.equipment import EquipmentAPI

@@ -1,32 +1,59 @@
 """
 Defines Model for a User and Defines Methods for JWT Use
 """
+from re import A
+from flask.helpers import make_response
+from flask.json import jsonify
 from marshmallow import Schema, fields
 from sqlalchemy.sql import func
 from flask import current_app
 import jwt, datetime
 
+from webargs.flaskparser import abort
+
 from api import db
 from api import bcrypt
 
 from api.src.utils.stripped_string import StrippedString
-
+from api.src.models.access import AccessGroup, AccessStatus, RoleModel
 from .abstractmodel import BaseModel, MetaBaseModel
-from api.src.models import abstractmodel
+
+users_roles = db.Table(
+    'users_roles',
+    db.Column('user_email', db.String, db.ForeignKey('usermodel.email')),
+    db.Column('role_name', db.Enum(AccessGroup), db.ForeignKey('rolemodel.name'))
+)
 
 class UserModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'usermodel'
     __table_args__ = {'extend_existing': True}
 
-    id = db.Column(db.Integer, db.Identity(start=100), primary_key=True)
+    id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
+    status = db.Column(db.Enum(AccessStatus), default = "ACTIVE", nullable=False) # default status active
     email = db.Column(StrippedString(50), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False) # store the hashed password
     created = db.Column(db.DateTime(timezone=True), server_default=func.now())
-    # user permission
 
-    def __init__(self, email, password):
+    roles = db.relationship('RoleModel', 
+            secondary=users_roles,
+            backref=db.backref('roles', lazy='dynamic')
+    )
+
+    def __init__(self, email, password, roles=[]):
         self.email = email
         self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+
+    def add_role(self, rolename: str):
+        role = RoleModel.get_by_name(rolename)
+        self.roles.append(role)
+    
+
+    def add_roles(self, *roles):
+        for role in roles:
+            self.add_roles(role)
+
+        
 
     def encode_auth_token(self, id):
         """
@@ -36,7 +63,7 @@ class UserModel(db.Model, BaseModel, metaclass=MetaBaseModel):
 
         try:
             payload = {
-                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, minutes=15),
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, minutes=60),
                 'iat': datetime.datetime.utcnow(),
                 'sub': id
             }
@@ -57,16 +84,21 @@ class UserModel(db.Model, BaseModel, metaclass=MetaBaseModel):
         """
 
         try:
-            payload = jwt.decode(auth_token, current_app.config.get('SECRET_KEY'))
+            payload = jwt.decode(auth_token, current_app.config.get('SECRET_KEY'), algorithms=["HS256"])
             is_blacklisted = BlacklistToken.check_blacklist(auth_token)
             if is_blacklisted:
                 return 'Token Blacklisted. Please log in again.'
             else:
                 return payload['sub']
         except jwt.ExpiredSignatureError:
-            return 'Signature Expired. Please log in again.'
+            message = {
+                'Status': 'Fail',
+                'Message': 'Signature Expired. Please log in again.'
+            }
+            return abort(401, make_response(jsonify(message)))
+
         except jwt.InvalidTokenError:
-            return 'Invalid Token. Please log in again.'
+            return abort(401, 'Invalid Token. Please log in again.')
 
 
 class UserSchema(Schema):

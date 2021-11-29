@@ -23,7 +23,11 @@ class MarketingStatus(enum.Enum):
 class MedicationModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'medicationmodel'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
+    owner = db.Column(db.Integer, default = 2, nullable=False)
+    group = db.Column(db.Integer, default = 64, nullable=False) # default group is pharmacy admin
+    status = db.Column(db.Integer, default = 4, nullable=False) # default status is active
+
     brand_name = db.Column(db.String(64), unique=False, nullable=False)
     reference_standard = db.Column(db.String(64), unique=False, nullable=False)
     dosage_form = db.Column(db.String(64), unique=False, nullable=False)

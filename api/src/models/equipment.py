@@ -14,12 +14,14 @@ class Department(enum.Enum):
     PD = "Pharmacy Department"
     AD = "Admin Department"
 
-
-
 class EquipmentModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'equipmentmodel'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
+    owner = db.Column(db.Integer, default = 1, nullable=False)
+    group = db.Column(db.Integer, default = 1, nullable=False)
+    status = db.Column(db.Integer, default = 4, nullable=False) # default status is active
+
     equipment_type = db.Column(db.String(20), unique=False, nullable=False)
     description = db.Column(db.String(200), unique=False, nullable=False)
     department = db.Column(db.Enum(Department), nullable=False)    

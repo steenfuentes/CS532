@@ -34,7 +34,11 @@ class LabOrderModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'labordermodel'
     __table_args__ = {'extend_existing':True}
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
+    owner = db.Column(db.Integer, default = 2, nullable=False)
+    group = db.Column(db.Integer, default = 32, nullable=False) # default group is Lab Staff
+    status = db.Column(db.Integer, default = 16, nullable=False) # default status is pending
+
     test_type = db.Column(db.Enum(TestType), nullable=True) #Implement an enumeration for this column
     date_performed = db.Column(db.Date, nullable=False) #change format to date
     performed_by = db.Column(db.String(60), nullable=True) # Create reference to an employee database table?

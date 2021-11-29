@@ -18,7 +18,6 @@ class PhysicianAPI(MethodView):
     """ Verbs that are relative to the Physicians"""
 
     @staticmethod
-    @cross_origin()
     @UserRepo.token_required
     def get(id):
         """ Return a physician based on the id"""
@@ -37,7 +36,6 @@ class PhysicianAPI(MethodView):
 
 
     @staticmethod
-    @cross_origin()
     @UserRepo.token_required
     @parser.use_kwargs(PhysicianSchema, location="json_or_form") 
     def post(**kwargs):
@@ -49,7 +47,6 @@ class PhysicianAPI(MethodView):
 
 
     @UserRepo.token_required
-    @cross_origin()
     @parser.use_kwargs(PhysicianSchema, location="json_or_form") 
     def put(self, id, **kwargs):
         """Update any attribute of the Physician Model"""

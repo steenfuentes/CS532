@@ -14,7 +14,11 @@ class PharmacyOrderModel(db.Model):
     __tablename__ = 'pharmacyordermodel'
     __table_args__ = {'extend_existing': True}
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
+    owner = db.Column(db.Integer, default = 2, nullable=False)
+    group = db.Column(db.Integer, default = 128, nullable=False) # default group is pharmacy staff
+    status = db.Column(db.Integer, default = 4, nullable=False) # default status active
+
     patient_id = db.Column(db.Integer, db.ForeignKey('patientmodel.id'))
     physician_id = db.Column(db.Integer, db.ForeignKey('physicianmodel.id'))
     medication = db.Column(db.String(64), db.ForeignKey('medicationmodel.id'))

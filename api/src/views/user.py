@@ -19,6 +19,7 @@ class RegisterAPI(MethodView):
     """ Resources for registering Users"""
 
     @staticmethod 
+    @UserRepo.token_required("ADMIN", "ROOT")
     @parser.use_kwargs(UserSchema, location="json_or_form") 
     def post(email, password):
         """
@@ -26,7 +27,7 @@ class RegisterAPI(MethodView):
         Make sure user doesn't exist already. 
         """
         try:
-            user = UserRepo.get_user_email(email)
+            user = UserRepo.get_by_email(email)
             response = {
                 'Status': 'Fail',
                 'Message': 'User with email ' + user.email +' already exists!'
@@ -37,7 +38,7 @@ class RegisterAPI(MethodView):
             response = {
                         'Status': 'Success',
                         'Message': 'User created with email: ' + user.email +
-                        'and User ID: ' + str(user.id)
+                        ' and User ID: ' + str(user.id)
             }
             return make_response(jsonify(response)), 201
             
@@ -52,14 +53,14 @@ class LoginAPI(MethodView):
         """Validate User Login Information & Generate JWT Token"""
 
         try:
-            user = UserRepo.get_user_email(email)
+            user = UserRepo.get_by_email(email)
             UserRepo.validate_password(user, password)
             auth_token = user.encode_auth_token(user.id)
             if auth_token:
                 response = {
                     'Status': 'Success',
                     'Message': 'Logged in!',
-                    'auth_token': auth_token.decode()
+                    'auth_token': auth_token
                 }
                 return make_response(jsonify(response)), 200
         
@@ -118,6 +119,6 @@ class UserProfileAPI(MethodView):
     @parser.use_kwargs(UserSchema, location="json_or_form")
     def put(self, id, **kwargs):
         """Update any attribute of the User Model"""
-        user = UserRepo.get_user_id(id)
+        user = UserRepo.get_by_id(id)
         
         return user

@@ -11,7 +11,11 @@ from api import db
 class AppointmentModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'appointmentmodel'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
+    owner = db.Column(db.Integer, default = 1, nullable=False)
+    group = db.Column(db.Integer, default = 8, nullable=False) # default group is medical staff
+    status = db.Column(db.Integer, default = 4, nullable=False) # default status is active
+
     date = db.Column(db.Date, nullable=False)
     time = db.Column(db.Time(timezone=True), nullable=False)
     

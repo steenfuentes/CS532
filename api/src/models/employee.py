@@ -35,7 +35,11 @@ class EmployeeModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'employeemodel'
     __table_args__ = {'extend_existing':True}
 
-    id = db.Column(db.Integer(), primary_key=True)
+    id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
+    owner = db.Column(db.Integer, default = 1, nullable=False)
+    group = db.Column(db.Integer, default = 1, nullable=False)
+    status = db.Column(db.Integer, default = 4, nullable=False) # default status is active
+
     employee_type = db.Column(db.Enum(EmployeeType), nullable=False)
     first_name = db.Column(db.StrippedString(50), nullable=False)
     last_name = db.Column(db.StrippedString(50), nullable=False)
@@ -45,7 +49,7 @@ class EmployeeModel(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     # relationships
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    login = db.relationship("UserModel", backref=backref("employeemodel", uselist=False))
+    user = db.relationship("UserModel", backref=backref("employeemodel", uselist=False))
     
 class EmployeeSchema(Schema):
     id = fields.Integer()
