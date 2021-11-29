@@ -75,6 +75,7 @@ class UserRepo():
             def _decorate(function):
                 def decorated(*args, **kwargs):
                     auth_header = request.headers.get('Authorization')
+                    print("HEADER\n", request.headers)
                     if auth_header:
                         try:
                             auth_token = auth_header.split(" ")[1]
@@ -114,13 +115,13 @@ class UserRepo():
                 if role_name not in user_roles
             ]
 
-        if len(accepted) == len(missing_roles): 
-            if missing_roles:
-                message="Missing acceptable role(s): {}".format(', '.join(missing_roles))
-                response = {
-                    'Status': 'Fail',
-                    'Message': message
-                }
-                print(message)
-                return abort(401, make_response(jsonify(response)))
+            if len(accepted) == len(missing_roles): 
+                if missing_roles:
+                    message="Missing at least one acceptable role: {}".format(', '.join(missing_roles))
+                    response = {
+                        'Status': 'Fail',
+                        'Message': message
+                    }
+                    print(message)
+                    return abort(401, make_response(jsonify(response)))
         

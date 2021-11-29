@@ -39,7 +39,7 @@ class RegisterAPI(MethodView):
             response = {
                         'Status': 'Success',
                         'Message': 'User created with email: ' + user.email +
-                        ' and User ID: ' + str(user.id)
+                        ', User ID: ' + str(user.id)
             }
             return make_response(jsonify(response)), 201
             
