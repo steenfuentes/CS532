@@ -2,7 +2,11 @@
 Defines Role Based Access Control for the System
 """
 import enum
-from re import A 
+from re import A
+from flask_marshmallow.schema import Schema
+
+from marshmallow import fields 
+from marshmallow_enum import EnumField
 
 from api import db
 from api.src.models.abstractmodel import BaseModel, MetaBaseModel
@@ -31,11 +35,13 @@ class AccessStatus(enum.Enum):
 roles_parents = db.Table(
     'roles_parents',
     db.Column('role_id', db.Integer, db.ForeignKey('rolemodel.id')),
-    db.Column('parent_id', db.Integer, db.ForeignKey('rolemodel.id'))
+    db.Column('parent_id', db.Integer, db.ForeignKey('rolemodel.id')),
+    extend_existing=True
 )
 
 class RoleModel(db.Model, RoleMixin, BaseModel, metaclass=MetaBaseModel ):
     __tablename__ = "rolemodel"
+    __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer(), db.Identity(start=1), primary_key=True)
     name = db.Column(db.Enum(AccessGroup), unique=True, nullable=False)
@@ -60,5 +66,9 @@ class RoleModel(db.Model, RoleMixin, BaseModel, metaclass=MetaBaseModel ):
     @staticmethod
     def get_by_name(name):
         return RoleModel.query.filter_by(name=name).first()
+
+class RoleSchema(Schema):
+    id = fields.Integer()
+    name = fields.String()
 
 

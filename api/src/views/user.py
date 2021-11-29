@@ -21,11 +21,12 @@ class RegisterAPI(MethodView):
     @staticmethod 
     @UserRepo.token_required("ADMIN", "ROOT")
     @parser.use_kwargs(UserSchema, location="json_or_form") 
-    def post(email, password):
+    def post(email, password, roles):
         """
         Create User using all of the incoming information.
         Make sure user doesn't exist already. 
         """
+        print("INCOMING ROLES:", roles)
         try:
             user = UserRepo.get_by_email(email)
             response = {
@@ -34,7 +35,7 @@ class RegisterAPI(MethodView):
             }
             return make_response(jsonify(response)), 202
         except ValidationError: 
-            user = UserRepo.create(email=email, password=password)
+            user = UserRepo.create(email=email, password=password, roles=roles)
             response = {
                         'Status': 'Success',
                         'Message': 'User created with email: ' + user.email +

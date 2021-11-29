@@ -15,7 +15,7 @@ from api import db
 from api import bcrypt
 
 from api.src.utils.stripped_string import StrippedString
-from api.src.models.access import AccessGroup, AccessStatus, RoleModel
+from api.src.models.access import AccessGroup, AccessStatus, RoleModel, RoleSchema
 from .abstractmodel import BaseModel, MetaBaseModel
 
 users_roles = db.Table(
@@ -42,9 +42,11 @@ class UserModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     def __init__(self, email, password, roles=[]):
         self.email = email
         self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+        for role in roles:
+            self.add_role(role)
 
 
-    def add_role(self, rolename: str):
+    def add_role(self, rolename):
         role = RoleModel.get_by_name(rolename)
         self.roles.append(role)
     
@@ -52,6 +54,13 @@ class UserModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     def add_roles(self, *roles):
         for role in roles:
             self.add_roles(role)
+
+    def get_roles(self):
+        all_roles = []
+        for role in self.roles:
+            all_roles.append(role.name.name)
+        
+        return all_roles
 
         
 
@@ -105,6 +114,7 @@ class UserSchema(Schema):
     id = fields.Integer()
     email = fields.Email()
     password = fields.String()
+    roles = fields.List(fields.String())
 
 
 class BlacklistToken(db.Model, BaseModel, metaclass=MetaBaseModel):

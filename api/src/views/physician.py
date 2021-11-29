@@ -36,7 +36,7 @@ class PhysicianAPI(MethodView):
 
 
     @staticmethod
-    @UserRepo.token_required
+    @UserRepo.token_required("ROOT", "ADMIN", "MED_ADMIN", "MED_STAFF")
     @parser.use_kwargs(PhysicianSchema, location="json_or_form") 
     def post(**kwargs):
         """Create Physician using all of the incoming information"""
@@ -46,7 +46,7 @@ class PhysicianAPI(MethodView):
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
 
-    @UserRepo.token_required
+    @UserRepo.token_required("ROOT", "ADMIN", "MED_ADMIN", "MED_STAFF")
     @parser.use_kwargs(PhysicianSchema, location="json_or_form") 
     def put(self, id, **kwargs):
         """Update any attribute of the Physician Model"""
