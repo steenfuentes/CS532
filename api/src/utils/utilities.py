@@ -8,7 +8,7 @@ from api import db
 # must be used within an app context
 def create_roles():
     """ Used within :obj:`manage.py` """
-    print("Adding roles to database...")
+    print("Adding access roles to database...")
     for group in AccessGroup:
         role = RoleModel(str(group.name))
         role.save()
