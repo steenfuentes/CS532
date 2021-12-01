@@ -58,7 +58,7 @@ export default function LoginPage(props) {
         <div>
             <Box sx={{ bgcolor: 'white' }}>
                 <Grid sx={{ flexGrow: 1 }} container direction="row" spacing={2}>
-                    <Grid item xs={12} spacing={0} justify="center">
+                    <Grid item xs={12} md={6} lg={4}>
                         <Grid item>
                             <Typography variant="h5">
                                 Sign in
@@ -67,7 +67,7 @@ export default function LoginPage(props) {
                         <Grid item>
                             <form onSubmit={handleSubmit}>
                                 <Grid container direction="column" spacing={2}>
-                                    <Grid item spacing={2}>
+                                    <Grid item>
                                         <TextField
                                             type="email"
                                             placeholder="Email"

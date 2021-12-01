@@ -11,11 +11,11 @@ export default function Hero(props) {
   return (
     <>
       <Container align="center" style={{ marginTop: '20px' }} maxWidth="sm">
-        <Typography variant="h2" main center>
+        <Typography variant="h2" >
           Welcome To <br />
           BSEG Health Care
         </Typography>
-        <Typography align="center" color="text.secondary" variant="h5">
+        <Typography align="center" variant="h5">
           Where our doctors, nurses and other healthcare providers across the country are dedicated to the care and improvement of human life.
         </Typography>
         <Link href="/login">
