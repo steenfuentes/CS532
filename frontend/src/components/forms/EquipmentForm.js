@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Grid, } from '@material-ui/core';
 import Controls from "../../components/Controls/Controls";
-import { useForm, Form } from '../../components/Form/useForm';
-import * as employeeService from "../../services/employeeService";
+import { useForm, Form } from '../../components/Forms/UseForm';
+//import * as employeeService from "../../services/employeeService";
 
 
 const ownedItems = [
@@ -89,12 +89,19 @@ export default function EmployeeForm() {
                 </Grid>
                 <Grid item xs={6}>
                     <Controls.RadioGroup
-                        name="ownedStatus"
+                        name="ownStatus"
                         label="Status"
                         value={values.ownStatus}
                         onChange={handleInputChange}
                         items={ownedItems}
                     />
+                    <Controls.DatePicker
+                        name="purchaseDate"
+                        label="Purchase Date"
+                        value={values.purchaseDate}
+                        onChange={handleInputChange}
+                    />
+
                     <div>
                         <Controls.Button
                             type="submit"
