@@ -11,6 +11,8 @@ import Card from '../../components/Card/Card';
 import { Typography } from '@mui/material';
 import styles from "../../assets/styling/views/dashboardStyle.js";
 
+import PatientForm from '../../components/Forms/PatientForm'
+
 
 function Patient() {
     const [data, setData] = useState([])
@@ -53,6 +55,7 @@ function Patient() {
                     </CardBody>
                 </Card>
             </GridItem>
+            <PatientForm/>
         </GridContainer>
     )
 }
