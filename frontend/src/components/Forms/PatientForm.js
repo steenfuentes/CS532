@@ -16,7 +16,7 @@ const initialFValues = {
     lastName: '',
     number: '',
     email: '',
-    adresss: '',
+    address: '',
     insurance: '',
     dob: new Date(),
     gender: 'male',
@@ -88,11 +88,11 @@ export default function LabOrderForm() {
                             error={errors.email}
                         />
                         <Controls.Input
-                            name="adress"
-                            label="Adress"
-                            value={values.adresss}
+                            name="address"
+                            label="Address"
+                            value={values.address}
                             onChange={handleInputChange}
-                            error={errors.adresss}
+                            error={errors.address}
                         />
                         <Controls.Input
                             name="insurance"
@@ -139,11 +139,20 @@ export default function LabOrderForm() {
                         />
                         <Controls.Input
                             name="labOrders"
-                            label="Lab Order"
+                            label="Lab Orders"
                             value={values.labOrders}
                             onChange={handleInputChange}
                             error={errors.labOrders}
                         />
+                        <div>
+                        <Controls.Button
+                            type="submit"
+                            text="Submit" />
+                        <Controls.Button
+                            text="Reset"
+                            color="default"
+                            onClick={resetForm} />
+                    </div>
                     </Grid>
                 </GridContainer>
             </Form>
