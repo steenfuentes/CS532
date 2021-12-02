@@ -20,6 +20,7 @@ def create_app(config_class=DevelopmentConfig):
     bcrypt.init_app(app)
     ma.init_app(app)
     cors.init_app(app, resources={r"/*": {"origins": "*"}})
+    app.config['CORS_HEADERS'] = 'Content-Type'
 
     
     """ Add Resources and Rules for API Endpoints """
