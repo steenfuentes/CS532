@@ -14,8 +14,8 @@ import LabForm from '../../components/Forms/LabOrderForm'
 function Lab() {
     return (
         <GridContainer>
-            <Typography variant="h4">Lab Order Tracking</Typography>
-            <LabForm/>
+            <LabForm>
+            </LabForm>
         </GridContainer>
     )
 }

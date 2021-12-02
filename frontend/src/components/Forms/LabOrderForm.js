@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Grid, } from '@material-ui/core';
 import Controls from "../../components/Controls/Controls";
 import { useForm, Form } from '../../components/Forms/UseForm';
+import { Typography } from '@material-ui/core';
+import GridContainer from '../Grid/GridContainer';
 
 const testTypes = [
     { id: 'CBC', title: 'Complete Blood Count' },
@@ -61,15 +63,51 @@ export default function EmployeeForm() {
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <Grid item xs={6}>
-                <Controls.Select
-                    label="Test Type"
-                    name="testType"
-                    value={values.testType}
-                    onChange={handleInputChange}
-                    items={testTypes}
-                />
-            </Grid>
-        </Form>
+            <Form onSubmit={handleSubmit}>
+                <Grid item xs={12}>
+                    <Controls.Select
+                        label="Test Type"
+                        name="testType"
+                        value={values.testType}
+                        onChange={handleInputChange}
+                        items={testTypes}
+                    />
+                    <Controls.Input
+                        label="Patient ID"
+                        name="patientId"
+                        value={values.patientId}
+                        onChange={handleInputChange}
+                        error={errors.patientId}
+                    />
+                    <Controls.Input
+                        label="Physican ID"
+                        name="physicanId"
+                        value={values.physicanId}
+                        onChange={handleInputChange}
+                        error={errors.physicanId}
+                    />
+                    <Controls.DatePicker
+                        name="datePerformed"
+                        label="Date Performed"
+                        value={values.datePerformed}
+                        onChange={handleInputChange}
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <Controls.Input
+                        label="PerformedBy"
+                        name="performedBy"
+                        value={values.performedBy}
+                        onChange={handleInputChange}
+                        error={errors.performedBy}
+                    />
+                    <Controls.Input
+                        label="Results"
+                        name="results"
+                        value={values.results}
+                        onChange={handleInputChange}
+                        error={errors.results}
+                    />
+                </Grid>
+            </Form>
     )}
