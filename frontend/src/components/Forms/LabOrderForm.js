@@ -35,10 +35,6 @@ export default function EmployeeForm() {
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('equipmentType' in fieldValues)
-            temp.equipmentType = fieldValues.equipmentType ? "" : "This field is required."
-        if ('equipmentDescription' in fieldValues)
-            temp.equipmentDescription = fieldValues.equipmentDescription ? "" : "This field is required."
         setErrors({
             ...temp
         })
@@ -65,6 +61,15 @@ export default function EmployeeForm() {
     }
 
     return (
-        <div>
-        </div>
+        <Form onSubmit={handleSubmit}>
+            <Grid item xs={6}>
+                <Controls.Select
+                    label="Test Type"
+                    name="testType"
+                    value={values.testType}
+                    onChange={handleInputChange}
+                    items={testTypes}
+                />
+            </Grid>
+        </Form>
     )}
