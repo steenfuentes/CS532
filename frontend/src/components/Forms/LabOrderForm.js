@@ -33,7 +33,7 @@ const initialFValues = {
     results: ''
 }
 
-export default function EmployeeForm() {
+export default function LabOrderForm() {
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }

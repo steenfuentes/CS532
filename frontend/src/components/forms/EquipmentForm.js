@@ -27,7 +27,7 @@ const initialFValues = {
     purchaseDate: new Date()
 }
 
-export default function EmployeeForm() {
+export default function EquipmentForm() {
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
