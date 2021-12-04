@@ -1,13 +1,18 @@
 import json
 import inspect
+from re import U
 import sys, os
 import random
+from marshmallow.utils import pprint
 import requests
 
 # add app path 
 sys.path.append(os.path.abspath(os.path.join('../..')))
 
-from api.src.models.laborder import TestType
+from api.src.models.laborder import TestType, LabOrderModel, LabOrderSchema
+from api.src.models.physician import PhysicianSchema, PhysicianModel
+from api.src.models.patient import PatientModel, PatientSchema
+
 from api import db, create_app
 
 app = create_app()
@@ -39,31 +44,36 @@ with open('mock_data/lab_orders.json') as labs:
 
 
 pcp_ids = []
+pcp_id = 1 # assume first md will be assigned id of 1
 for md in physician_data:
-    pcp_ids.append(md["id"])
-    response = requests.post(url=physician_url, data=md)
-    if response.status_code == 201:
-        print("Added Dr.", md["last_name"], "to the physician table!\n")
-    else:
-        print(response.text)
-
+    pcp_ids.append(pcp_id)
+    pcp_id += 1
+    schema = PhysicianSchema()
+    result = schema.load(md)
+    physician = PhysicianModel(**result)
+    db.session.add(physician)
+    db.session.commit()
+    print("Added Dr.", md["last_name"], "to the physician table!\n")
+    
 patient_ids = []
+patient_id = 1 # assume first patient will be assigned id of 1
 for patient in patient_data:
     patient["pcp_id"] = pcp_ids[random.randrange(0,len(pcp_ids))]
+    patient["medications"] = ""
     patient_ids.append(patient["id"])
-    response = requests.post(url=patient_url, data=patient)
-    if response.status_code == 201:
-        print("Added patient:", patient["first_name"], patient["last_name"], "to the patient table!\n")
-    else:
-        print(response.text)
+    schema = PatientSchema()
+    result = schema.load(patient)
+    patient = PatientModel(**result)
+    db.session.add(physician)
+    db.session.commit()
+    print("Added patient:", patient["first_name"], patient["last_name"], "to the patient table!\n")
 
 for lab in labs_data:
     lab["test_type"] = tests[random.randrange(0,tests_len)]
     lab["physician_id"] = pcp_ids[random.randrange(0,len(pcp_ids)-1)]
     lab["patient_id"] = patient_ids[random.randrange(0,len(patient_ids)-1)]
-    response = requests.post(url=laborder_url, data=lab)
-    if response.status_code == 201:
-        print("Added lab order:", lab["id"], "to the lab order table!\n")
-    else:
-        print(response.text)
+    schema = LabOrderSchema()
+    result = schema.load(lab)
+    order = LabOrderModel(**result)
+    print("Added lab order:", lab["id"], "to the lab order table!\n")
   
