@@ -25,6 +25,18 @@ def drop_db():
     """Drops the db tables."""
     db.drop_all()
 
+@manager.command
+def refresh_db():
+    """Drops & Recreates db tables"""
+    print("Recreating Database...")
+    drop_db()
+    print("Tables dropped...")
+    create_db()
+
+@manager.command
+def populate_db():
+    import api.src.utils.populate_db as pop_db
+    pop_db
 
 if __name__ == '__main__':
     manager.run()

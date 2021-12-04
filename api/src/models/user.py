@@ -36,7 +36,7 @@ class UserModel(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     roles = db.relationship('RoleModel', 
             secondary=users_roles,
-            backref=db.backref('roles', lazy='dynamic')
+            backref=db.backref('roles', cascade="all,delete",lazy='dynamic')
     )
 
     def __init__(self, email, password, roles=[]):

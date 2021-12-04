@@ -46,8 +46,7 @@ class LabOrderModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     patient_id = db.Column(db.Integer, db.ForeignKey('patientmodel.id'))
     physician_id = db.Column(db.Integer, db.ForeignKey('physicianmodel.id'))
 
-    def __init__(self, id, test_type, patient_id =None, physician_id=None, date_performed="", performed_by="", results=""):
-        self.id = id
+    def __init__(self, test_type, patient_id =None, physician_id=None, date_performed="", performed_by="", results=""):
         self.test_type = test_type
         self.patient_id = patient_id
         self.physician_id = physician_id
@@ -57,7 +56,7 @@ class LabOrderModel(db.Model, BaseModel, metaclass=MetaBaseModel):
 
 class LabOrderSchema(Schema):
     test_type = EnumField(TestType, error='by_name') 
-    id = fields.Integer(required=True)
+    id = fields.Integer()
     date_performed = fields.String()
     performed_by = fields.String()
     results = fields.String()

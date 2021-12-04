@@ -54,7 +54,7 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
 
 
 class PatientSchema(Schema): 
- 
+    id = fields.Integer()
     first_name = fields.String()
     last_name = fields.String()
     number = fields.String()
