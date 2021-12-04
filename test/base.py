@@ -1,9 +1,9 @@
 from flask_testing import TestCase
-from api.config import TestingConfig
 
+from api.config import TestingConfig
 from api import db
 from api import create_app
-
+from api.src.utils.utilities import create_admin, create_roles
 
 
 class BaseTestCase(TestCase):
@@ -16,7 +16,8 @@ class BaseTestCase(TestCase):
 
     def setUp(self):
         db.create_all(app = create_app(TestingConfig))
-        db.session.commit()
+        create_roles()
+        create_admin()
 
     def tearDown(self):
         db.session.remove()
