@@ -17,12 +17,17 @@ const HomeLayout = ({ children, title, isAuthenticated, deauthenticate }) => (
         {!isAuthenticated && <Link href="/login"><a>Sign In</a></Link>}
         {/*{!isAuthenticated && <Link href="/signup"><a>Sign Up</a></Link>}*/}
         {isAuthenticated && <li onClick={deauthenticate}><a>Sign Out</a></li>}
-        <Link href="/whoami"><a>Who Am I</a></Link>
+        <Link href="/patients"><a>Patients</a></Link>
       </ul>
     </div>
 
     <div className="has-text-centered">
       {children}
+    </div>
+    <div class="navbar-brand is-right">
+      <a class="navbar-item is-hidden-desktop jb-navbar-menu-toggle" data-target="navbar-menu">
+        <span class="icon"><i class="mdi mdi-dots-vertical"></i></span>
+      </a>
     </div>
   </div>
 );

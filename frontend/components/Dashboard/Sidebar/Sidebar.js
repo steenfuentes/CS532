@@ -1,9 +1,10 @@
-/*eslint-disable*/
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import { useRouter } from "next/router";
+// added redux support
+import { connect } from 'react-redux';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -17,7 +18,7 @@ import Icon from "@material-ui/core/Icon";
 import AdminNavbarLinks from "../Navbar/AdminLinks";
 import styles from "../../../assets/styling/components/Sidebar/sidebarStyles";
 
-export default function Sidebar(props) {
+function Sidebar({ user }) {
     // used for checking current route
     const router = useRouter();
     // creates styles for this component
@@ -164,3 +165,24 @@ Sidebar.propTypes = {
     routes: PropTypes.arrayOf(PropTypes.object),
     open: PropTypes.bool,
 };
+
+
+
+Sidebar.getInitialProps = async (ctx) => {
+    initialize(ctx);
+    const token = ctx.store.getState().authentication.token;
+    if (token) {
+        const response = await axios.get(`${API}/records/`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        const user = await response.data;
+        return { user, token };
+        console.log(user);
+    }
+
+};
+
+
+export default connect(null, null)(Sidebar);

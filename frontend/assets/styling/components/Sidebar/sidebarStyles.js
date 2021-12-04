@@ -15,7 +15,7 @@ import {
     hexToRgb,
 } from "../../main-dash";
 
-const sidebarStyle = (theme) => ({
+const sidebarStyle = () => ({
     drawerPaper: {
         border: "none",
         position: "fixed",

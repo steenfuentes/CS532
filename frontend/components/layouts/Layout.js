@@ -14,3 +14,10 @@ export const Layout = ({ children }) => {
 }
 
 export default Layout;
+
+
+const mapStateToProps = (state) => (
+  { isAuthenticated: !!state.authentication.token }
+);
+
+export default connect(mapStateToProps, actions)(HomeLayout)
