@@ -77,7 +77,7 @@ class LoginAPI(MethodView):
 class LogoutAPI(MethodView):
     """Resources for logging out"""
 
-    
+    @UserRepo.token_required()
     def post(self):
         auth_header = request.headers.get('Authorization')
         if auth_header:
