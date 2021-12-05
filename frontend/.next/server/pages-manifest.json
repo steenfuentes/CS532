@@ -2,10 +2,5 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/admin/pharmacy": "pages/admin/pharmacy.js",
-  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js",
-  "/admin/equipment": "pages/admin/equipment.js",
-  "/": "pages/index.js",
-  "/home": "pages/home.js",
-  "/admin/dashboard": "pages/admin/dashboard.js"
+  "/admin/pharmacy": "pages/admin/pharmacy.js"
 }
