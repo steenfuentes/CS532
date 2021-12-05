@@ -30,6 +30,8 @@ export default function LabOrderForm() {
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
+        if ('email' in fieldValues)
+            temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
         setErrors({
             ...temp
         })
