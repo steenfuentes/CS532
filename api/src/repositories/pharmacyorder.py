@@ -1,7 +1,7 @@
 """
 Class that allows interaction with the lab order database model
 """
-from api.src.models.laborder import MedicationModel
+
 from api.src.models.patient import PatientModel
 from api.src.models.pharmacyorder import PharmacyOrderModel
 from api.src.models.physician import PhysicianModel

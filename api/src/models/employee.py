@@ -4,25 +4,14 @@ Define the model for an employee
 import enum
 from marshmallow import fields, Schema
 from marshmallow_enum import EnumField
-
-from api import db, ma
-from .abstractmodel import BaseModel, MetaBaseModel
 from sqlalchemy.orm import backref, validates
 from sqlalchemy.types import TypeDecorator
 
 
-class StrippedString(TypeDecorator):
 
-    impl = db.String
-
-    def process_bind_param(self, value, dialect):
-        # In case you have nullable string fields and pass None
-        return value.strip() if value else value
-
-    def copy(self, **kw):
-        return StrippedString(self.impl.length)
-
-
+from api import db, ma
+from .abstractmodel import BaseModel, MetaBaseModel
+from api.src.utils.stripped_string import StrippedString
 class EmployeeType(enum.Enum):
     PA = "Phsyician's Assistant"
     RN = "Nurse"
@@ -41,15 +30,15 @@ class EmployeeModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     status = db.Column(db.Integer, default = 4, nullable=False) # default status is active
 
     employee_type = db.Column(db.Enum(EmployeeType), nullable=False)
-    first_name = db.Column(db.StrippedString(50), nullable=False)
-    last_name = db.Column(db.StrippedString(50), nullable=False)
+    first_name = db.Column(StrippedString(50), nullable=False)
+    last_name = db.Column(StrippedString(50), nullable=False)
     start_date = db.Column(db.Date(), nullable=False)
-    number = db.Column(db.StrippedString(15), nullable=True)        # nullable=False for production
-    email = db.Column(db.StrippedString(50), nullable=True)         # nullable=False for production
+    number = db.Column(StrippedString(15), nullable=True)        # nullable=False for production
+    email = db.Column(StrippedString(50), nullable=True)         # nullable=False for production
 
     # relationships
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship("UserModel", backref=backref("employeemodel", uselist=False))
+    user_id = db.Column(db.Integer, db.ForeignKey('usermodel.id'))
+    user = db.relationship("UserModel",backref=backref("employeemodel", cascade="all,delete",uselist=False))
     
 class EmployeeSchema(Schema):
     id = fields.Integer()

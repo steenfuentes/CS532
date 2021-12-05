@@ -28,6 +28,7 @@ def create_app(config_class=DevelopmentConfig):
     from api.src.views.laborder import LabOrderAPI
     from api.src.views.patient import PatientAPI
     from api.src.views.physician import PhysicianAPI
+    from api.src.views.pharmacyorder import PharmacyOrderAPI
     from api.src.views.user import RegisterAPI, LoginAPI, LogoutAPI, UserProfileAPI
 
     equipment_view = EquipmentAPI.as_view('equipment_api')
@@ -44,6 +45,11 @@ def create_app(config_class=DevelopmentConfig):
     app.add_url_rule('/records/', defaults={'id': None}, view_func=patient_view, methods=['GET'])
     app.add_url_rule('/records/', view_func=patient_view, methods=['POST','PUT'])
     app.add_url_rule('/records/<int:id>', view_func=patient_view, methods=['GET'])
+
+    pharmacyorder_view = PharmacyOrderAPI.as_view('pharmacyorder_api')
+    app.add_url_rule('/pharmacy/order', defaults={'id': None}, view_func=pharmacyorder_view, methods=['GET'])
+    app.add_url_rule('/pharmacy/order', view_func=pharmacyorder_view, methods=['POST','PUT'])
+    app.add_url_rule('/pharmacy/order/<int:id>', view_func=pharmacyorder_view, methods=['GET'])
 
     physician_view = PhysicianAPI.as_view('physician_api')
     app.add_url_rule('/physicians/', defaults={'id': None}, view_func=physician_view, methods=['GET'])

@@ -8,7 +8,7 @@ from marshmallow_enum import EnumField
 
 from api import db, ma
 from .abstractmodel import BaseModel, MetaBaseModel
-from sqlalchemy.orm import validates
+from sqlalchemy.orm import backref, validates
 
 
 # just outlining the basic info needed that defines a patient
@@ -41,8 +41,12 @@ class LabOrderModel(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     test_type = db.Column(db.Enum(TestType), nullable=True) #Implement an enumeration for this column
     date_performed = db.Column(db.Date, nullable=False) #change format to date
-    performed_by = db.Column(db.String(60), nullable=True) # Create reference to an employee database table?
+ # Create reference to an employee database table?
     results = db.Column(db.String(120), nullable=True) # Create a database table for results?
+
+    performed_by = db.relationship("EmployeeModel", backref='labordermodel', uselist=False)
+
+    tech_id = db.Column(db.Integer, db.ForeignKey('employeemodel.id'))
     patient_id = db.Column(db.Integer, db.ForeignKey('patientmodel.id'))
     physician_id = db.Column(db.Integer, db.ForeignKey('physicianmodel.id'))
 
@@ -58,8 +62,9 @@ class LabOrderSchema(Schema):
     test_type = EnumField(TestType, error='by_name') 
     id = fields.Integer()
     date_performed = fields.String()
-    performed_by = fields.String()
     results = fields.String()
+    performed_by = fields.String()
+    tech_id = fields.Integer()
     patient_id = fields.Integer()
     physician_id = fields.Integer()
 
