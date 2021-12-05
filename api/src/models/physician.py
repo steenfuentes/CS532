@@ -28,8 +28,7 @@ class PhysicianModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     patients = db.relationship("PatientModel", backref="physicianmodel", lazy='select')
     lab_orders = db.relationship("LabOrderModel", backref="physicianmodel", lazy='select')
 
-def __init__(self, id, first_name, last_name, number="", email="", appointments=[], patients=[], lab_orders=[]):
-    self.id = id
+def __init__(self, first_name, last_name, number="", email="", appointments=[], patients=[], lab_orders=[]):
     self.first_name = first_name
     self.last_name = last_name
     self.number = number

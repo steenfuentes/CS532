@@ -11,9 +11,8 @@ class BaseTestCase(TestCase):
 
     def create_app(self):
         app = create_app(TestingConfig)
-        print('test1')
         return app
-
+        
     def setUp(self):
         db.create_all(app = create_app(TestingConfig))
         create_roles()
