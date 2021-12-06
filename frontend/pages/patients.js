@@ -25,9 +25,11 @@ import HomeLayout from '../components/layouts/HomeLayout';
 const Patients = ({ user, token }) => {
   console.log(user.Patients)
   const patientName = user.Patients.map(patient => { return patient.first_name + " " + patient.last_name })
-  const patientNumber = user.Patients.map(patient => { return patient.phone_number })
-
-  // const [id, setId] = useState('')
+  const patientNumber = user.Patients.map(patient => { return patient.number })
+  const patientEmail = user.Patients.map(patient => { return patient.email })
+  const patientAddress = user.Patients.map(patient => { return patient.address })
+  patientName.map(name => { console.log(name) })
+  console.log(patientName, patientNumber, patientEmail);
   const columns = [
     { title: "ID", field: "" },
     { title: "Name", field: "first_name" }
@@ -44,6 +46,14 @@ const Patients = ({ user, token }) => {
       <h3>You are {!token ? "not signed in" : " authenticaed via ", token}</h3>
       <div>
         <h2>Patients</h2>
+        <h3>Hello {patientName.map(name => (<h3>{name}</h3>))}</h3>
+      </div>
+      {!user
+        ?
+        <h3>Error loading patient information, please try again</h3>
+        : null
+      }
+      < div >
         <div className="update-patient">
           <form
             onSubmit={handleSubmit}
@@ -69,9 +79,27 @@ const Patients = ({ user, token }) => {
               </p>
             </div>
             <div className="field">
+              <p className="control has-icons-left has-icons-right">
+                <input
+                  className="input"
+                  type="text"
+                  placeholder="id"
+                  required
+                  value={"id"}
+                  onChange={e => setId(e.target.value)}
+                />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-envelope" />
+                </span>
+                <span className="icon is-small is-right">
+                  <i className="fas fa-check" />
+                </span>
+              </p>
+            </div>
+            <div className="field">
               <p className="control has-text-centered">
                 <button type="submit" className="button is-success">
-                  Sign In
+                  Update Patient Info
                 </button>
               </p>
             </div>
