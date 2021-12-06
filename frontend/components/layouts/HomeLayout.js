@@ -24,9 +24,9 @@ const HomeLayout = ({ children, title, isAuthenticated, deauthenticate }) => (
     <div className="has-text-centered">
       {children}
     </div>
-    <div class="navbar-brand is-right">
-      <a class="navbar-item is-hidden-desktop jb-navbar-menu-toggle" data-target="navbar-menu">
-        <span class="icon"><i class="mdi mdi-dots-vertical"></i></span>
+    <div className="navbar-brand is-right">
+      <a className="navbar-item is-hidden-desktop jb-navbar-menu-toggle" data-target="navbar-menu">
+        <span className="icon"><i className="mdi mdi-dots-vertical"></i></span>
       </a>
     </div>
   </div>
