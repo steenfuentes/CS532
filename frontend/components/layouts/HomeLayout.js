@@ -16,6 +16,8 @@ const HomeLayout = ({ children, title, isAuthenticated, deauthenticate }) => (
         <Link href="/"><a>Home</a></Link>
         <Link href="/patients"><a>Patients</a></Link>
         <Link href="/lab"><a>Lab</a></Link>
+        <Link href="/patients"><a>Scheduler</a></Link>
+
         <Link href="/pharmacy"><a>Pharmacy</a></Link>
         <Link href="/scheduler"><a>Billing</a></Link>
         <Link href="/patients"><a>Equipment</a></Link>
@@ -36,6 +38,18 @@ const HomeLayout = ({ children, title, isAuthenticated, deauthenticate }) => (
       <a className="navbar-item is-hidden-desktop jb-navbar-menu-toggle" data-target="navbar-menu">
         <span className="icon"><i className="mdi mdi-dots-vertical"></i></span>
       </a>
+    </div>
+    <div className="tabs is-centered">
+      <ul>
+        <Link href="/"><a>Home</a></Link>
+        <div style={{ marginLeft: "5vh" }}>
+          {!isAuthenticated && <Link href="/login"><a>Sign In</a></Link>}
+          {isAuthenticated && <li onClick={deauthenticate}><a>Sign Out</a></li>}
+        </div>
+
+
+
+      </ul>
     </div>
   </div>
 );
