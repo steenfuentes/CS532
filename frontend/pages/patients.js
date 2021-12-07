@@ -1,35 +1,19 @@
 import React, { useState } from 'react';
 import withRedux from 'next-redux-wrapper';
 import axios from 'axios';
+import Head from 'next/head';
 import { API } from '../config';
 import initialize from '../utils/initialize';
 import { initStore } from '../redux';
 import HomeLayout from '../components/layouts/HomeLayout';
 
-//     id = fields.Integer()
-//     first_name = fields.String()
-//     last_name = fields.String()
-//     number = fields.String()
-//     email = fields.Email()
-//     address = fields.String()
-//     insurance = fields.String()
-//     dob = fields.String()
-//     gender = fields.String()
-//     pcp_id = fields.Integer()
-//     medications = fields.String()
-//     appointments = fields.List(fields.Nested(AppointmentSchema()))
-//     lab_orders = fields.List(fields.Nested(LabOrderSchema()))
+
 
 
 
 const Patients = ({ user, token }) => {
-  console.log(user.Patients)
-  const patientName = user.Patients.map(patient => { return patient.first_name + " " + patient.last_name })
-  const patientNumber = user.Patients.map(patient => { return patient.number })
-  const patientEmail = user.Patients.map(patient => { return patient.email })
-  const patientAddress = user.Patients.map(patient => { return patient.address })
-  patientName.map(name => { console.log(name) })
-  console.log(patientName, patientNumber, patientEmail);
+
+  const patients = user.Patients.map(patient => { return patient })
   const columns = [
     { title: "ID", field: "" },
     { title: "Name", field: "first_name" }
@@ -40,18 +24,86 @@ const Patients = ({ user, token }) => {
     e.preventDefault();
 
   }
+  const style = {
+    table: {
+      fontfamily: "arial, sans - serif",
+      borderCollapse: "collapse",
+      width: "100%",
+    },
+
+    //     td, th {
+    //       border: 1px solid #dddddd;
+    //   text - align: left;
+    //   padding: 8px;
+    // },
+
+    //   tr: nth - child(even) {
+    //   background - color: #dddddd;
+  }
+
 
   return (
+
+
     < HomeLayout title="Patients" >
-      <h3>You are {!token ? "not signed in" : " authenticaed via ", token}</h3>
+      <p>You are authorized via {!token ? "not signed in" : " authenticaed via ", token}</p>
       <div>
-        <h2>Patients</h2>
-        <h3>Hello {patientName.map(name => (<h3>{name}</h3>))}</h3>
+        <h1 style={{ fontSize: "20px", fontWeight: "bold", paddingLeft: "40px", float: "left" }}>Patients</h1>
+        {!user
+          ?
+          <p>You are not signed in</p>
+          :
+          (<div style={{ margin: "auto", padding: "0 40px" }}>
+            <table style={{
+              margin: "auto", fontfamily: "arial, sans - serif",
+              borderCollapse: "collapse",
+              width: "100%",
+            }}>
+              <tr>
+                <th className={{
+                  border: "1px solid #dddddd",
+                  textAlign: "left",
+                  padding: "8px",
+                }}>ID</th>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Insurance</th>
+                <th>DOB</th>
+                <th>Gender</th>
+              </tr>
+              {patients.map(patient => {
+                return (
+                  <tr>
+                    <td>{patient.id}</td>
+                    <td>{patient.first_name + " " + patient.last_name}</td>
+                    <td>{patient.number}</td>
+                    <td>{patient.email}</td>
+                    <td>{patient.address}</td>
+                    <td>{patient.insurance}</td>
+                    <td>{patient.dob}</td>
+                    <td>{patient.gender}</td>
+
+
+
+
+                  </tr>
+                )
+              })}
+            </table>
+          </div>
+          )}
+
+
+
+
       </div>
-      {!user
-        ?
-        <h3>Error loading patient information, please try again</h3>
-        : null
+      {
+        !user
+          ?
+          <h3>Error loading patient information, please try again</h3>
+          : null
       }
       < div >
         <div className="update-patient">
@@ -104,12 +156,13 @@ const Patients = ({ user, token }) => {
               </p>
             </div>
           </form>
-
         </div>
-        <h3 className="names"> {patientName[0]}  </h3>
       </div>
 
+
+
     </HomeLayout >
+
   )
 };
 
