@@ -19,7 +19,6 @@ const Patients = ({ user, token }) => {
   ]
 
   const handleSubmit = (e) => {
-    initialize
     e.preventDefault();
 
   }
@@ -170,13 +169,22 @@ Patients.getInitialProps = async (ctx) => {
       headers: {
         Authorization: `Bearer ${token}`,
       }
+    }).then((res) => {
+      if (res.status === 401) {
+        ctx.store.dispatch({ type: "LOGOUT" });
+      } else {
+        return res.data;
+      }
     });
+
+
     const user = await response.data;
 
     return { user, token };
   }
+}
 
-};
+
 
 
 export default withRedux(initStore)(Patients);

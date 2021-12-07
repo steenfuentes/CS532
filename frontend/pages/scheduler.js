@@ -11,7 +11,6 @@ const Scheduler = ({ token }) => {
     !token ? router.push('/login') : null;
 
 
-
     return (
         <HomeLayout>
             <div className="container">
