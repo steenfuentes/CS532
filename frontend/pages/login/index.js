@@ -17,7 +17,6 @@ class Signin extends React.Component {
 
   static getInitialProps(ctx) {
     initialize(ctx);
-    this.props.patientRecords({})
     const token = ctx.store.getState().authentication.token;
     if (token) {
       const response = axios.get(`${API}/records/`, {
@@ -40,56 +39,64 @@ class Signin extends React.Component {
   render() {
     return (
       <HomeLayout title="Sign In">
-        <h3 className="title is-3">Sign In</h3>
-        <form
-          onSubmit={this.handleSubmit.bind(this)}
-          className="container"
-          style={{ width: '540px' }}
-        >
-          <div className="field">
-            <p className="control has-icons-left has-icons-right">
-              <input
-                className="input"
-                type="text"
-                placeholder="Email"
-                required
-                value={this.state.email}
-                onChange={(e) => this.setState({ email: e.target.value })}
-              />
-              <span className="icon is-small is-left">
-                <i className="fas fa-envelope" />
-              </span>
-              <span className="icon is-small is-right">
-                <i className="fas fa-check" />
-              </span>
-            </p>
+        <body style={{
+          position: "relative",
+          top: "0",
+          bottom: "0"
+        }}>
+          <div style={{ marginTop: '100px', height: '100%' }}>
+            <h3 className="title is-3">Sign In</h3>
+            <form
+              onSubmit={this.handleSubmit.bind(this)}
+              className="container"
+              style={{ width: '540px' }}
+            >
+              <div className="field">
+                <p className="control has-icons-left has-icons-right">
+                  <input
+                    className="input"
+                    type="text"
+                    placeholder="Email"
+                    required
+                    value={this.state.email}
+                    onChange={(e) => this.setState({ email: e.target.value })}
+                  />
+                  <span className="icon is-small is-left">
+                    <i className="fas fa-envelope" />
+                  </span>
+                  <span className="icon is-small is-right">
+                    <i className="fas fa-check" />
+                  </span>
+                </p>
+              </div>
+              <div className="field">
+                <p className="control has-icons-left">
+                  <input
+                    className="input"
+                    type="password"
+                    placeholder="Password"
+                    required
+                    value={this.state.password}
+                    onChange={(e) => this.setState({ password: e.target.value })}
+                  />
+                  <span className="icon is-small is-left">
+                    <i className="fas fa-lock" />
+                  </span>
+                </p>
+              </div>
+              <div className="field">
+                <p className="control has-text-centered">
+                  <button style={{ backgroundColor: "dodgerblue" }} type="submit" className="button is-success">
+                    Sign In
+                  </button>
+                </p>
+              </div>
+            </form>
+            <div>
+              <h3></h3>
+            </div>
           </div>
-          <div className="field">
-            <p className="control has-icons-left">
-              <input
-                className="input"
-                type="password"
-                placeholder="Password"
-                required
-                value={this.state.password}
-                onChange={(e) => this.setState({ password: e.target.value })}
-              />
-              <span className="icon is-small is-left">
-                <i className="fas fa-lock" />
-              </span>
-            </p>
-          </div>
-          <div className="field">
-            <p className="control has-text-centered">
-              <button type="submit" className="button is-success">
-                Sign In
-              </button>
-            </p>
-          </div>
-        </form>
-        <div>
-          <h3></h3>
-        </div>
+        </body>
       </HomeLayout>
     );
   }

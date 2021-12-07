@@ -52,7 +52,7 @@ const reauthenticate = (token) => {
 const deauthenticate = () => {
   return (dispatch) => {
     removeCookie('token');
-    Router.push('/');
+    Router.push('/login');
     dispatch({ type: DEAUTHENTICATE });
   };
 };
