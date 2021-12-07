@@ -7,7 +7,7 @@ import HomeLayout from '../components/layouts/HomeLayout';
 
 const Index = () => (
   <HomeLayout>
-    <div style={{ height: '90vh' }}>
+    <div style={{ height: '80vh' }}>
       <div style={{
 
         height: "200px",
@@ -24,7 +24,8 @@ const Index = () => (
         <Link href="/patients">
           <button style={{
             backgroundColor: "rgba(255, 255, 255, 0.8)",
-            border: "1px solid rgba(0, 0, 0, 0.8)",
+            border: "1px solid rgba(0, 0, 0, 0.4)",
+            borderRadius: "5px",
             padding: "20px",
             fontSize: "30px",
             textAlign: "center",
@@ -34,7 +35,8 @@ const Index = () => (
           }} class="grid-item">Patients</button></Link>
         <Link href="/lab"><button style={{
           backgroundColor: "rgba(255, 255, 255, 0.8)",
-          border: "1px solid rgba(0, 0, 0, 0.8)",
+          border: "1px solid rgba(0, 0, 0, 0.4)",
+          borderRadius: "5px",
           padding: "20px",
           fontSize: "30px",
           textAlign: "center",
@@ -46,10 +48,12 @@ const Index = () => (
         }} class="grid-item">Lab</button></Link>
         <Link href="/scheduler"><button style={{
           backgroundColor: "rgba(255, 255, 255, 0.8)",
-          border: "1px solid rgba(0, 0, 0, 0.8)",
+          border: "1px solid rgba(0, 0, 0, 0.4)",
           padding: "20px",
           fontSize: "30px",
           textAlign: "center",
+          borderRadius: "5px",
+
           margin: "1em",
           fontWeight: "bold",
 
@@ -57,10 +61,12 @@ const Index = () => (
         }} class="grid-item">Scheduler</button></Link>
         <Link href="/pharmacy"><button style={{
           backgroundColor: "rgba(255, 255, 255, 0.8)",
-          border: "1px solid rgba(0, 0, 0, 0.8)",
+          border: "1px solid rgba(0, 0, 0, 0.4)",
           padding: "20px",
           fontSize: "30px",
           textAlign: "center",
+          borderRadius: "5px",
+
           margin: "1em",
           fontWeight: "bold",
 
@@ -68,9 +74,10 @@ const Index = () => (
         }} class="grid-item">Pharmacy</button></Link>
         <Link href="/billing"><button style={{
           backgroundColor: "rgba(255, 255, 255, 0.8)",
-          border: "1px solid rgba(0, 0, 0, 0.8)",
+          border: "1px solid rgba(0, 0, 0, 0.4)",
           padding: "20px",
           fontSize: "30px",
+          borderRadius: "5px",
           textAlign: "center",
           fontWeight: "bold",
           margin: "1em",
@@ -78,8 +85,10 @@ const Index = () => (
         }} class="grid-item">Billing</button></Link>
         <Link href="/equipment"><button style={{
           backgroundColor: "rgba(255, 255, 255, 0.8)",
-          border: "1px solid rgba(0, 0, 0, 0.8)",
+          border: "1px solid rgba(0, 0, 0, 0.4)",
           padding: "20px",
+          borderRadius: "5px",
+
           fontSize: "30px",
           fontWeight: "bold",
           textAlign: "center",
