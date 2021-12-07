@@ -7,9 +7,8 @@ import { initStore } from '../redux';
 import HomeLayout from '../components/layouts/HomeLayout';
 import React from "react";
 
-const Scheduler = ({ token }) => {
+const Billing = ({ token }) => {
     !token ? router.push('/login') : null;
-
 
 
     return (
@@ -17,7 +16,7 @@ const Scheduler = ({ token }) => {
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
-                        <h1>Scheduler</h1>
+                        <h1>Billing</h1>
                     </div>
                 </div>
             </div>
@@ -25,12 +24,10 @@ const Scheduler = ({ token }) => {
     )
 }
 
-Scheduler.getInitialProps = async (ctx) => {
+Billing.getInitialProps = async (ctx) => {
     initialize(ctx);
     const token = ctx.store.getState().authentication.token;
 
     return { token };
-}
-
-
-export default withRedux(initStore)(Scheduler);
+};
+export default withRedux(initStore)(Billing);

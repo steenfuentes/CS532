@@ -4,17 +4,16 @@ import axios from 'axios';
 import { API } from '../config';
 import initialize from '../utils/initialize';
 import { initStore } from '../redux';
+import router from 'next/router';
 import HomeLayout from '../components/layouts/HomeLayout';
 
 
 const Lab = ({ laborders, token }) => {
     // const patients = orders.Patients.map(patient => { return patient })
     // const [id, setId] = useState('');
+    const orders = !laborders ? router.push("/login") : laborders.map(laborder => { return laborder })
     console.log(laborders);
-    const handleSubmit = (e) => {
-        e.preventDefault();
 
-    }
 
 
 
@@ -30,7 +29,7 @@ const Lab = ({ laborders, token }) => {
                 </div>
                 <div className="update-patient" style={{ float: "left", paddingLeft: "40px", display: "inline-block" }}>
                     <form
-                        onSubmit={handleSubmit}
+                        onSubmit={"handleSubmit"}
                         className="container"
                         style={{
                             display: "flex",
@@ -144,7 +143,7 @@ const Lab = ({ laborders, token }) => {
             {
                 !laborders
                     ?
-                    <h3>Error loading patient information, please try again</h3>
+                    <h3>Error loading lab information, please try again</h3>
                     : null
             }
             < div >
@@ -166,6 +165,9 @@ Lab.getInitialProps = async (ctx) => {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
+        }).catch(err => {
+            console.log(err);
+            return { err };
         });
         const laborders = await response.data;
 

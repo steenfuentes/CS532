@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import withRedux from 'next-redux-wrapper';
 import axios from 'axios';
-import Head from 'next/head';
 import { API } from '../config';
 import initialize from '../utils/initialize';
 import { initStore } from '../redux';
 import HomeLayout from '../components/layouts/HomeLayout';
-
+import router from 'next/router';
 
 const Patients = ({ user, token }) => {
 
-  const patients = user.Patients.map(patient => { return patient })
+
+  const patients = !user ? router.push("/login") : user.Patients.map(patient => { return patient })
   // const [id, setId] = useState('');
   const columns = [
     { title: "ID", field: "" },

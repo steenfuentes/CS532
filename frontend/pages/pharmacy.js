@@ -7,9 +7,8 @@ import { initStore } from '../redux';
 import HomeLayout from '../components/layouts/HomeLayout';
 import React from "react";
 
-const Scheduler = ({ token }) => {
-    !token ? router.push('/login') : null;
-
+const Pharmacy = ({ medication }) => {
+    const orders = !medication ? router.push("/login") : medication.map(laborder => { return medication })
 
 
     return (
@@ -17,7 +16,7 @@ const Scheduler = ({ token }) => {
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
-                        <h1>Scheduler</h1>
+                        <h1>Pharmacy</h1>
                     </div>
                 </div>
             </div>
@@ -25,12 +24,19 @@ const Scheduler = ({ token }) => {
     )
 }
 
-Scheduler.getInitialProps = async (ctx) => {
+Pharmacy.getInitialProps = async (ctx) => {
     initialize(ctx);
     const token = ctx.store.getState().authentication.token;
+    if (token) {
+        const response = await axios.get(`${API}/equipment/`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        const medication = await response.data;
 
-    return { token };
-}
+        return { medication, token };
+    }
 
-
-export default withRedux(initStore)(Scheduler);
+};
+export default withRedux(initStore)(Pharmacy);
