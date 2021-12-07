@@ -30,7 +30,6 @@ const Patients = ({ user, token }) => {
 
 
     < HomeLayout title="Patients" >
-      <p>You are authorized via {!token ? "not signed in" : " authenticaed via ", token}</p>
 
       <div style={{ display: "inline-block" }}>
         <div style={{ display: "flex" }}>
@@ -112,32 +111,30 @@ const Patients = ({ user, token }) => {
             <table style={{
               margin: "auto", fontfamily: "arial, sans - serif",
               borderCollapse: "collapse",
-              width: "100%",
+              width: "100%", border: "1px solid #ddd",
             }}>
-              <tr>
-                <th className={{
-                  border: "1px solid #dddddd",
-                  textAlign: "left",
-                  padding: "8px",
+              <tr style={{ borderBottom: "2px solid #ddd" }} >
+                <th style={{
+                  paddingLeft: "4px",
                 }}>ID</th>
-                <th>Name</th>
-                <th>Number</th>
-                <th style={{ paddingLeft: "10px" }}>Email</th>
-                <th style={{ paddingLeft: "10px" }}>Address</th>
+                <th style={{ paddingLeft: "8px" }}>Name</th>
+                <th style={{ paddingLeft: "8px" }}>Number</th>
+                <th style={{ paddingLeft: "8px" }}>Email</th>
+                <th style={{ paddingLeft: "8px" }}>Address</th>
                 <th>Insurance</th>
                 <th>DOB</th>
-                <th style={{ paddingLeft: "10px" }}>Gender</th>
+                <th style={{ paddingLeft: "8px" }}>Gender</th>
               </tr>
               {patients.map(patient => {
                 return (
                   <tr>
-                    <td>{patient.id}</td>
-                    <td>{patient.first_name + " " + patient.last_name}</td>
-                    <td>{patient.number}</td>
-                    <td style={{ paddingLeft: "10px" }}>{patient.email}</td>
-                    <td style={{ paddingLeft: "10px" }}>{patient.address}</td>
-                    <td>{patient.insurance}</td>
-                    <td>{patient.dob}</td>
+                    <td style={{ paddingLeft: "4px" }}>{patient.id}</td>
+                    <td style={{ padding: "0 8px", borderRight: "1px solid #ddd" }}>{patient.first_name + " " + patient.last_name}</td>
+                    <td style={{ padding: "0 8px", borderRight: "1px solid #ddd" }}>{patient.number}</td>
+                    <td style={{ padding: "0 8px", borderRight: "1px solid #ddd" }}>{patient.email}</td>
+                    <td style={{ padding: "0 8px", borderRight: "1px solid #ddd" }}>{patient.address}</td>
+                    <td style={{ padding: "0 8px", borderRight: "1px solid #ddd" }}>{patient.insurance}</td>
+                    <td style={{ padding: "0 8px", borderRight: "1px solid #ddd" }}>{patient.dob}</td>
                     <td style={{ paddingLeft: "10px" }}>{patient.gender}</td>
 
                   </tr>
