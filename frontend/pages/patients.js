@@ -8,12 +8,10 @@ import { initStore } from '../redux';
 import HomeLayout from '../components/layouts/HomeLayout';
 
 
-
-
-
 const Patients = ({ user, token }) => {
 
   const patients = user.Patients.map(patient => { return patient })
+  // const [id, setId] = useState('');
   const columns = [
     { title: "ID", field: "" },
     { title: "Name", field: "first_name" }
@@ -21,25 +19,11 @@ const Patients = ({ user, token }) => {
   ]
 
   const handleSubmit = (e) => {
+    initialize
     e.preventDefault();
 
   }
-  const style = {
-    table: {
-      fontfamily: "arial, sans - serif",
-      borderCollapse: "collapse",
-      width: "100%",
-    },
 
-    //     td, th {
-    //       border: 1px solid #dddddd;
-    //   text - align: left;
-    //   padding: 8px;
-    // },
-
-    //   tr: nth - child(even) {
-    //   background - color: #dddddd;
-  }
 
 
   return (
@@ -47,8 +31,79 @@ const Patients = ({ user, token }) => {
 
     < HomeLayout title="Patients" >
       <p>You are authorized via {!token ? "not signed in" : " authenticaed via ", token}</p>
-      <div>
-        <h1 style={{ fontSize: "20px", fontWeight: "bold", paddingLeft: "40px", float: "left" }}>Patients</h1>
+
+      <div style={{ display: "inline-block" }}>
+        <div style={{ display: "flex" }}>
+          <h1 style={{ fontSize: "20px", fontWeight: "bold", paddingLeft: "40px", float: "left" }}>Patients</h1>
+        </div>
+        <div className="update-patient" style={{ float: "left", paddingLeft: "40px", display: "inline-block" }}>
+          <form
+            onSubmit={handleSubmit}
+            className="container"
+            style={{
+              display: "flex",
+              flexFlow: "row wrap",
+              alignItems: "center",
+              width: '540px'
+            }}
+          >
+            <div className="style.field">
+              <p className="control has-icons-left has-icons-right">
+                <input
+                  style={{
+                    verticalAlign: "middle",
+                    margin: "5px 10px 5px 0",
+                    padding: "10px",
+                    backgroundColor: "#fff",
+                    border: "1px solid #ddd",
+                  }}
+                  type="text"
+                  placeholder="id"
+                  required
+                  value={"id"}
+                  onChange={e => setId(e.target.value)}
+                />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-envelope" />
+                </span>
+                <span className="icon is-small is-right">
+                  <i className="fas fa-check" />
+                </span>
+              </p>
+            </div>
+            <div style={{ marginBottom: "0px" }} className="field">
+              <p className="control has-icons-left has-icons-right">
+                <input
+                  style={{
+                    verticalAlign: "middle",
+                    margin: "5px 10px 5px 0",
+                    padding: "10px",
+                    backgroundColor: "#fff",
+                    border: "1px solid #ddd",
+                  }}
+                  type="text"
+                  placeholder="id"
+                  required
+                  value={"id"}
+                  onChange={e => setId(e.target.value)}
+                />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-envelope" />
+                </span>
+                <span className="icon is-small is-right">
+                  <i className="fas fa-check" />
+                </span>
+              </p>
+            </div>
+            <div style={{ display: "inline-block" }}>
+              <p className="control has-text-centered">
+                <button type="submit" className="button is-success">
+                  Update Patient Info
+                </button>
+              </p>
+            </div>
+          </form>
+        </div>
         {!user
           ?
           <p>You are not signed in</p>
@@ -67,11 +122,11 @@ const Patients = ({ user, token }) => {
                 }}>ID</th>
                 <th>Name</th>
                 <th>Number</th>
-                <th>Email</th>
-                <th>Address</th>
+                <th style={{ paddingLeft: "10px" }}>Email</th>
+                <th style={{ paddingLeft: "10px" }}>Address</th>
                 <th>Insurance</th>
                 <th>DOB</th>
-                <th>Gender</th>
+                <th style={{ paddingLeft: "10px" }}>Gender</th>
               </tr>
               {patients.map(patient => {
                 return (
@@ -79,14 +134,11 @@ const Patients = ({ user, token }) => {
                     <td>{patient.id}</td>
                     <td>{patient.first_name + " " + patient.last_name}</td>
                     <td>{patient.number}</td>
-                    <td>{patient.email}</td>
-                    <td>{patient.address}</td>
+                    <td style={{ paddingLeft: "10px" }}>{patient.email}</td>
+                    <td style={{ paddingLeft: "10px" }}>{patient.address}</td>
                     <td>{patient.insurance}</td>
                     <td>{patient.dob}</td>
-                    <td>{patient.gender}</td>
-
-
-
+                    <td style={{ paddingLeft: "10px" }}>{patient.gender}</td>
 
                   </tr>
                 )
@@ -94,9 +146,6 @@ const Patients = ({ user, token }) => {
             </table>
           </div>
           )}
-
-
-
 
       </div>
       {
@@ -106,57 +155,7 @@ const Patients = ({ user, token }) => {
           : null
       }
       < div >
-        <div className="update-patient">
-          <form
-            onSubmit={handleSubmit}
-            className="container"
-            style={{ width: '540px' }}
-          >
-            <div className="field">
-              <p className="control has-icons-left has-icons-right">
-                <input
-                  className="input"
-                  type="text"
-                  placeholder="id"
-                  required
-                  value={"id"}
-                  onChange={e => setId(e.target.value)}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope" />
-                </span>
-                <span className="icon is-small is-right">
-                  <i className="fas fa-check" />
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left has-icons-right">
-                <input
-                  className="input"
-                  type="text"
-                  placeholder="id"
-                  required
-                  value={"id"}
-                  onChange={e => setId(e.target.value)}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope" />
-                </span>
-                <span className="icon is-small is-right">
-                  <i className="fas fa-check" />
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-text-centered">
-                <button type="submit" className="button is-success">
-                  Update Patient Info
-                </button>
-              </p>
-            </div>
-          </form>
-        </div>
+
       </div>
 
 

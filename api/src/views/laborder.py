@@ -19,11 +19,11 @@ class LabOrderAPI(MethodView):
         """ Return LabOrder based on the id"""
         if id is None:
             p = LabOrderRepo.get_all()
-            schema = LabOrderModel.Schema(many=True)
+            schema = LabOrderSchema(many=True)
         else:
             p = LabOrderRepo.get(id)
             print(p)
-            schema = LabOrderModel.Schema()
+            schema = LabOrderSchema()
             print(schema)
        
         result = schema.dump(p)

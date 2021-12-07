@@ -11,12 +11,26 @@ class Signin extends React.Component {
     this.state = {
       email: '',
       password: '',
+      user: [],
     };
   }
 
   static getInitialProps(ctx) {
     initialize(ctx);
+    this.props.patientRecords({})
+    const token = ctx.store.getState().authentication.token;
+    if (token) {
+      const response = axios.get(`${API}/records/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      const user = response.data;
+
+      return { user, token };
+    }
   }
+
 
   handleSubmit(e) {
     e.preventDefault();
@@ -73,6 +87,9 @@ class Signin extends React.Component {
             </p>
           </div>
         </form>
+        <div>
+          <h3></h3>
+        </div>
       </HomeLayout>
     );
   }
