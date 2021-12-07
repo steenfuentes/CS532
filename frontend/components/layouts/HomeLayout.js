@@ -14,10 +14,18 @@ const HomeLayout = ({ children, title, isAuthenticated, deauthenticate }) => (
     <div className="tabs is-centered">
       <ul>
         <Link href="/"><a>Home</a></Link>
-        {!isAuthenticated && <Link href="/login"><a>Sign In</a></Link>}
-        {/*{!isAuthenticated && <Link href="/signup"><a>Sign Up</a></Link>}*/}
-        {isAuthenticated && <li onClick={deauthenticate}><a>Sign Out</a></li>}
         <Link href="/patients"><a>Patients</a></Link>
+        <Link href="/lab"><a>Lab</a></Link>
+        <Link href="/pharmacy"><a>Pharmacy</a></Link>
+        <Link href="/scheduler"><a>Billing</a></Link>
+        <Link href="/patients"><a>Equipment</a></Link>
+        <div style={{ marginLeft: "5vh" }}>
+          {!isAuthenticated && <Link href="/login"><a>Sign In</a></Link>}
+          {isAuthenticated && <li onClick={deauthenticate}><a>Sign Out</a></li>}
+        </div>
+
+
+
       </ul>
     </div>
 
