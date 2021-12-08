@@ -2,40 +2,21 @@
 import actions from '../redux/actions';
 import initialize from '../utils/initialize';
 import { initStore } from '../redux';
+import withRedux from 'next-redux-wrapper';
+import axios from 'axios';
+import { API } from '../config'
 import HomeLayout from '../components/layouts/HomeLayout';
 import router from 'next/router';
 
-class Patients extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      patients: [],
-      id: '',
-      name: '',
-    }
-  }
-
-  static getInitialProps(ctx) {
-    initialize(ctx);
-    const token = ctx.store.getState().authentication.token;
-    this.props.patientRecords({ token });
-    console.log(patients);
-  }
+const Patients = ({ patientRecord, token }) => {
 
 
 
 
-  // const [id, setId] = useState('');
-
-
-
-
-<<<<<<< HEAD
+  const patients = patientRecord.Patients.map(patient => { return patient })
 
 
   return (
-
-
     < HomeLayout title="Patients" >
 
       <div style={{ display: "inline-block" }}>
@@ -44,7 +25,7 @@ class Patients extends React.Component {
         </div>
         <div className="update-patient" style={{ float: "left", paddingLeft: "40px", display: "inline-block" }}>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={"handleSubmit"}
             className="container"
             style={{
               display: "flex",
@@ -110,7 +91,8 @@ class Patients extends React.Component {
             </div>
           </form>
         </div>
-        {!user
+
+        {!this.props.user
           ?
           <p>You are not signed in</p>
           :
@@ -152,53 +134,36 @@ class Patients extends React.Component {
           )}
 
       </div>
-      {
-        !user
-          ?
-          <h3>Error loading patient information, please try again</h3>
-          : null
+
+
+    </HomeLayout >
+  )
+
+}
+
+
+Patients.getInitialProps = async (ctx) => {
+  initialize(ctx);
+  const token = ctx.store.getState().authentication.token;
+  if (token) {
+    const response = await axios.get(`${API}/records/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       }
-      < div >
-
-      </div>
-
-
-        < div >
-
-        </div>
-
-
-
-      </HomeLayout >
-
-
-    return { user, token };
+    });
+    const patientRecord = await response.data;
+    if (response.status === 401) {
+      ctx.store.dispatch({ type: "LOGOUT" });
+    } else {
+      return { patientRecord, token };
+    }
   }
 }
 
-// Patients.getInitialProps = async (ctx) => {
-//   initialize(ctx);
-//   const token = ctx.store.getState().authentication.token;
-//   if (token) {
-//     const response = await axios.get(`${API}/records/`, {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       }
-//     });
-//     const user = await response.data;
-//     if (response.status === 401) {
-//       ctx.store.dispatch({ type: "LOGOUT" });
-//     } else {
-//       return { user, token };
-//     }
-
-
-
-//   };
-
-// }
 
 
 
 
-export default withRedux(initStore, null, actions)(Patients);
+
+
+export default withRedux(initStore)(Patients);

@@ -10,82 +10,81 @@ import HomeLayout from '../components/layouts/HomeLayout';
 
 const Lab = ({ laborders }) => {
 
-
-
     return (
-
-                <div style={{ display: "inline-block" }}>
-                    <div style={{ display: "flex" }}>
-                        <h1 style={{ fontSize: "20px", fontWeight: "bold", paddingLeft: "40px", float: "left" }}>Lab Orders</h1>
-                    </div>
-                    <div className="update-patient" style={{ float: "left", paddingLeft: "40px", display: "inline-block" }}>
-                        <form
-                            onSubmit={"handleSubmit"}
-                            className="container"
-                            style={{
-                                display: "flex",
-                                flexFlow: "row wrap",
-                                alignItems: "center",
-                                width: '540px'
-                            }}
-                        >
-                            <div className="style.field">
-                                <p className="control has-icons-left has-icons-right">
-                                    <input
-                                        style={{
-                                            verticalAlign: "middle",
-                                            margin: "5px 10px 5px 0",
-                                            padding: "10px",
-                                            backgroundColor: "#fff",
-                                            border: "1px solid #ddd",
-                                        }}
-                                        type="text"
-                                        placeholder="id"
-                                        required
-                                        value={"id"}
-                                        onChange={e => setId(e.target.value)}
-                                    />
-                                    <span className="icon is-small is-left">
-                                        <i className="fas fa-envelope" />
-                                    </span>
-                                    <span className="icon is-small is-right">
-                                        <i className="fas fa-check" />
-                                    </span>
-                                </p>
-                            </div>
-                            <div style={{ marginBottom: "0px" }} className="field">
-                                <p className="control has-icons-left has-icons-right">
-                                    <input
-                                        style={{
-                                            verticalAlign: "middle",
-                                            margin: "5px 10px 5px 0",
-                                            padding: "10px",
-                                            backgroundColor: "#fff",
-                                            border: "1px solid #ddd",
-                                        }}
-                                        type="text"
-                                        placeholder="id"
-                                        required
-                                        value={"id"}
-                                        onChange={e => setId(e.target.value)}
-                                    />
-                                    <span className="icon is-small is-left">
-                                        <i className="fas fa-envelope" />
-                                    </span>
-                                    <span className="icon is-small is-right">
-                                        <i className="fas fa-check" />
-                                    </span>
-                                </p>
-                            </div>
-                            <div style={{ display: "inline-block" }}>
-                                <p className="control has-text-centered">
-                                    <button type="submit" className="button is-success">
-                                        Update Patient Info
-                                    </button>
-                                </p>
-                            </div>
-                        </form>
-                    </div>
+        <HomeLayout title={'Lab'}>
+            <div style={{ display: "inline-block" }}>
+                <div style={{ display: "flex" }}>
+                    <h1 style={{ fontSize: "20px", fontWeight: "bold", paddingLeft: "40px", float: "left" }}>Lab Orders</h1>
+                </div>
+                <div className="update-patient" style={{ float: "left", paddingLeft: "40px", display: "inline-block" }}>
+                    <form
+                        onSubmit={"handleSubmit"}
+                        className="container"
+                        style={{
+                            display: "flex",
+                            flexFlow: "row wrap",
+                            alignItems: "center",
+                            width: '540px'
+                        }}
+                    >
+                        <div className="style.field">
+                            <p className="control has-icons-left has-icons-right">
+                                <input
+                                    style={{
+                                        verticalAlign: "middle",
+                                        margin: "5px 10px 5px 0",
+                                        padding: "10px",
+                                        backgroundColor: "#fff",
+                                        border: "1px solid #ddd",
+                                    }}
+                                    type="text"
+                                    placeholder="id"
+                                    required
+                                    value={"id"}
+                                    onChange={e => setId(e.target.value)}
+                                />
+                                <span className="icon is-small is-left">
+                                    <i className="fas fa-envelope" />
+                                </span>
+                                <span className="icon is-small is-right">
+                                    <i className="fas fa-check" />
+                                </span>
+                            </p>
+                        </div>
+                        <div style={{ marginBottom: "0px" }} className="field">
+                            <p className="control has-icons-left has-icons-right">
+                                <input
+                                    style={{
+                                        verticalAlign: "middle",
+                                        margin: "5px 10px 5px 0",
+                                        padding: "10px",
+                                        backgroundColor: "#fff",
+                                        border: "1px solid #ddd",
+                                    }}
+                                    type="text"
+                                    placeholder="id"
+                                    required
+                                    value={"id"}
+                                    onChange={e => setId(e.target.value)}
+                                />
+                                <span className="icon is-small is-left">
+                                    <i className="fas fa-envelope" />
+                                </span>
+                                <span className="icon is-small is-right">
+                                    <i className="fas fa-check" />
+                                </span>
+                            </p>
+                        </div>
+                        <div style={{ display: "inline-block" }}>
+                            <p className="control has-text-centered">
+                                <button type="submit" className="button is-success">
+                                    Update Patient Info
+                                </button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+                <div>
                     {!laborders
                         ?
                         <p>You are not signed in</p>
@@ -125,21 +124,12 @@ const Lab = ({ laborders }) => {
                                 })}
                             </table>
                         </div>
-                    </form>
+                        )}
                 </div>
-                {
-                    !laborders
-                        ?
-                        <h3>Error loading lab information, please try again</h3>
-                        : null
-                }
+            </div>
 
-                </div>
+        </HomeLayout >
 
-
-
-            </HomeLayout >
-        </div>
 
     )
 };

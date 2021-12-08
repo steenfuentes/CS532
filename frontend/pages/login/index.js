@@ -24,9 +24,7 @@ class Signin extends React.Component {
     this.props.authenticate({ email: this.state.email, password: this.state.password }, 'login/');
   }
 
-  render() {
-    return (
-      <HomeLayout title="Sign In">
+
   render() {
     return (
       <HomeLayout title="Sign In">
@@ -84,7 +82,8 @@ class Signin extends React.Component {
               </div>
             </form>
           </div>
-              <h3></h3>
+          <h3></h3>
+        </body>
       </HomeLayout>
     );
   }

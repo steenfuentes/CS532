@@ -61,4 +61,3 @@ class LabOrderModel(db.Model, am.BaseModel, metaclass=am.MetaBaseModel):
         self.results = results
 
 
-

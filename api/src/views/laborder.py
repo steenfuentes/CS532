@@ -18,23 +18,14 @@ class LabOrderAPI(MethodView):
     def get(id):
         """ Return LabOrder based on the id"""
         if id is None:
-<<<<<<< HEAD
             l = lorepo.LabOrderRepo.get_all()
             schema = s.LabOrderSchema(many=True)
-=======
-            l = LabOrderRepo.get_all()
-            schema = LabOrderSchema(many=True)
->>>>>>> c58233b8e9cf595e9ffbfefbe2dd0bbe261a1fcb
             result = schema.dump(l)
             return jsonify({"LAB ORDERS": result})
         else:
             p = lorepo.LabOrderRepo.get(id)
             print(p)
-<<<<<<< HEAD
             schema = s.LabOrderSchema()
-=======
-            schema = LabOrderSchema()
->>>>>>> c58233b8e9cf595e9ffbfefbe2dd0bbe261a1fcb
             print(schema)
        
         result = schema.dump(p)

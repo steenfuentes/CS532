@@ -137,4 +137,3 @@ class BlacklistToken(db.Model, am.BaseModel, metaclass=am.MetaBaseModel):
         else:
             return False
 
-
