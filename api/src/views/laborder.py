@@ -23,23 +23,23 @@ class LabOrderAPI(MethodView):
             result = schema.dump(l)
             return jsonify({"LAB ORDERS": result})
         else:
-            p = lorepo.LabOrderRepo.get(id)
+            l = lorepo.LabOrderRepo.get(id)
             print(p)
             schema = s.LabOrderSchema()
             print(schema)
        
-        result = schema.dump(p)
+        result = schema.dump(l)
     
         return result
 
     @staticmethod
-    @parser.use_kwargs(s.LabOrderSchema, location="json_or_form")
+    @parser.use_kwargs(s.LabOrderSchema(), location="json_or_form")
     def post(**kwargs):
         """Create LabOrder using all of the incoming information"""
         lorepo.LabOrderRepo.create(**kwargs)
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
-    @parser.use_kwargs(s.LabOrderSchema, location="json_or_form")
+    @parser.use_kwargs(s.LabOrderSchema(), location="json_or_form")
     def put(id, **kwargs):
         """Update any attribute of the LabOrder Model"""
         order = lorepo.LabOrderRepo.get(id)

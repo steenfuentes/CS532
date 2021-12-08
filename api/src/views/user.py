@@ -23,7 +23,7 @@ class RegisterAPI(MethodView):
 
     @staticmethod 
     @ur.token_required("ADMIN", "ROOT")
-    @parser.use_kwargs(s.UserSchema, location="json_or_form") 
+    @parser.use_kwargs(s.UserSchema(), location="json_or_form") 
     def post(email, password, roles):
         """
         Create User using all of the incoming information.
@@ -53,7 +53,7 @@ class LoginAPI(MethodView):
     ur = ur.UserRepo()
 
     @staticmethod
-    @parser.use_kwargs(s.UserSchema, location="json_or_form")
+    @parser.use_kwargs(s.UserSchema(), location="json_or_form")
     def post(email, password):
         """Validate User Login Information & Generate JWT Token"""
 
@@ -123,7 +123,7 @@ class UserProfileAPI(MethodView):
     """Resources for changing User Information"""
     ur = ur.UserRepo()
     
-    @parser.use_kwargs(s.UserSchema, location="json_or_form")
+    @parser.use_kwargs(s.UserSchema(), location="json_or_form")
     def put(self, id, **kwargs):
         """Update any attribute of the User Model"""
         user = ur.UserRepo.get_by_id(id)
