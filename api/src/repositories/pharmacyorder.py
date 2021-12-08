@@ -22,25 +22,25 @@ class PharmacyOrderRepo():
         return LabOrder_list
     
     @staticmethod
-    def create(id,**kwargs):
+    def create(**kwargs):
         """ Create a new LabOrder
             Must have a patient and physician associated upon creation    
         """
         # associated_physician = PhysicianModel.query.filter_by(id=physician_id).one()
-        PharmacyOrder = PharmacyOrderModel(id=id, **kwargs)
+        PharmacyOrder = PharmacyOrderModel(**kwargs)
         # LabOrder.append(associated_physician)
         if "patient_id" in kwargs:
             patient_id = kwargs.get("patient_id")
             associated_patient = PatientModel.query.filter_by(id=patient_id).one()
             print("Retrieving patient...")
-            associated_patient.pharmacy_order.append(PharmacyOrder)
+            associated_patient.pharmacy_orders.append(PharmacyOrder)
             print("Pharmacy Order added to:", associated_patient.first_name, associated_patient.last_name)
             associated_patient.save()
         
         if "physician_id" in kwargs:
             physician_id = kwargs.get("physician_id")
             associated_md = PhysicianModel.query.filter_by(id=physician_id).one()
-            associated_md.pharmacy_order.append(PharmacyOrder)
+            associated_md.pharmacy_orders.append(PharmacyOrder)
             associated_md.save()
         
         return PharmacyOrder.save()

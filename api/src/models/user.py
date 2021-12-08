@@ -5,6 +5,7 @@ from re import A
 from flask.helpers import make_response
 from flask.json import jsonify
 from marshmallow import Schema, fields
+from sqlalchemy.orm import backref
 from sqlalchemy.sql import func
 from flask import current_app
 import jwt, datetime
@@ -35,8 +36,8 @@ class UserModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     created = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
     roles = db.relationship('RoleModel', 
-            secondary=users_roles,
-            backref=db.backref('roles', cascade="all,delete",lazy='dynamic')
+            secondary=users_roles,cascade="all,delete",
+            backref=backref('roles', cascade="all,delete",lazy='dynamic')
     )
 
     def __init__(self, email, password, roles=[]):

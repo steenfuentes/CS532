@@ -24,12 +24,12 @@ class PhysicianModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     email = db.Column(StrippedString(50), unique=True, nullable=True) # Change to nullable=False for production
 
     # relationships this model is a parent to
-    appointments = db.relationship("AppointmentModel", backref="physicianmodel", lazy='select')
-    patients = db.relationship("PatientModel", backref="physicianmodel", lazy='select')
-    lab_orders = db.relationship("LabOrderModel", backref="physicianmodel", lazy='select')
+    appointments = db.relationship("AppointmentModel",cascade="all,delete", backref="physicianmodel", lazy='select')
+    patients = db.relationship("PatientModel", cascade="all,delete",backref="physicianmodel", lazy='select')
+    lab_orders = db.relationship("LabOrderModel", cascade="all,delete",backref="physicianmodel", lazy='select')
+    pharmacy_orders = db.relationship("PharmacyOrderModel", cascade="all,delete",backref="physicianmodel", lazy='select')
 
-def __init__(self, id, first_name, last_name, number="", email="", appointments=[], patients=[], lab_orders=[]):
-    self.id = id
+def __init__(self,first_name, last_name, number="", email="", appointments=[], patients=[], lab_orders=[]): 
     self.first_name = first_name
     self.last_name = last_name
     self.number = number

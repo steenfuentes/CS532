@@ -70,6 +70,6 @@ for lab in labs_data:
     result = schema.load(lab)
     order = LabOrderModel(**result)
     order.save()
-    print("Added lab order:", laborder_id , "to the lab order table!\n")
+    print("Added lab order:", order.id , "to the lab order table!\n")
     laborder_id += 1
   

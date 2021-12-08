@@ -50,12 +50,11 @@ class LabOrderModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     patient_id = db.Column(db.Integer, db.ForeignKey('patientmodel.id'))
     physician_id = db.Column(db.Integer, db.ForeignKey('physicianmodel.id'))
 
-    def __init__(self, test_type, patient_id =None, physician_id=None, date_performed="", performed_by="", results=""):
+    def __init__(self, test_type, patient_id =None, physician_id=None, date_performed="", results=""):
         self.test_type = test_type
         self.patient_id = patient_id
         self.physician_id = physician_id
         self.date_performed = date_performed
-        self.performed_by = performed_by
         self.results = results
 
 class LabOrderSchema(Schema):

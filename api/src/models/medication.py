@@ -24,7 +24,7 @@ class MedicationModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = 'medicationmodel'
 
     id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
-    owner = db.Column(db.Integer, default = 2, nullable=False)
+    owner = db.Column(db.Integer, default = 1, nullable=False)
     group = db.Column(db.Integer, default = 64, nullable=False) # default group is pharmacy admin
     status = db.Column(db.Integer, default = 4, nullable=False) # default status is active
 

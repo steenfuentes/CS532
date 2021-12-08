@@ -5,6 +5,7 @@ import enum
 from marshmallow import fields, Schema
 from marshmallow_enum import EnumField
 from sqlalchemy.orm import backref, validates
+from sqlalchemy.sql.functions import func
 from sqlalchemy.types import TypeDecorator
 
 
@@ -32,13 +33,18 @@ class EmployeeModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     employee_type = db.Column(db.Enum(EmployeeType), nullable=False)
     first_name = db.Column(StrippedString(50), nullable=False)
     last_name = db.Column(StrippedString(50), nullable=False)
-    start_date = db.Column(db.Date(), nullable=False)
+    start_date = db.Column(db.Date,server_default=func.now())
     number = db.Column(StrippedString(15), nullable=True)        # nullable=False for production
-    email = db.Column(StrippedString(50), nullable=True)         # nullable=False for production
-
+   
     # relationships
     user_id = db.Column(db.Integer, db.ForeignKey('usermodel.id'))
     user = db.relationship("UserModel",backref=backref("employeemodel", cascade="all,delete",uselist=False))
+
+    def __init__(self, employee_type, first_name, last_name, number=""):
+        self.employee_type = employee_type
+        self.first_name = first_name
+        self.last_name = last_name
+        self.number = number
     
 class EmployeeSchema(Schema):
     id = fields.Integer()
@@ -47,7 +53,7 @@ class EmployeeSchema(Schema):
     last_name = fields.String()
     start_date = fields.Date()
     number = fields.String()
-    email = fields.Email()
+   
 
 
 

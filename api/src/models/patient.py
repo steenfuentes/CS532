@@ -33,12 +33,13 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     pcp_id = db.Column(db.Integer, db.ForeignKey("physicianmodel.id"))
 
     # relationships
-    lab_orders = db.relationship("LabOrderModel", backref="patientmodel", lazy=True)
-    appointments = db.relationship("AppointmentModel", backref="patientmodel", lazy=True)
+    lab_orders = db.relationship("LabOrderModel", cascade="all,delete",backref="patientmodel", lazy=True)
+    pharmacy_orders = db.relationship("PharmacyOrderModel", cascade="all,delete",backref="patientmodel",lazy=True)
+    appointments = db.relationship("AppointmentModel", cascade="all,delete",backref="patientmodel", lazy=True)
 
     def __init__(self, first_name, last_name, number, email="",
                     address="", insurance="", dob="", gender="", pcp_id="", 
-                    medications="", appointments=[], lab_orders=[]):
+                    medications="", appointments=[], lab_orders=[],pharmacy_orders=[]):
         self.first_name = first_name
         self.last_name = last_name
         self.number = number
@@ -51,6 +52,7 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
         self.medications = medications
         self.appointments = appointments
         self.lab_orders = lab_orders
+        self.pharmacy_orders = pharmacy_orders
 
 
 class PatientSchema(Schema): 
