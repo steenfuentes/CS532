@@ -58,9 +58,9 @@ class LoginAPI(MethodView):
         """Validate User Login Information & Generate JWT Token"""
 
         try:
-            user = ur.UserRepo.get_by_email(email)
-            ur.UserRepo.validate_password(user, password)
-            auth_token = user.encode_auth_token(user.id)
+            usr = ur.UserRepo.get_by_email(email)
+            ur.UserRepo.validate_password(usr, password)
+            auth_token = user.UserModel.encode_auth_token(user.id)
             if auth_token:
                 response = {
                     'Status': 'Success',

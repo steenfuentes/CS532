@@ -106,7 +106,7 @@ class UserRepo():
 
     
 
-    def verify_roles(usr, *accepted):
+    def verify_roles(usr : user.UserModel, *accepted):
         if accepted:
             user_roles = usr.get_roles()
             missing_roles = [
