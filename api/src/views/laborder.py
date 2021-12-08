@@ -18,8 +18,10 @@ class LabOrderAPI(MethodView):
     def get(id):
         """ Return LabOrder based on the id"""
         if id is None:
-            p = LabOrderRepo.get_all()
+            l = LabOrderRepo.get_all()
             schema = LabOrderSchema(many=True)
+            result = schema.dump(l)
+            return jsonify({"LAB ORDERS": result})
         else:
             p = LabOrderRepo.get(id)
             print(p)
