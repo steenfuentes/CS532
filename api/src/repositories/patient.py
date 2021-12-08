@@ -1,7 +1,5 @@
-from api.src.models.patient import PatientModel
-from api.src.models.laborder import LabOrderModel
-from api.src.models.physician import PhysicianModel
-from api.src.repositories.physician import PhysicianRepo
+import  api.src.models.patient as patient
+import  api.src.repositories.physician as mdrepo
 
 class PatientRepo():
 
@@ -10,25 +8,25 @@ class PatientRepo():
     @staticmethod
     def get(id):
         """ Query a patient by ID """
-        return PatientModel.query.filter_by(id=id).one_or_none()
+        return patient.PatientModel.query.filter_by(id=id).one_or_none()
 
     @staticmethod
     def get_all():
         """ Query all the patients in the database. Return a dictionary."""
-        patient_list = PatientModel.query.all()
+        patient_list = patient.PatientModel.query.all()
         return patient_list
     
     @staticmethod
     def create(**kwargs):
         """ Create a new patient"""
-        patient = PatientModel(**kwargs)
+        pt = patient.PatientModel(**kwargs)
         if "pcp_id" in kwargs:
             physician_id = kwargs.get("pcp_id")
-            physician = PhysicianRepo.get(id=physician_id)
-            physician.patients.append(patient)
+            physician = mdrepo.PhysicianRepo.get(id=physician_id)
+            physician.patients.append(pt)
             physician.save()
         
-        return patient.save()
+        return pt.save()
     
 
     def update(self, id, **kwargs):
@@ -39,7 +37,7 @@ class PatientRepo():
 
         if "physician_id" in kwargs:
             physician_id = kwargs.get("physician_id")
-            physician = PhysicianRepo.get(id=physician_id)
+            physician = mdrepo.PhysicianRepo.get(id=physician_id)
             physician.patients.append(patient)
             physician.save()
 

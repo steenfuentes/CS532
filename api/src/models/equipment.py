@@ -5,7 +5,7 @@ from marshmallow.fields import Email
 import enum 
 
 from api import db
-from .abstractmodel import BaseModel, MetaBaseModel
+import api.src.models.abstractmodel as am
 
 
 class Department(enum.Enum):
@@ -14,7 +14,7 @@ class Department(enum.Enum):
     PD = "Pharmacy Department"
     AD = "Admin Department"
 
-class EquipmentModel(db.Model, BaseModel, metaclass=MetaBaseModel):
+class EquipmentModel(db.Model, am.BaseModel, metaclass=am.MetaBaseModel):
     __tablename__ = 'equipmentmodel'
 
     id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
@@ -36,11 +36,5 @@ class EquipmentModel(db.Model, BaseModel, metaclass=MetaBaseModel):
         self.own = own
         self.purchase_date = purchase_date
 
-class EquipmentSchema(Schema):
-    id = fields.Integer()
-    equipment_type = fields.String()
-    description = fields.String()
-    department = fields.String()
-    own = fields.Boolean()
-    purchase_date = fields.Date()
+
 

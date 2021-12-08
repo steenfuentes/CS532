@@ -67,8 +67,6 @@ class RoleModel(db.Model, RoleMixin, BaseModel, metaclass=MetaBaseModel ):
     def get_by_name(name):
         return RoleModel.query.filter_by(name=name).first()
 
-class RoleSchema(Schema):
-    id = fields.Integer()
-    name = fields.String()
+
 
 

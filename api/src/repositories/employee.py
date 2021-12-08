@@ -6,14 +6,14 @@ from webargs.flaskparser import abort
 from api import bcrypt
 from webargs import ValidationError
 
-from api.src.models.employee import EmployeeModel, EmployeeSchema
+import api.src.models.employee as emp
 
 class EmployeeRepo():
  
     @staticmethod
     def get_by_id(id):
         """ Query a User by their id"""
-        employee = EmployeeModel.query.filter_by(id=id).one_or_none()
+        employee = emp.EmployeeModel.query.filter_by(id=id).one_or_none()
         if employee is None:
             raise ValidationError("Employee does not exist!")
         
@@ -56,7 +56,7 @@ class EmployeeRepo():
         """ Query all the Users in the database. Return a dictionary."""
 
         print("Querying User table...")
-        Employee_list = EmployeeModel.query.all()
+        Employee_list = emp.EmployeeModel.query.all()
 
         return Employee_list
     
@@ -64,7 +64,7 @@ class EmployeeRepo():
     def create(**kwargs):
         """ Create a new employee"""
         
-        employee = EmployeeModel(**kwargs)
+        employee = emp.EmployeeModel(**kwargs)
     
         return employee.save()
  

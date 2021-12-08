@@ -6,11 +6,13 @@ from flask import jsonify
 from webargs.flaskparser import parser
 
 
-from api.src.repositories.appointment import AppointmentRepo
-from api.src.models.appointment import AppointmentModel, AppointmentSchema
+import api.src.repositories.appointment as ar
+import api.src.models.schema as s
+
 
 class AppointmentAPI(MethodView):
     """ Verbs that are relative to a lab"""
+    
 
     @staticmethod
     def get(id):
@@ -20,12 +22,14 @@ class AppointmentAPI(MethodView):
         """
 
         if id is None:
-            p = AppointmentRepo.get_all()
-            schema = AppointmentModel.Schema(many=True)
+            a = ar.AppointmentRepo.get_all()
+            schema = s.AppointmentSchema(many=True)
+            result = schema.load()
+
         else:
-            p = AppointmentRepo.get(id)
+            p = ar.AppointmentRepo.get(id)
             print(p)
-            schema = AppointmentModel.Schema()
+            schema = s.AppointmentSchema()
             print(schema)
        
         result = schema.dump(p)
@@ -34,7 +38,7 @@ class AppointmentAPI(MethodView):
 
 
     @staticmethod
-    @parser.use_kwargs(AppointmentSchema, location="json_or_form")
+    @parser.use_kwargs(s.AppointmentSchema, location="json_or_form")
     def post(id,**kwargs):
         """Create Appointment using all of the incoming information"""
 
@@ -43,11 +47,11 @@ class AppointmentAPI(MethodView):
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
 
-    @parser.use_kwargs(AppointmentSchema, location="json_or_form")
+    @parser.use_kwargs(s.AppointmentSchema, location="json_or_form")
     def put(id, **kwargs):
         """Update any attribute of the Appointment Model"""
 
-        order = AppointmentRepo.get(id)
+        order = ar.AppointmentRepo.get(id)
         order.update(**kwargs)
         order.save()
 

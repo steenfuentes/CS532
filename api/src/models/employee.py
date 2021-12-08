@@ -11,7 +11,7 @@ from sqlalchemy.types import TypeDecorator
 
 
 from api import db, ma
-from .abstractmodel import BaseModel, MetaBaseModel
+import api.src.models.abstractmodel as am
 from api.src.utils.stripped_string import StrippedString
 class EmployeeType(enum.Enum):
     PA = "Phsyician's Assistant"
@@ -21,7 +21,7 @@ class EmployeeType(enum.Enum):
     LT = "Lab Technician"
 
 
-class EmployeeModel(db.Model, BaseModel, metaclass=MetaBaseModel):
+class EmployeeModel(db.Model, am.BaseModel, metaclass=am.MetaBaseModel):
     __tablename__ = 'employeemodel'
     __table_args__ = {'extend_existing':True}
 
@@ -39,20 +39,17 @@ class EmployeeModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     # relationships
     user_id = db.Column(db.Integer, db.ForeignKey('usermodel.id'))
     user = db.relationship("UserModel",backref=backref("employeemodel", cascade="all,delete",uselist=False))
-
+    lab_orders = db.relationship("LabOrderModel", cascade="all,delete",backref="employeemodel", lazy='select')
+    
+    
     def __init__(self, employee_type, first_name, last_name, number=""):
         self.employee_type = employee_type
         self.first_name = first_name
         self.last_name = last_name
         self.number = number
+
     
-class EmployeeSchema(Schema):
-    id = fields.Integer()
-    employee_type = EnumField(EmployeeType, error='by_name')
-    first_name = fields.String()
-    last_name = fields.String()
-    start_date = fields.Date()
-    number = fields.String()
+
    
 
 

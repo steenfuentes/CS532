@@ -6,12 +6,12 @@ from webargs.flaskparser import abort
 from api import bcrypt
 from webargs import ValidationError
 
-from api.src.models.user import BlacklistToken, UserModel
+import api.src.models.user as user
 
 class UserRepo():
 
     @staticmethod
-    def validate_password(user: UserModel, password):
+    def validate_password(user: user.UserModel, password):
         """ Validate User Password """
 
         if not bcrypt.check_password_hash(user.password, password):
@@ -20,20 +20,20 @@ class UserRepo():
     @staticmethod
     def get_by_email(email):
         """ Validate Email & Query a User by their email"""
-        user = UserModel.query.filter_by(email=email).one_or_none()
-        if user is None:
+        usr = user.UserModel.query.filter_by(email=email).one_or_none()
+        if usr is None:
             raise ValidationError("User does not exist!")
 
-        return user
+        return usr
  
     @staticmethod
     def get_by_id(id):
         """ Query a User by their id"""
-        user = UserModel.query.filter_by(id=id).one_or_none()
-        if user is None:
+        usr = user.UserModel.query.filter_by(id=id).one_or_none()
+        if usr is None:
             raise ValidationError("User does not exist!")
         
-        return user
+        return usr
 
     
     
@@ -42,7 +42,7 @@ class UserRepo():
         """ Query all the Users in the database. Return a dictionary."""
 
         print("Querying User table...")
-        User_list = UserModel.query.all()
+        User_list = user.UserModel.query.all()
 
         return User_list
     
@@ -50,9 +50,9 @@ class UserRepo():
     def create(**kwargs):
         """ Create a new User"""
         
-        user = UserModel(**kwargs)
+        usr = user.UserModel(**kwargs)
     
-        return user.save()
+        return usr.save()
  
  
     def update(self, id, **kwargs):
@@ -67,7 +67,7 @@ class UserRepo():
     @staticmethod
     def logout(token):
         """ Blacklist JWT Token """
-        blacklist_token = BlacklistToken(token=token)
+        blacklist_token = user.BlacklistToken(token=token)
         return blacklist_token.save()
 
     # decorator for verifying the JWT
@@ -88,9 +88,9 @@ class UserRepo():
                     else:
                         auth_token = ''
                     if auth_token:
-                        token_response = UserModel.decode_auth_token(auth_token)
-                        user = UserRepo.get_by_id(int(token_response))
-                        UserRepo.verify_roles(user, *accepted)
+                        token_response = user.UserModel.decode_auth_token(auth_token)
+                        usr = UserRepo.get_by_id(int(token_response))
+                        UserRepo.verify_roles(usr, *accepted)
                         print("Access Verified...")
                     else:
                         response = {
@@ -106,9 +106,9 @@ class UserRepo():
 
     
 
-    def verify_roles(user, *accepted):
+    def verify_roles(usr, *accepted):
         if accepted:
-            user_roles = user.get_roles()
+            user_roles = usr.get_roles()
             missing_roles = [
                 role_name
                 for role_name in accepted

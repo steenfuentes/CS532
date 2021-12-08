@@ -1,4 +1,4 @@
-from api.src.models.equipment import EquipmentModel    
+import api.src.models.equipment as eq  
     
 class EquipmentRepo:
 
@@ -6,13 +6,13 @@ class EquipmentRepo:
     def get(id):
         """ Query a piece of equipment by id """
 
-        return EquipmentModel.query.filter_by(id=id).one_or_none()
+        return eq.EquipmentModel.query.filter_by(id=id).one_or_none()
 
     @staticmethod
     def get_all():
         """ Query all equipment. Return a dictionary."""
 
-        patient_list = EquipmentModel.query.all()
+        patient_list = eq.EquipmentModel.query.all()
         
         return patient_list
     
@@ -20,9 +20,9 @@ class EquipmentRepo:
     def create(**kwargs):
         """ Create a new piece of equipment"""
 
-        eq = EquipmentModel(**kwargs)
+        equipment = eq.EquipmentModel(**kwargs)
 
-        return eq.save()
+        return equipment.save()
     
     def update(self,**kwargs):
         """ update any attribute of the user"""

@@ -4,11 +4,10 @@ Defines model and schema for appointments
 from flask_marshmallow.schema import Schema
 from marshmallow import fields
 
-from api.src.models.laborder import LabOrderSchema
-from .abstractmodel import BaseModel, MetaBaseModel
+import api.src.models.abstractmodel as am
 from api import db
 
-class AppointmentModel(db.Model, BaseModel, metaclass=MetaBaseModel):
+class AppointmentModel(db.Model, am.BaseModel, metaclass=am.MetaBaseModel):
     __tablename__ = 'appointmentmodel'
 
     id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
@@ -29,11 +28,4 @@ class AppointmentModel(db.Model, BaseModel, metaclass=MetaBaseModel):
         self.time = time
         self.patient_id = patient_id
         self.physician_id = phsyician_id
-
-class AppointmentSchema(Schema):
-    id = fields.Integer()
-    date = fields.Date()
-    time = fields.Time()
-    patient_id = fields.Integer()
-    physician_id = fields.Integer()
 

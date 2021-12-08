@@ -16,21 +16,21 @@ from api import db
 from api import bcrypt
 
 from api.src.utils.stripped_string import StrippedString
-from api.src.models.access import AccessGroup, AccessStatus, RoleModel, RoleSchema
-from .abstractmodel import BaseModel, MetaBaseModel
+import api.src.models.access as access
+import api.src.models.abstractmodel as am
 
 users_roles = db.Table(
     'users_roles',
     db.Column('user_email', db.String, db.ForeignKey('usermodel.email')),
-    db.Column('role_name', db.Enum(AccessGroup), db.ForeignKey('rolemodel.name'))
+    db.Column('role_name', db.Enum(access.AccessGroup), db.ForeignKey('rolemodel.name'))
 )
 
-class UserModel(db.Model, BaseModel, metaclass=MetaBaseModel):
+class UserModel(db.Model, am.BaseModel, metaclass=am.MetaBaseModel):
     __tablename__ = 'usermodel'
     __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
-    status = db.Column(db.Enum(AccessStatus), default = "ACTIVE", nullable=False) # default status active
+    status = db.Column(db.Enum(access.AccessStatus), default = "ACTIVE", nullable=False) # default status active
     email = db.Column(StrippedString(50), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False) # store the hashed password
     created = db.Column(db.DateTime(timezone=True), server_default=func.now())
@@ -48,7 +48,7 @@ class UserModel(db.Model, BaseModel, metaclass=MetaBaseModel):
 
 
     def add_role(self, rolename):
-        role = RoleModel.get_by_name(rolename)
+        role = access.RoleModel.get_by_name(rolename)
         self.roles.append(role)
     
 
@@ -111,14 +111,8 @@ class UserModel(db.Model, BaseModel, metaclass=MetaBaseModel):
             return abort(401, 'Invalid Token. Please log in again.')
 
 
-class UserSchema(Schema):
-    id = fields.Integer()
-    email = fields.Email()
-    password = fields.String()
-    roles = fields.List(fields.String())
 
-
-class BlacklistToken(db.Model, BaseModel, metaclass=MetaBaseModel):
+class BlacklistToken(db.Model, am.BaseModel, metaclass=am.MetaBaseModel):
     """
     Token Model for storing JWT Tokens
     """

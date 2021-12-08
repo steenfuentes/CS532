@@ -7,8 +7,8 @@ from marshmallow import ValidationError
 from marshmallow.utils import pprint
 from webargs.flaskparser import use_kwargs
 
-from api.src.repositories.equipment import EquipmentRepo
-from api.src.models.equipment import EquipmentModel, EquipmentSchema
+import api.src.repositories.equipment as eqrepo
+import api.src.models.schema as s
 
 class EquipmentAPI(MethodView):
     """ Verbs that are relative to equipment"""
@@ -17,12 +17,14 @@ class EquipmentAPI(MethodView):
     def get(id):
         """ Return equipment based on the id"""
         if id is None:
-            p = EquipmentRepo.get_all()
-            schema = EquipmentModel.Schema(many=True)
+            e = eqrepo.EquipmentRepo.get_all()
+            schema = s.EquipmentSchema(many=True)
+            result = schema.load(e)
+            return jsonify("Equipment:", result)
         else:
-            p = EquipmentRepo.get(id)
+            p = eqrepo.EquipmentRepo.get(id)
             print(p)
-            schema = EquipmentModel.Schema()
+            schema = s.EquipmentSchema()
             print(schema)
        
         result = schema.dump(p)
@@ -30,10 +32,10 @@ class EquipmentAPI(MethodView):
         return result
 
     @staticmethod
-    @use_kwargs(EquipmentSchema())
+    @use_kwargs(s.EquipmentSchema())
     def post(**kwargs):
         """Create equipment using all of the incoming information"""
-        schema = EquipmentSchema(missing=set)
+        schema = s.EquipmentSchema(missing=set)
         schema.load(**kwargs)
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 

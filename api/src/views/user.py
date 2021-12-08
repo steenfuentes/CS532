@@ -1,6 +1,7 @@
 """
 Define the REST verbs for endpoints related to the User
 """
+from re import I
 from flask_cors import cross_origin
 from flask.helpers import make_response
 from flask.views import MethodView
@@ -10,17 +11,19 @@ from marshmallow import ValidationError
 from marshmallow.decorators import VALIDATES
 from webargs.flaskparser import abort, parser
 
-from api.src.repositories.user import UserRepo
-from api.src.models.user import UserModel, UserSchema, BlacklistToken
-from api.src.views.patient import PatientAPI
+import api.src.repositories.user as ur
+import api.src.models.schema as s
+import api.src.models.user as user
 
 
 class RegisterAPI(MethodView):
     """ Resources for registering Users"""
+    ur = ur.UserRepo()
+
 
     @staticmethod 
-    @UserRepo.token_required("ADMIN", "ROOT")
-    @parser.use_kwargs(UserSchema, location="json_or_form") 
+    @ur.token_required("ADMIN", "ROOT")
+    @parser.use_kwargs(s.UserSchema, location="json_or_form") 
     def post(email, password, roles):
         """
         Create User using all of the incoming information.
@@ -28,14 +31,14 @@ class RegisterAPI(MethodView):
         """
         print("INCOMING ROLES:", roles)
         try:
-            user = UserRepo.get_by_email(email)
+            user = ur.UserRepo.get_by_email(email)
             response = {
                 'Status': 'Fail',
                 'Message': 'User with email ' + user.email +' already exists!'
             }
             return make_response(jsonify(response)), 202
         except ValidationError: 
-            user = UserRepo.create(email=email, password=password, roles=roles)
+            user = ur.UserRepo.create(email=email, password=password, roles=roles)
             response = {
                         'Status': 'Success',
                         'Message': 'User created with email: ' + user.email +
@@ -47,15 +50,16 @@ class RegisterAPI(MethodView):
 
 class LoginAPI(MethodView):
     """ Resources for Logging In"""
+    ur = ur.UserRepo()
 
     @staticmethod
-    @parser.use_kwargs(UserSchema, location="json_or_form")
+    @parser.use_kwargs(s.UserSchema, location="json_or_form")
     def post(email, password):
         """Validate User Login Information & Generate JWT Token"""
 
         try:
-            user = UserRepo.get_by_email(email)
-            UserRepo.validate_password(user, password)
+            user = ur.UserRepo.get_by_email(email)
+            ur.UserRepo.validate_password(user, password)
             auth_token = user.encode_auth_token(user.id)
             if auth_token:
                 response = {
@@ -76,8 +80,10 @@ class LoginAPI(MethodView):
 
 class LogoutAPI(MethodView):
     """Resources for logging out"""
+    ur = ur.UserRepo()
 
-    @UserRepo.token_required()
+
+    @ur.token_required()
     def post(self):
         auth_header = request.headers.get('Authorization')
         if auth_header:
@@ -85,10 +91,10 @@ class LogoutAPI(MethodView):
         else:
             auth_token = ''
         if auth_token:
-            token_reponse = UserModel.decode_auth_token(auth_token)
+            token_reponse = user.UserModel.decode_auth_token(auth_token)
             if not isinstance(token_reponse, str):
                 try:
-                    UserRepo.logout(auth_token)
+                    ur.UserRepo.logout(auth_token)
                     response = {
                         'Status': 'Success',
                         'Message': 'You are now logged out!'
@@ -115,11 +121,11 @@ class LogoutAPI(MethodView):
 
 class UserProfileAPI(MethodView):
     """Resources for changing User Information"""
-
+    ur = ur.UserRepo()
     
-    @parser.use_kwargs(UserSchema, location="json_or_form")
+    @parser.use_kwargs(s.UserSchema, location="json_or_form")
     def put(self, id, **kwargs):
         """Update any attribute of the User Model"""
-        user = UserRepo.get_by_id(id)
+        user = ur.UserRepo.get_by_id(id)
         
         return user

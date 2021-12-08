@@ -7,7 +7,7 @@ from flask_script import Manager
 
 from api import create_app, db
 from api.src.utils.utilities import create_roles, create_admin
-from api.src.models.user import UserModel
+
 
 manager = Manager(create_app)
 

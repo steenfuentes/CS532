@@ -6,9 +6,12 @@ from flask_marshmallow.schema import Schema
 from marshmallow import validate, pre_load, schema, fields
 from marshmallow_enum import EnumField
 
-from api import db, ma
-from .abstractmodel import BaseModel, MetaBaseModel
+
+import api.src.models.abstractmodel as am
+import api.src.models.patient as patient
+import api.src.models.physician as physician
 from sqlalchemy.orm import backref, validates
+from api import db
 
 
 # just outlining the basic info needed that defines a patient
@@ -30,7 +33,7 @@ class TestType(enum.Enum):
     U = "Urinalysis"
     C = "Cultures"
 
-class LabOrderModel(db.Model, BaseModel, metaclass=MetaBaseModel):
+class LabOrderModel(db.Model, am.BaseModel, metaclass=am.MetaBaseModel):
     __tablename__ = 'labordermodel'
     __table_args__ = {'extend_existing':True}
 
@@ -40,30 +43,22 @@ class LabOrderModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     status = db.Column(db.Integer, default = 16, nullable=False) # default status is pending
 
     test_type = db.Column(db.Enum(TestType), nullable=True) #Implement an enumeration for this column
-    date_performed = db.Column(db.Date, nullable=False) #change format to date
+    date_performed = db.Column(db.Date, nullable=True) #change format to date
  # Create reference to an employee database table?
     results = db.Column(db.String(120), nullable=True) # Create a database table for results?
 
-    performed_by = db.relationship("EmployeeModel", backref='labordermodel', uselist=False)
-
     tech_id = db.Column(db.Integer, db.ForeignKey('employeemodel.id'))
     patient_id = db.Column(db.Integer, db.ForeignKey('patientmodel.id'))
+    patient = db.relationship("PatientModel", cascade="all,delete", backref="labordermodel",uselist=False,lazy=True)
     physician_id = db.Column(db.Integer, db.ForeignKey('physicianmodel.id'))
+    physician = db.relationship("PhysicianModel",cascade="all,delete", backref="labordermodel",uselist=False,lazy=True)
 
-    def __init__(self, test_type, patient_id =None, physician_id=None, date_performed="", results=""):
+    def __init__(self, test_type, patient_id =None, physician_id=None, date_performed=None, results=""):
         self.test_type = test_type
         self.patient_id = patient_id
         self.physician_id = physician_id
         self.date_performed = date_performed
         self.results = results
 
-class LabOrderSchema(Schema):
-    test_type = EnumField(TestType, error='by_name') 
-    id = fields.Integer()
-    date_performed = fields.String()
-    results = fields.String()
-    performed_by = fields.String()
-    tech_id = fields.Integer()
-    patient_id = fields.Integer()
-    physician_id = fields.Integer()
+
 

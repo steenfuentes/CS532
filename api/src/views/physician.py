@@ -10,46 +10,48 @@ from marshmallow.decorators import VALIDATES
 from marshmallow.utils import pprint
 from webargs.flaskparser import abort, parser
 
-from api.src.repositories.user import UserRepo
-from api.src.repositories.physician import PhysicianRepo
-from api.src.models.physician import PhysicianModel, PhysicianSchema
+import api.src.repositories.user as ur
+import api.src.repositories.physician as pr
+import api.src.models.schema as s
 
 class PhysicianAPI(MethodView):
     """ Verbs that are relative to the Physicians"""
+    ur = ur.UserRepo()
 
     @staticmethod
-    @UserRepo.token_required
+    @ur.token_required
     def get(id):
         """ Return a physician based on the id"""
         if id is None: 
-            p = PhysicianRepo.get_all()
-            schema = PhysicianSchema(many=True)
+            p = pr.PhysicianRepo.get_all()
+            schema = s.PhysicianSchema(many=True)
             result = schema.dump(p, many=True)
             return jsonify({"Physicians": result})
 
         else:
-            p = PhysicianRepo.get(id)
-            schema = PhysicianSchema()
+            p = pr.PhysicianRepo.get(id)
+            schema = s.PhysicianSchema()
             result = schema.dump(p)
        
         return result
 
 
     @staticmethod
-    @UserRepo.token_required("ROOT", "ADMIN", "MED_ADMIN", "MED_STAFF")
-    @parser.use_kwargs(PhysicianSchema, location="json_or_form") 
+    @ur.token_required("ROOT", "ADMIN", "MED_ADMIN", "MED_STAFF")
+    @parser.use_kwargs(s.PhysicianSchema, location="json_or_form") 
     def post(**kwargs):
         """Create Physician using all of the incoming information"""
 
-        PhysicianRepo.create(**kwargs)
+        pr.PhysicianRepo.create(**kwargs)
 
         return {'Status': 'Complete!'}, 201 # Will return some sort of message back to confirm that a user has been created?
 
 
-    @UserRepo.token_required("ROOT", "ADMIN", "MED_ADMIN", "MED_STAFF")
-    @parser.use_kwargs(PhysicianSchema, location="json_or_form") 
+    @ur.token_required("ROOT", "ADMIN", "MED_ADMIN", "MED_STAFF")
+    @parser.use_kwargs(s.PhysicianSchema, location="json_or_form") 
     def put(self, id, **kwargs):
         """Update any attribute of the Physician Model"""
-        physician = PhysicianRepo.get(id)
-        
-        pass
+        physician = pr.PhysicianRepo.get(id)
+        updated_md = pr.PhysicianRepo.update(id, **kwargs)
+
+        return jsonify({'Updated': (updated_md.first_name, updated_md.last_name)}), 201

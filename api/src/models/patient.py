@@ -5,14 +5,17 @@ Defines the model for a patient
 from flask_marshmallow.schema import Schema
 from marshmallow import fields
 
-from api import db
-from api.src.models.appointment import AppointmentSchema
-from api.src.models.laborder import LabOrderSchema
-from .abstractmodel import BaseModel, MetaBaseModel
-from api.src.utils.stripped_string import StrippedString
 
-class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
+import api.src.models.abstractmodel as am
+import api.src.models.laborder as lo
+import api.src.models.appointment as appt
+from api.src.utils.stripped_string import StrippedString
+from api import db
+
+
+class PatientModel(db.Model, am.BaseModel, metaclass=am.MetaBaseModel):
     __tablename__ = 'patientmodel'
+    __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, db.Identity(start=1), primary_key=True)
     owner = db.Column(db.Integer, default = 1, nullable=False)
@@ -33,13 +36,11 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     pcp_id = db.Column(db.Integer, db.ForeignKey("physicianmodel.id"))
 
     # relationships
-    lab_orders = db.relationship("LabOrderModel", cascade="all,delete",backref="patientmodel", lazy=True)
-    pharmacy_orders = db.relationship("PharmacyOrderModel", cascade="all,delete",backref="patientmodel",lazy=True)
     appointments = db.relationship("AppointmentModel", cascade="all,delete",backref="patientmodel", lazy=True)
 
     def __init__(self, first_name, last_name, number, email="",
                     address="", insurance="", dob="", gender="", pcp_id="", 
-                    medications="", appointments=[], lab_orders=[],pharmacy_orders=[]):
+                    medications="", appointments=[]):
         self.first_name = first_name
         self.last_name = last_name
         self.number = number
@@ -50,25 +51,11 @@ class PatientModel(db.Model, BaseModel, metaclass=MetaBaseModel):
         self.gender = gender
         self.pcp = pcp_id
         self.medications = medications
-        self.appointments = appointments
-        self.lab_orders = lab_orders
-        self.pharmacy_orders = pharmacy_orders
+        self.appointments = appointments 
 
 
-class PatientSchema(Schema): 
-    id = fields.Integer()
-    first_name = fields.String()
-    last_name = fields.String()
-    number = fields.String()
-    email = fields.Email()
-    address = fields.String()
-    insurance = fields.String()
-    dob = fields.String()
-    gender = fields.String()
-    pcp_id = fields.Integer()
-    medications = fields.String()
-    appointments = fields.List(fields.Nested(AppointmentSchema()))
-    lab_orders = fields.List(fields.Nested(LabOrderSchema()))
+
+
 
     
     

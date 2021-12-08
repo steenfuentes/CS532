@@ -1,4 +1,4 @@
-from api.src.models.physician import PhysicianModel
+import api.src.models.physician as md
 
 class PhysicianRepo():
 
@@ -7,20 +7,20 @@ class PhysicianRepo():
     @staticmethod
     def get(id):
         """ Query a Physician by ID """
-        return PhysicianModel.query.filter_by(id=id).one_or_none()
+        return md.PhysicianModel.query.filter_by(id=id).one_or_none()
 
     @staticmethod
     def get_all():
         """ Query all the Physicians in the database. Return a dictionary."""
         print("Querying physician table...")
-        Physician_list = PhysicianModel.query.all()
+        Physician_list = md.PhysicianModel.query.all()
 
         return Physician_list
     
     @staticmethod
     def create(**kwargs):
         """ Create a new Physician"""
-        Physician = PhysicianModel(**kwargs)
+        Physician = md.PhysicianModel(**kwargs)
         return Physician.save()
     
     def update(self, id, **kwargs):
