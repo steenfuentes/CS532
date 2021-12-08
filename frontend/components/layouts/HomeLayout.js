@@ -13,7 +13,7 @@ const HomeLayout = ({ children, title, isAuthenticated, deauthenticate }) => (
     </Head>
     <div style={{ height: "80px", backgroundColor: "dodgerblue", boxShadow: "0 5px #ddd" }} className="tabs is-centered">
       <ul>
-        <Link href="/"><a style={{ color: "#FFF", borderBottom: "none" }}>Home</a></Link>
+        <Link href="/dashboard"><a style={{ color: "#FFF", borderBottom: "none" }}>Home</a></Link>
         <Link href="/patients"><a style={{ color: "#FFF", marginLeft: "10px", borderBottom: "none" }}>Patients</a></Link>
         <Link href="/lab"><a style={{ color: "#FFF", marginLeft: "10px", borderBottom: "none" }}>Lab</a></Link>
         <Link href="/scheduler"><a style={{ color: "#FFF", marginLeft: "10px", borderBottom: "none" }}> Scheduler</a></Link>

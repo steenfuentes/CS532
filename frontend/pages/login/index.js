@@ -1,6 +1,8 @@
 import React from 'react';
 import withRedux from 'next-redux-wrapper';
 import { initStore } from '../../redux';
+import { API } from '../../config';
+import axios from 'axios';
 import actions from '../../redux/actions';
 import initialize from '../../utils/initialize';
 import HomeLayout from '../../components/layouts/HomeLayout';

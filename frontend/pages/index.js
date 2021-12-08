@@ -1,129 +1,107 @@
+import React from 'react';
+import axios from 'axios';
 import withRedux from 'next-redux-wrapper';
-import Link from 'next/link';
 import { initStore } from '../redux';
+import actions from '../redux/actions';
+import { API } from '../config';
 import initialize from '../utils/initialize';
 import HomeLayout from '../components/layouts/HomeLayout';
-import router from 'next/router';
+
+class Signin extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+            user: [],
+        };
+    }
+
+    static getInitialProps(ctx) {
+        initialize(ctx);
+        const token = ctx.store.getState().authentication.token;
+        if (token) {
+            const response = axios.get(`${API}/records/`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+            const user = response.data;
+
+            return { user, token };
+        }
+    }
 
 
-const Index = ({ token }) => {
-  !token ? router.push('/login') : null;
+    handleSubmit(e) {
+        e.preventDefault();
+        this.props.authenticate({ email: this.state.email, password: this.state.password }, 'login/');
+    }
 
-
-  return (
-
-    <HomeLayout>
-      <div style={{ height: '80vh' }}>
-        <div style={{
-
-          height: "200px",
-          top: "0",
-          bottom: "0",
-          left: "0",
-          right: "0",
-          display: "grid",
-          gridTemplateColumns: "auto auto auto",
-          margin: "auto",
-          maxWidth: "800px",
-          padding: "1em"
-        }}>
-          <Link href="/patients">
-            <button style={{
-              backgroundColor: "rgba(255, 255, 255, 0.8)",
-              border: "1px solid rgba(0, 0, 0, 0.4)",
-              borderRadius: "5px",
-              padding: "20px",
-              height: "10vh",
-              fontSize: "30px",
-              textAlign: "center",
-              fontWeight: "bold",
-
-              margin: "1em",
-            }} class="grid-item">Patients</button></Link>
-          <Link href="/lab"><button style={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            border: "1px solid rgba(0, 0, 0, 0.4)",
-            borderRadius: "5px",
-            padding: "20px",
-            height: "10vh",
-
-            fontSize: "30px",
-            textAlign: "center",
-            margin: "1em",
-            fontWeight: "bold",
-
-
-
-          }} class="grid-item">Lab</button></Link>
-          <Link href="/scheduler"><button style={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            border: "1px solid rgba(0, 0, 0, 0.4)",
-            padding: "20px",
-            fontSize: "30px",
-            textAlign: "center",
-            height: "10vh",
-
-            borderRadius: "5px",
-
-            margin: "1em",
-            fontWeight: "bold",
-
-
-          }} class="grid-item">Scheduler</button></Link>
-          <Link href="/pharmacy"><button style={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            border: "1px solid rgba(0, 0, 0, 0.4)",
-            padding: "20px",
-            fontSize: "30px",
-            textAlign: "center",
-            height: "10vh",
-
-            borderRadius: "5px",
-
-            margin: "1em",
-            fontWeight: "bold",
-
-
-          }} class="grid-item">Pharmacy</button></Link>
-          <Link href="/billing"><button style={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            border: "1px solid rgba(0, 0, 0, 0.4)",
-            padding: "20px",
-            fontSize: "30px",
-            borderRadius: "5px",
-            height: "10vh",
-
-            textAlign: "center",
-            fontWeight: "bold",
-            margin: "1em",
-
-          }} class="grid-item">Billing</button></Link>
-          <Link href="/equipment"><button style={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            border: "1px solid rgba(0, 0, 0, 0.4)",
-            padding: "20px",
-            borderRadius: "5px",
-            height: "10vh",
-            fontSize: "30px",
-            fontWeight: "bold",
-            textAlign: "center",
-            margin: "1em",
-
-          }} class="grid-item">Equipment</button></Link>
-        </div>
-      </div>
-
-
-
-    </HomeLayout >
-  );
+    render() {
+        return (
+            <HomeLayout title="Sign In">
+                <body style={{
+                    position: "relative",
+                    top: "0",
+                    bottom: "0"
+                }}>
+                    <div style={{ marginTop: '100px', height: '100%' }}>
+                        <h3 className="title is-3">Sign In</h3>
+                        <form
+                            onSubmit={this.handleSubmit.bind(this)}
+                            className="container"
+                            style={{ width: '540px' }}
+                        >
+                            <div className="field">
+                                <p className="control has-icons-left has-icons-right">
+                                    <input
+                                        className="input"
+                                        type="text"
+                                        placeholder="Email"
+                                        required
+                                        value={this.state.email}
+                                        onChange={(e) => this.setState({ email: e.target.value })}
+                                    />
+                                    <span className="icon is-small is-left">
+                                        <i className="fas fa-envelope" />
+                                    </span>
+                                    <span className="icon is-small is-right">
+                                        <i className="fas fa-check" />
+                                    </span>
+                                </p>
+                            </div>
+                            <div className="field">
+                                <p className="control has-icons-left">
+                                    <input
+                                        className="input"
+                                        type="password"
+                                        placeholder="Password"
+                                        required
+                                        value={this.state.password}
+                                        onChange={(e) => this.setState({ password: e.target.value })}
+                                    />
+                                    <span className="icon is-small is-left">
+                                        <i className="fas fa-lock" />
+                                    </span>
+                                </p>
+                            </div>
+                            <div className="field">
+                                <p className="control has-text-centered">
+                                    <button style={{ backgroundColor: "dodgerblue" }} type="submit" className="button is-success">
+                                        Sign In
+                                    </button>
+                                </p>
+                            </div>
+                        </form>
+                        <div>
+                            <h3></h3>
+                        </div>
+                    </div>
+                </body>
+            </HomeLayout>
+        );
+    }
 }
 
-Index.getInitialProps = async (ctx) => {
-  initialize(ctx);
-  const token = ctx.store.getState().authentication.token;
-  return { token };
-
-};
-
-export default withRedux(initStore)(Index);
+export default withRedux(initStore, null, actions)(Signin);

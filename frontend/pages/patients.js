@@ -169,19 +169,18 @@ Patients.getInitialProps = async (ctx) => {
       headers: {
         Authorization: `Bearer ${token}`,
       }
-    }).then((res) => {
-      if (res.status === 401) {
-        ctx.store.dispatch({ type: "LOGOUT" });
-      } else {
-        return res.data;
-      }
     });
-
-
     const user = await response.data;
+    if (response.status === 401) {
+      ctx.store.dispatch({ type: "LOGOUT" });
+    } else {
+      return { user, token };
+    }
 
-    return { user, token };
-  }
+
+
+  };
+
 }
 
 

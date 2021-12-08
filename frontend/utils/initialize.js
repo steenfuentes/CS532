@@ -14,7 +14,7 @@ export default function (ctx) {
 
     if (token && (ctx.pathname === '/login' || ctx.pathname === '/signup')) {
       setTimeout(function () {
-        Router.push('/');
+        router.push('/login');
       }, 0);
     }
   }
