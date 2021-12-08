@@ -22,6 +22,24 @@ const authenticate = ({ email, password }, type) => {
       });
   };
 };
+const patientRecords = ({ token }) => {
+  return (dispatch) => {
+    axios.get(`${API}/records/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+  }
+}
+const labOrders = ({ token }) => {
+  return (dispatch) => {
+    axios.get(`${API}/records/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+  }
+}
 
 // gets the token from the cookie and saves it in the store
 const reauthenticate = (token) => {
@@ -34,7 +52,7 @@ const reauthenticate = (token) => {
 const deauthenticate = () => {
   return (dispatch) => {
     removeCookie('token');
-    Router.push('/');
+    Router.push('/login');
     dispatch({ type: DEAUTHENTICATE });
   };
 };
@@ -44,4 +62,8 @@ export default {
   authenticate,
   reauthenticate,
   deauthenticate,
+  patientRecords,
+  labOrders,
+
 };
+

@@ -29,7 +29,11 @@ class PhysicianModel(db.Model, BaseModel, metaclass=MetaBaseModel):
     lab_orders = db.relationship("LabOrderModel", cascade="all,delete",backref="physicianmodel", lazy='select')
     pharmacy_orders = db.relationship("PharmacyOrderModel", cascade="all,delete",backref="physicianmodel", lazy='select')
 
+<<<<<<< HEAD
 def __init__(self,first_name, last_name, number="", email="", appointments=[], patients=[], lab_orders=[]): 
+=======
+def __init__(self, first_name, last_name, number="", email="", appointments=[], patients=[], lab_orders=[]):
+>>>>>>> acef88fb86d206cb0a62f5bced166920bb816d30
     self.first_name = first_name
     self.last_name = last_name
     self.number = number

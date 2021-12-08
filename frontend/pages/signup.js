@@ -3,7 +3,9 @@ import withRedux from 'next-redux-wrapper';
 import { initStore } from '../redux';
 import actions from '../redux/actions';
 import initialize from '../utils/initialize';
-import Layout from '../components/Layout';
+import HomeLayout from '../components/layouts/HomeLayout';
+import MaterialTable from "material-table";
+
 
 class Signup extends React.Component {
   constructor(props) {
@@ -11,21 +13,35 @@ class Signup extends React.Component {
     this.state = {
       email: '',
       password: '',
+      columns: [
+        { title: 'Name', field: 'name' },
+        { title: 'Surname', field: 'surname', initialEditValue: 'initial edit value' },
+        { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
+        {
+          title: 'Birth Place',
+          field: 'birthCity',
+          lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
+        },
+      ],
+      data: [
+        { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+        { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 },
+      ]
     };
   }
 
-  static getInitialProps (ctx) {
+  static getInitialProps(ctx) {
     initialize(ctx);
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.authenticate({email: this.state.email, password: this.state.password}, 'signup');
+    this.props.authenticate({ email: this.state.email, password: this.state.password }, 'signup');
   }
 
   render() {
     return (
-      <Layout title="Sign Up">
+      <HomeLayout title="Sign Up">
         <h3 className="title is-3">Sign Up</h3>
         <form
           onSubmit={this.handleSubmit.bind(this)}
@@ -40,7 +56,7 @@ class Signup extends React.Component {
                 placeholder="Email"
                 required
                 value={this.state.email}
-                onChange={(e) => this.setState({email: e.target.value})}
+                onChange={(e) => this.setState({ email: e.target.value })}
               />
               <span className="icon is-small is-left">
                 <i className="fas fa-envelope" />
@@ -58,7 +74,7 @@ class Signup extends React.Component {
                 placeholder="Password"
                 required
                 value={this.state.password}
-                onChange={(e) => this.setState({password: e.target.value})}
+                onChange={(e) => this.setState({ password: e.target.value })}
               />
               <span className="icon is-small is-left">
                 <i className="fas fa-lock" />
@@ -73,7 +89,11 @@ class Signup extends React.Component {
             </p>
           </div>
         </form>
-      </Layout>
+        <MaterialTable
+          title="Editable Preview"
+          columns={this.state.columns}
+          data={this.state.data} />
+      </HomeLayout>
     );
   }
 }
