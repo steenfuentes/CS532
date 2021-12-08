@@ -1,6 +1,8 @@
 import React from 'react';
 import withRedux from 'next-redux-wrapper';
 import { initStore } from '../../redux';
+import { API } from '../../config';
+import axios from 'axios';
 import actions from '../../redux/actions';
 import initialize from '../../utils/initialize';
 import HomeLayout from '../../components/layouts/HomeLayout';
@@ -15,20 +17,6 @@ class Signin extends React.Component {
     };
   }
 
-  static getInitialProps(ctx) {
-    initialize(ctx);
-    const token = ctx.store.getState().authentication.token;
-    if (token) {
-      const response = axios.get(`${API}/records/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      });
-      const user = response.data;
-
-      return { user, token };
-    }
-  }
 
 
   handleSubmit(e) {
@@ -36,6 +24,9 @@ class Signin extends React.Component {
     this.props.authenticate({ email: this.state.email, password: this.state.password }, 'login/');
   }
 
+  render() {
+    return (
+      <HomeLayout title="Sign In">
   render() {
     return (
       <HomeLayout title="Sign In">
@@ -92,11 +83,8 @@ class Signin extends React.Component {
                 </p>
               </div>
             </form>
-            <div>
-              <h3></h3>
-            </div>
           </div>
-        </body>
+              <h3></h3>
       </HomeLayout>
     );
   }

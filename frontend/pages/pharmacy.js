@@ -7,8 +7,9 @@ import { initStore } from '../redux';
 import HomeLayout from '../components/layouts/HomeLayout';
 import React from "react";
 
-const Pharmacy = ({ medication }) => {
-    const orders = !medication ? router.push("/login") : medication.map(laborder => { return medication })
+const Pharmacy = ({ token }) => {
+    !token ? router.push('/login') : null;
+
 
 
     return (
@@ -27,16 +28,15 @@ const Pharmacy = ({ medication }) => {
 Pharmacy.getInitialProps = async (ctx) => {
     initialize(ctx);
     const token = ctx.store.getState().authentication.token;
-    if (token) {
-        const response = await axios.get(`${API}/equipment/`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        });
-        const medication = await response.data;
 
-        return { medication, token };
-    }
+    return { token };
+}
 
 };
+=======
+
+    return { token };
+}
+
+>>>>>>> c58233b8e9cf595e9ffbfefbe2dd0bbe261a1fcb
 export default withRedux(initStore)(Pharmacy);

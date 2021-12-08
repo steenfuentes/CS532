@@ -1,4 +1,4 @@
-import Router from 'next/router';
+import router from 'next/router';
 import axios from 'axios';
 import { AUTHENTICATE, DEAUTHENTICATE } from '../types';
 import { API } from '../../config';
@@ -14,7 +14,7 @@ const authenticate = ({ email, password }, type) => {
       .then((response) => {
         console.log(response.data.auth_token);
         setCookie('token', response.data.auth_token);
-        Router.push('/');
+        router.push('/dashboard');
         dispatch({ type: AUTHENTICATE, payload: response.data.auth_token });
       })
       .catch((err) => {
@@ -23,12 +23,17 @@ const authenticate = ({ email, password }, type) => {
   };
 };
 const patientRecords = ({ token }) => {
-  return (dispatch) => {
-    axios.get(`${API}/records/`, {
+  {
+    constresponse = axios.get(`${API}/records/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
-    })
+    }).then((response) => {
+      return response.data;
+    });
+    console.log("response");
+    return patients;
+
   }
 }
 const labOrders = ({ token }) => {
@@ -52,7 +57,7 @@ const reauthenticate = (token) => {
 const deauthenticate = () => {
   return (dispatch) => {
     removeCookie('token');
-    Router.push('/login');
+    router.push('/');
     dispatch({ type: DEAUTHENTICATE });
   };
 };

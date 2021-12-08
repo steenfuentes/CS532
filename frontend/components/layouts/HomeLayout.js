@@ -11,9 +11,9 @@ const HomeLayout = ({ children, title, isAuthenticated, deauthenticate }) => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" />
     </Head>
-    <div style={{ height: "80px", backgroundColor: "dodgerblue", boxShadow: "0 5px #ddd" }} className="tabs is-centered">
-      <ul>
-        <Link href="/"><a style={{ color: "#FFF", borderBottom: "none" }}>Home</a></Link>
+    <div style={{ height: "80px", backgroundColor: "dodgerblue", boxShadow: "0 5px rgba(0,0,0,.1)" }} className="tabs is-centered">
+      <ul style={{ borderBottom: "none" }}>
+        <Link href="/dashboard"><a style={{ color: "#FFF", borderBottom: "none" }}>Home</a></Link>
         <Link href="/patients"><a style={{ color: "#FFF", marginLeft: "10px", borderBottom: "none" }}>Patients</a></Link>
         <Link href="/lab"><a style={{ color: "#FFF", marginLeft: "10px", borderBottom: "none" }}>Lab</a></Link>
         <Link href="/scheduler"><a style={{ color: "#FFF", marginLeft: "10px", borderBottom: "none" }}> Scheduler</a></Link>

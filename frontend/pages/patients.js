@@ -1,28 +1,36 @@
-import React, { useState } from 'react';
-import withRedux from 'next-redux-wrapper';
-import axios from 'axios';
-import { API } from '../config';
+
+import actions from '../redux/actions';
 import initialize from '../utils/initialize';
 import { initStore } from '../redux';
 import HomeLayout from '../components/layouts/HomeLayout';
 import router from 'next/router';
 
-const Patients = ({ user, token }) => {
-
-
-  const patients = !user ? router.push("/login") : user.Patients.map(patient => { return patient })
-  // const [id, setId] = useState('');
-  const columns = [
-    { title: "ID", field: "" },
-    { title: "Name", field: "first_name" }
-
-  ]
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+class Patients extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      patients: [],
+      id: '',
+      name: '',
+    }
   }
 
+  static getInitialProps(ctx) {
+    initialize(ctx);
+    const token = ctx.store.getState().authentication.token;
+    this.props.patientRecords({ token });
+    console.log(patients);
+  }
+
+
+
+
+  // const [id, setId] = useState('');
+
+
+
+
+<<<<<<< HEAD
 
 
   return (
@@ -155,36 +163,42 @@ const Patients = ({ user, token }) => {
       </div>
 
 
+        < div >
 
-    </HomeLayout >
-
-  )
-};
-
-Patients.getInitialProps = async (ctx) => {
-  initialize(ctx);
-  const token = ctx.store.getState().authentication.token;
-  if (token) {
-    const response = await axios.get(`${API}/records/`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    }).then((res) => {
-      if (res.status === 401) {
-        ctx.store.dispatch({ type: "LOGOUT" });
-      } else {
-        return res.data;
-      }
-    });
+        </div>
 
 
-    const user = await response.data;
+
+      </HomeLayout >
+
 
     return { user, token };
   }
 }
 
+// Patients.getInitialProps = async (ctx) => {
+//   initialize(ctx);
+//   const token = ctx.store.getState().authentication.token;
+//   if (token) {
+//     const response = await axios.get(`${API}/records/`, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       }
+//     });
+//     const user = await response.data;
+//     if (response.status === 401) {
+//       ctx.store.dispatch({ type: "LOGOUT" });
+//     } else {
+//       return { user, token };
+//     }
 
 
 
-export default withRedux(initStore)(Patients);
+//   };
+
+// }
+
+
+
+
+export default withRedux(initStore, null, actions)(Patients);
