@@ -17,20 +17,7 @@ class Signin extends React.Component {
     };
   }
 
-  static getInitialProps(ctx) {
-    initialize(ctx);
-    const token = ctx.store.getState().authentication.token;
-    if (token) {
-      const response = axios.get(`${API}/records/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      });
-      const user = response.data;
 
-      return { user, token };
-    }
-  }
 
 
   handleSubmit(e) {

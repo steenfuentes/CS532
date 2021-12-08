@@ -23,12 +23,17 @@ const authenticate = ({ email, password }, type) => {
   };
 };
 const patientRecords = ({ token }) => {
-  return (dispatch) => {
-    axios.get(`${API}/records/`, {
+  {
+    constresponse = axios.get(`${API}/records/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
-    })
+    }).then((response) => {
+      return response.data;
+    });
+    console.log("response");
+    return patients;
+
   }
 }
 const labOrders = ({ token }) => {
