@@ -109,11 +109,13 @@ class UserRepo():
     def verify_roles(usr : user.UserModel, *accepted):
         if accepted:
             user_roles = usr.get_roles()
-            missing_roles = [
-                role_name
-                for role_name in accepted
-                if role_name not in user_roles
-            ]
+            print("INCOMING USER ROLES:", user_roles)
+            missing_roles = []
+            for name in accepted:
+                if name not in user_roles:
+                    missing_roles.append(name)
+
+            print("MISSING ROLES:", missing_roles)
 
             if len(accepted) == len(missing_roles): 
                 if missing_roles:

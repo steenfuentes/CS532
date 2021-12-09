@@ -58,9 +58,10 @@ class LoginAPI(MethodView):
         """Validate User Login Information & Generate JWT Token"""
 
         try:
-            usr = ur.UserRepo.get_by_email(email)
+            usr = ur.UserRepo.get_by_email(email) 
+            print("USER ID", usr.id)
             ur.UserRepo.validate_password(usr, password)
-            auth_token = user.UserModel.encode_auth_token(user.id)
+            auth_token = usr.encode_auth_token(id=usr.id)
             if auth_token:
                 response = {
                     'Status': 'Success',
@@ -94,7 +95,7 @@ class LogoutAPI(MethodView):
             token_reponse = user.UserModel.decode_auth_token(auth_token)
             if not isinstance(token_reponse, str):
                 try:
-                    ur.UserRepo.logout(auth_token)
+                    ur.logout(auth_token)
                     response = {
                         'Status': 'Success',
                         'Message': 'You are now logged out!'
