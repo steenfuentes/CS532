@@ -64,7 +64,6 @@ class UserRepo():
         
         return User.save()
     
-    @staticmethod
     def logout(token):
         """ Blacklist JWT Token """
         blacklist_token = user.BlacklistToken(token=token)
@@ -89,6 +88,7 @@ class UserRepo():
                         auth_token = ''
                     if auth_token:
                         token_response = user.UserModel.decode_auth_token(auth_token)
+                        print(token_response)
                         usr = UserRepo.get_by_id(int(token_response))
                         UserRepo.verify_roles(usr, *accepted)
                         print("Access Verified...")
@@ -104,15 +104,16 @@ class UserRepo():
             return _decorate
         
 
-    
 
     def verify_roles(usr : user.UserModel, *accepted):
-        if accepted:
+        if len(accepted) > 1:                           # self will be passed always
+            print(*accepted)
             user_roles = usr.get_roles()
             print("INCOMING USER ROLES:", user_roles)
             missing_roles = []
             for name in accepted:
                 if name not in user_roles:
+                    print(name)
                     missing_roles.append(name)
 
             print("MISSING ROLES:", missing_roles)

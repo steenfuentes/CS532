@@ -73,6 +73,7 @@ class UserSchema(Schema):
     email = fields.Email()
     password = fields.String()
     roles = fields.List(fields.String())
+    registered_on = fields.DateTime()
 
 class LabOrderSchema(Schema):
     test_type = EnumField(TestType, error='by_name') 

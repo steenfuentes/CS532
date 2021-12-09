@@ -19,7 +19,7 @@ class PhysicianAPI(MethodView):
     ur = ur.UserRepo()
 
     @staticmethod
-    @ur.token_required
+    @ur.token_required()
     def get(id):
         """ Return a physician based on the id"""
         if id is None: 

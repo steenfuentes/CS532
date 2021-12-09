@@ -31,12 +31,4 @@ Pharmacy.getInitialProps = async (ctx) => {
 
     return { token };
 }
-
-};
-=======
-
-    return { token };
-}
-
->>>>>>> c58233b8e9cf595e9ffbfefbe2dd0bbe261a1fcb
 export default withRedux(initStore)(Pharmacy);

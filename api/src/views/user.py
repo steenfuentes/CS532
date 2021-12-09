@@ -78,13 +78,26 @@ class LoginAPI(MethodView):
             }
             return make_response(jsonify(response)), 500
 
+class StatusAPI(MethodView):
+    """ Resources for verifying user status"""
+    
+    @staticmethod
+    @ur.UserRepo.token_required()
+    def get():
+        auth_header = request.headers.get('Authorization')
+        auth_token = auth_header.split(" ")[1]
+        token_response = user.UserModel.decode_auth_token(auth_token)
+        usr = ur.UserRepo.get_by_id(int(token_response))
+        schema = s.UserSchema(exclude=["password"])
+        data = schema.dump(usr) 
+        return make_response(data), 200
 
 class LogoutAPI(MethodView):
     """Resources for logging out"""
-    ur = ur.UserRepo()
+    urepo = ur.UserRepo()
 
 
-    @ur.token_required()
+    @urepo.token_required()
     def post(self):
         auth_header = request.headers.get('Authorization')
         if auth_header:
@@ -95,7 +108,7 @@ class LogoutAPI(MethodView):
             token_reponse = user.UserModel.decode_auth_token(auth_token)
             if not isinstance(token_reponse, str):
                 try:
-                    ur.logout(auth_token)
+                    ur.UserRepo.logout(auth_token)
                     response = {
                         'Status': 'Success',
                         'Message': 'You are now logged out!'
@@ -122,7 +135,6 @@ class LogoutAPI(MethodView):
 
 class UserProfileAPI(MethodView):
     """Resources for changing User Information"""
-    ur = ur.UserRepo()
     
     @parser.use_kwargs(s.UserSchema(), location="json_or_form")
     def put(self, id, **kwargs):

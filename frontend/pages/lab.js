@@ -102,22 +102,22 @@ const Lab = ({ laborders }) => {
                                         padding: "8px",
                                     }}>ID</th>
                                     <th style={{ paddingLeft: "10px" }}>Date Performed</th>
-                                    <th style={{ paddingLeft: "10px" }}>Patient ID</th>
+                                    <th style={{ paddingLeft: "10px" }}>Patient Name</th>
                                     <th style={{ paddingLeft: "10px" }}>Performed By</th>
-                                    <th style={{ paddingLeft: "10px" }}>Physician ID</th>
+                                    <th style={{ paddingLeft: "10px" }}>Physician Name</th>
                                     <th style={{ paddingLeft: "10px" }}>Results</th>
                                     <th style={{ paddingLeft: "10px" }}>Test Type</th>
                                 </tr>
-                                {orders.map(order => {
+                                {laborders.map(laborders => {
                                     return (
                                         <tr>
-                                            <td>{order.date_performed}</td>
-                                            <td style={{ paddingLeft: "10px" }}>{order.id}</td>
-                                            <td style={{ paddingLeft: "10px" }}>{order.patient_id}</td>
-                                            <td style={{ paddingLeft: "10px" }}>{order.performed_by}</td>
-                                            <td style={{ paddingLeft: "10px" }}>{order.physician_id}</td>
-                                            <td style={{ paddingLeft: "10px" }}>{order.results}</td>
-                                            <td style={{ paddingLeft: "10px" }}>{order.test_type}</td>
+                                            <td>{laborders.date_performed}</td>
+                                            <td style={{ paddingLeft: "10px" }}>{laborders.id}</td>
+                                            <td style={{ paddingLeft: "10px" }}>{laborders.patient.first_name + ' ' +laborders.patient.last_name}</td>
+                                            <td style={{ paddingLeft: "10px" }}>{laborders.performed_by}</td>
+                                            <td style={{ paddingLeft: "10px" }}>{laborders.physician.first_name + ' ' + laborders.physician.last_name}</td>
+                                            <td style={{ paddingLeft: "10px" }}>{laborders.results}</td>
+                                            <td style={{ paddingLeft: "10px" }}>{laborders.test_type}</td>
 
                                         </tr>
                                     )
@@ -146,7 +146,7 @@ Lab.getInitialProps = async (ctx) => {
             console.log(err);
             return { err };
         });
-        const laborders = await response.data;
+        const laborders = await response.data['LAB ORDERS'];
 
         return { laborders, token };
     }

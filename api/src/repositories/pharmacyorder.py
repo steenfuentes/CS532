@@ -33,7 +33,6 @@ class PharmacyOrderRepo():
             patient_id = kwargs.get("patient_id")
             associated_patient = patient.PatientModel.query.filter_by(id=patient_id).one()
             print("Retrieving patient...")
-            associated_patient.pharmacy_orders.append(PharmacyOrder)
             PharmacyOrder.patient = associated_patient
             print("Pharmacy Order added to:", associated_patient.first_name, associated_patient.last_name)
             associated_patient.save()
@@ -41,7 +40,6 @@ class PharmacyOrderRepo():
         if "physician_id" in kwargs:
             physician_id = kwargs.get("physician_id")
             associated_md = md.PhysicianModel.query.filter_by(id=physician_id).one()
-            associated_md.pharmacy_orders.append(PharmacyOrder)
             PharmacyOrder.physician = associated_md
             associated_md.save()
         

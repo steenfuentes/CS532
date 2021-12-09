@@ -60,7 +60,8 @@ class UserModel(db.Model, am.BaseModel, metaclass=am.MetaBaseModel):
         all_roles = []
         for role in self.roles:
             all_roles.append(role.name.name)
-        
+        print("Roles retrieved:", all_roles) 
+
         return all_roles
 
         

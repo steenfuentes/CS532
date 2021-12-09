@@ -64,6 +64,9 @@ def create_app(config_class=DevelopmentConfig):
 
     login_view = user.LoginAPI.as_view('login_api')
     app.add_url_rule('/login/', view_func=login_view, methods=['POST'])
+
+    status_view = user.StatusAPI.as_view('status_api')
+    app.add_url_rule('/auth/status/', view_func=status_view, methods=['GET'])
     
     logout_view = user.LogoutAPI.as_view('logout_api')
     app.add_url_rule('/dashboard/logout/', view_func=logout_view, methods=['POST'])

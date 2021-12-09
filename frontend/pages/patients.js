@@ -8,14 +8,7 @@ import { API } from '../config'
 import HomeLayout from '../components/layouts/HomeLayout';
 import router from 'next/router';
 
-const Patients = ({ patientRecord, token }) => {
-
-
-
-
-  const patients = patientRecord.Patients.map(patient => { return patient })
-
-
+const Patients = ({ patientRecord, user}) => {
   return (
     < HomeLayout title="Patients" >
 
@@ -92,7 +85,7 @@ const Patients = ({ patientRecord, token }) => {
           </form>
         </div>
 
-        {!this.props.user
+        {!user
           ?
           <p>You are not signed in</p>
           :
@@ -114,7 +107,7 @@ const Patients = ({ patientRecord, token }) => {
                 <th>DOB</th>
                 <th style={{ paddingLeft: "8px" }}>Gender</th>
               </tr>
-              {patients.map(patient => {
+              {patientRecord.map(patient => {
                 return (
                   <tr>
                     <td style={{ paddingLeft: "4px" }}>{patient.id}</td>
@@ -150,20 +143,20 @@ Patients.getInitialProps = async (ctx) => {
       headers: {
         Authorization: `Bearer ${token}`,
       }
+    })
+    const user = await axios.get(`${API}/auth/status/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
     });
-    const patientRecord = await response.data;
+    const patientRecord = await response.data["Patients"];
     if (response.status === 401) {
       ctx.store.dispatch({ type: "LOGOUT" });
     } else {
-      return { patientRecord, token };
+      return { patientRecord, user };
     }
   }
 }
-
-
-
-
-
 
 
 export default withRedux(initStore)(Patients);
